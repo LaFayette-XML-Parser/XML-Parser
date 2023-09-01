@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XML Parser</title>
+    <style>
+        body {
+            background-color: #f3f6f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>XML Parser</h1>
+    <input type="file" id="xmlFileInput" accept=".xml">
+    <button id="processButton">Process XML</button>
+    <a id="downloadLink" style="display: none;">Download Output</a>
+
+    <script>
+        document.getElementById('processButton').addEventListener('click', async () => {
+            const fileInput = document.getElementById('xmlFileInput');
+            const downloadLink = document.getElementById('downloadLink');
+            const tbody = document.createElement('tbody');
+
+            if (fileInput.files.length === 0) {
+                return;
+            }
+
+            const xmlFile = fileInput.files[0];
+            const xmlData = await xmlFile.text();
+
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
+
+            const propertiesElements = xmlDoc.querySelectorAll('Properties');
+
+            // Initialize variables for the combination
+            let markedAttribute = '';
+            let iopcountValue = '';
+            let psAmpValue = '';
+
+            // Create an object to store quantities for each combination
+            const quantityByCombination = {};
+
+            tbody.innerHTML = ''; // Clear existing rows
+
+            propertiesElements.forEach(propertiesElement => {
+                const refNameElements = propertiesElement.querySelectorAll('RefName');
+
+                refNameElements.forEach(refNameElement => {
+                    const propertyName = refNameElement.textContent;
+                    const valueElement = refNameElement.nextElementSibling;
+
+                    if (propertyName === 'iopcount') {
+                        iopcountValue = valueElement.textContent;
+                    } else if (propertyName === 'powersupplysize') {
+                        psAmpValue = valueElement.textContent;
+
+                        // Replace "less power supply" with "lps"
+                        if (psAmpValue.toLowerCase() === 'less power supply') {
+                            psAmpValue = '';
+                        }
+
+                        // Create a unique key for the combination
+                        const combinationKey = `${markedAttribute}_${iopcountValue}_${psAmpValue}`;
+
+                        // Initialize or increment the quantity for this combination
+                        if (combinationKey in quantityByCombination) {
+                            quantityByCombination[combinationKey]++;
+                        } else {
+                            quantityByCombination[combinationKey] = 1;
+                        }
+                    } else if (propertyName === 'MarkNumber') {
+                        markedAttribute = valueElement.textContent;
+                    }
+                });
+            });
+
+            // Create a table
+            const table = document.createElement('table');
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Marked</th>
+                        <th>Iopcount</th>
+                        <th>PS Amp</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+            `;
+
+            // Create rows for each combination
+            for (const combinationKey in quantityByCombination) {
+                if (quantityByCombination.hasOwnProperty(combinationKey)) {
+                    const [marked, iopcount, psAmp] = combinationKey.split('_');
+                    const quantity = quantityByCombination[combinationKey];
+
+                    const row = table.insertRow();
+                    row.innerHTML = `
+                        <td>${marked || '-'}</td>
+                        <td>${iopcount || '-'}</td>
+                        <td>${psAmp || '-'}</td>
+                        <td>${quantity}</td>
+                    `;
+                }
+            }
+
+            tbody.appendChild(table);
+
+            // Create a Blob containing the table content
+            const blob = new Blob([table.outerHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+
+            // Set the download link properties
+            downloadLink.href = url;
+            downloadLink.download = 'output.html';
+            downloadLink.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

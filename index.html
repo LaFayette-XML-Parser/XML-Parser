@@ -16,37 +16,43 @@
 </head>
 <body>
     <h1>XML Parser</h1>
+    <!-- File input for XML selection -->
     <input type="file" id="xmlFileInput" accept=".xml">
+    <!-- Button to trigger XML processing -->
     <button id="processButton">Process XML</button>
+    <!-- Link to download the processed output (hidden by default) -->
     <a id="downloadLink" style="display: none;">Download Output</a>
 
     <script>
         document.getElementById('processButton').addEventListener('click', async () => {
+            // Get references to HTML elements
             const fileInput = document.getElementById('xmlFileInput');
             const downloadLink = document.getElementById('downloadLink');
-            const tbody = document.createElement('tbody');
 
             if (fileInput.files.length === 0) {
-                return;
+                return; // No file selected, nothing to process
             }
 
             const xmlFile = fileInput.files[0];
             const xmlData = await xmlFile.text();
 
+            // Parse the XML data
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
 
-            const propertiesElements = xmlDoc.querySelectorAll('Properties');
-
-            // Initialize variables for the combination
+            // Initialize variables for property values
             let markedAttribute = '';
             let iopcountValue = '';
             let psAmpValue = '';
+            let modelValue = '';
+            let widthValue = '';
+            let railValue = '';
 
             // Create an object to store quantities for each combination
             const quantityByCombination = {};
 
-            tbody.innerHTML = ''; // Clear existing rows
+            // Get all 'Properties' elements
+            const propertiesElements = xmlDoc.querySelectorAll('Properties');
 
             propertiesElements.forEach(propertiesElement => {
                 const refNameElements = propertiesElement.querySelectorAll('RefName');
@@ -55,18 +61,28 @@
                     const propertyName = refNameElement.textContent;
                     const valueElement = refNameElement.nextElementSibling;
 
+                    // Handle different property names
                     if (propertyName === 'iopcount') {
                         iopcountValue = valueElement.textContent;
+                    } else if (propertyName === 'Model') {
+                        modelValue = valueElement.textContent;
+                    } else if (propertyName === 'overallwidth') {
+                        widthValue = valueElement.textContent;
+                    } else if (propertyName === 'rollercenters') {
+                        railValue = valueElement.textContent;
+                        
+                        // Trim the railValue to a whole number using Math.floor()
+                        railValue = Math.floor(parseFloat(railValue));
                     } else if (propertyName === 'powersupplysize') {
                         psAmpValue = valueElement.textContent;
 
                         // Replace "less power supply" with "lps"
                         if (psAmpValue.toLowerCase() === 'less power supply') {
-                            psAmpValue = '';
+                            psAmpValue = 'lps';
                         }
 
                         // Create a unique key for the combination
-                        const combinationKey = `${markedAttribute}_${iopcountValue}_${psAmpValue}`;
+                        const combinationKey = `${markedAttribute}_${modelValue}_${widthValue}_${railValue}_${iopcountValue}_${psAmpValue}`;
 
                         // Initialize or increment the quantity for this combination
                         if (combinationKey in quantityByCombination) {
@@ -80,46 +96,52 @@
                 });
             });
 
-            // Create a table
-            const table = document.createElement('table');
-            table.innerHTML = `
-                <thead>
-                    <tr>
-                        <th>Marked</th>
-                        <th>Iopcount</th>
-                        <th>PS Amp</th>
-                        <th>Quantity</th>
-                    </tr>
-                </thead>
-            `;
+            // Create a CSV data string
+            let csvData = 'Marked,Model,Width,Rlr Ctrs,Iopcount,PS Amp,Quantity\n';
 
-            // Create rows for each combination
             for (const combinationKey in quantityByCombination) {
                 if (quantityByCombination.hasOwnProperty(combinationKey)) {
-                    const [marked, iopcount, psAmp] = combinationKey.split('_');
+                    const [marked, model, width, rail, iopcount, psAmp] = combinationKey.split('_');
                     const quantity = quantityByCombination[combinationKey];
 
-                    const row = table.insertRow();
-                    row.innerHTML = `
-                        <td>${marked || '-'}</td>
-                        <td>${iopcount || '-'}</td>
-                        <td>${psAmp || '-'}</td>
-                        <td>${quantity}</td>
-                    `;
+                    // Convert width and rail values to a formatted string
+                    const formattedWidth = formatInchesToFeetAndInches(width);
+                    const formattedRail = formatInchesToFeetAndInches(rail);
+
+                    // Create a CSV row for the combination
+                    csvData += `${marked || '-'},${model || '-'},${formattedWidth || '-'},${formattedRail || '-'},${iopcount || '-'},${psAmp || '-'},${quantity}\n`;
                 }
             }
 
-            tbody.appendChild(table);
-
-            // Create a Blob containing the table content
-            const blob = new Blob([table.outerHTML], { type: 'text/html' });
+            // Create a Blob containing the CSV data
+            const blob = new Blob([csvData], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
 
             // Set the download link properties
             downloadLink.href = url;
-            downloadLink.download = 'output.html';
+            downloadLink.download = 'output.csv'; // Set the filename to "output.csv"
             downloadLink.style.display = 'block';
         });
+
+        // Function to format inches to feet and inches
+        function formatInchesToFeetAndInches(inches) {
+            const inchesFloat = parseFloat(inches || '0');
+            const feet = Math.floor(inchesFloat / 12);
+            const remainderInches = inchesFloat % 12;
+            let formattedString = '';
+            if (feet > 0) {
+                formattedString += `${feet} ft `;
+            }
+            
+            // Check if remainderInches is an integer (e.g., 5.00 or 3.00)
+            if (remainderInches === Math.floor(remainderInches)) {
+                formattedString += remainderInches.toFixed(0) + ' in';
+            } else {
+                formattedString += remainderInches.toFixed(2) + ' in';
+            }
+            
+            return formattedString;
+        }
     </script>
 </body>
 </html>

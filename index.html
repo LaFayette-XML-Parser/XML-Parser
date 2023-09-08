@@ -47,6 +47,7 @@
             let modelValue = '';
             let widthValue = '';
             let railValue = '';
+            let curveValue = '';
 
             // Create an object to store quantities for each combination
             const quantityByCombination = {};
@@ -76,13 +77,13 @@
                     } else if (propertyName === 'powersupplysize') {
                         psAmpValue = valueElement.textContent;
 
-                        // Replace "less power supply" with "lps"
+                        // Replace "less power supply" with "LPS"
                         if (psAmpValue.toLowerCase() === 'less power supply') {
-                            psAmpValue = 'lps';
+                            psAmpValue = 'LPS';
                         }
 
                         // Create a unique key for the combination
-                        const combinationKey = `${markedAttribute}_${modelValue}_${widthValue}_${railValue}_${iopcountValue}_${psAmpValue}`;
+                        const combinationKey = `${markedAttribute}_${modelValue}_${widthValue}_${railValue}_${iopcountValue}_${curveValue}_${psAmpValue}`;
 
                         // Initialize or increment the quantity for this combination
                         if (combinationKey in quantityByCombination) {
@@ -92,16 +93,18 @@
                         }
                     } else if (propertyName === 'MarkNumber') {
                         markedAttribute = valueElement.textContent;
+                    } else if (propertyName === 'curveangle') {
+                        curveValue = valueElement.textContent;
                     }
                 });
             });
 
             // Create a CSV data string
-            let csvData = 'Marked,Model,Width,Rlr Ctrs,Iopcount,PS Amp,Quantity\n';
+            let csvData = 'Mark #,Model,Width,Rlr Ctrs,IOP Count, Curve, PS Qty,PS Amp\n';
 
             for (const combinationKey in quantityByCombination) {
                 if (quantityByCombination.hasOwnProperty(combinationKey)) {
-                    const [marked, model, width, rail, iopcount, psAmp] = combinationKey.split('_');
+                    const [marked, model, width, rail, iopcount, curve, psAmp] = combinationKey.split('_');
                     const quantity = quantityByCombination[combinationKey];
 
                     // Convert width and rail values to a formatted string
@@ -109,7 +112,7 @@
                     const formattedRail = formatInchesToFeetAndInches(rail);
 
                     // Create a CSV row for the combination
-                    csvData += `${marked || '-'},${model || '-'},${formattedWidth || '-'},${formattedRail || '-'},${iopcount || '-'},${psAmp || '-'},${quantity}\n`;
+                    csvData += `${marked || '-'},${model || '-'},${formattedWidth || '-'},${formattedRail || '-'},${iopcount || '-'},${curve || '-'}, ${quantity}, ${psAmp || '-'}\n`;
                 }
             }
 
@@ -119,7 +122,10 @@
 
             // Set the download link properties
             downloadLink.href = url;
-            downloadLink.download = 'output.csv'; // Set the filename to "output.csv"
+            
+            // Remove spaces from the filename
+            const xmlFileName = xmlFile.name.replace(/\s+/g, '_');
+            downloadLink.download = `${xmlFileName}.csv`;  
             downloadLink.style.display = 'block';
         });
 

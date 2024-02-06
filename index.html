@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>XML Parser</title>
     <style>
@@ -14,25 +15,39 @@
         }
     </style>
 </head>
+
 <body>
     <h1>XML Parser</h1>
+
     <!-- File input for XML selection -->
     <input type="file" id="xmlFileInput" accept=".xml">
+
     <!-- Button to trigger XML processing -->
     <button id="processButton">Process XML</button>
-    <!-- Link to download the processed output (hidden by default) -->
+
+    <!-- Link to download the processed output -->
     <a id="downloadLink" style="display: none;">Download Output</a>
 
     <script>
+        // Function to format inches to feet and inches
+        function formatInchesToFeetAndInches(inches) {
+            const feet = Math.floor(inches / 12);
+            const remainingInches = inches % 12;
+            return `${feet} ft ${remainingInches} in`;
+        }
+
+        // Event listener for the process button
         document.getElementById('processButton').addEventListener('click', async () => {
-            // Get references to HTML elements
             const fileInput = document.getElementById('xmlFileInput');
             const downloadLink = document.getElementById('downloadLink');
 
+            // Check if a file is selected
             if (fileInput.files.length === 0) {
-                return; // No file selected, nothing to process
+                alert('Please select an XML file.');
+                return;
             }
 
+            // Get the selected XML file
             const xmlFile = fileInput.files[0];
             const xmlData = await xmlFile.text();
 
@@ -42,112 +57,172 @@
 
             // Initialize variables for property values
             let markedAttribute = '';
-            let iopcountValue = '';
-            let psAmpValue = '';
+            let iopCountValue = '';
             let modelValue = '';
             let widthValue = '';
             let railValue = '';
             let curveValue = '';
+            let lengthValue = '';
+            let infeedValue = '';
+            let dischargeValue = '';
+            let hpValue = '';
+            let speedValue = '';
+            let weightValue = '';
+            let priceValue = '';
+            let psAmpValue = ''; // Initialize outside the loop
 
             // Create an object to store quantities for each combination
             const quantityByCombination = {};
-
-            // Get all 'Properties' elements
             const propertiesElements = xmlDoc.querySelectorAll('Properties');
 
+            // Iterate through 'Properties' elements
             propertiesElements.forEach(propertiesElement => {
+                // Initialize psAmpValue outside the loop
+                let psAmpValue = '';
+
                 const refNameElements = propertiesElement.querySelectorAll('RefName');
 
+                // Iterate through 'RefName' elements
                 refNameElements.forEach(refNameElement => {
                     const propertyName = refNameElement.textContent;
                     const valueElement = refNameElement.nextElementSibling;
 
-                    // Handle different property names
-                    if (propertyName === 'iopcount') {
-                        iopcountValue = valueElement.textContent;
-                    } else if (propertyName === 'Model') {
-                        modelValue = valueElement.textContent;
-                    } else if (propertyName === 'overallwidth') {
-                        widthValue = valueElement.textContent;
-                    } else if (propertyName === 'rollercenters') {
-                        railValue = valueElement.textContent;
-                        
-                        // Trim the railValue to a whole number using Math.floor()
-                        railValue = Math.floor(parseFloat(railValue));
-                    } else if (propertyName === 'powersupplysize') {
-                        psAmpValue = valueElement.textContent;
-
-                        // Replace "less power supply" with "LPS"
-                        if (psAmpValue.toLowerCase() === 'less power supply') {
-                            psAmpValue = 'LPS';
-                        }
-
-                        // Create a unique key for the combination
-                        const combinationKey = `${markedAttribute}_${modelValue}_${widthValue}_${railValue}_${iopcountValue}_${curveValue}_${psAmpValue}`;
-
-                        // Initialize or increment the quantity for this combination
-                        if (combinationKey in quantityByCombination) {
-                            quantityByCombination[combinationKey]++;
-                        } else {
-                            quantityByCombination[combinationKey] = 1;
-                        }
-                    } else if (propertyName === 'MarkNumber') {
+                    // Marked Attribute
+                    if (propertyName === 'MarkNumber') {
                         markedAttribute = valueElement.textContent;
-                    } else if (propertyName === 'curveangle') {
+                    }
+                    // Model
+                    else if (propertyName === 'Model') {
+                        iopCountValue = ''; // Clear iopCountValue when a new model is encountered
+                        modelValue = valueElement.textContent;
+                    }
+                    // IOP Count
+                    else if (propertyName === 'iopcount') {
+                        iopCountValue = iopCountValue || valueElement.textContent;
+                    }
+                    // Overall Width
+                    else if (propertyName === 'overallwidth') {
+                        widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                    }
+                    // Roller Centers
+                    else if (propertyName === 'rollercenters') {
+                        railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                    }
+                    // Curve Angle
+                    else if (propertyName === 'curveangle') {
                         curveValue = valueElement.textContent;
                     }
+                    // Overall Length
+                    else if (propertyName === 'overalllength') {
+                        lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                    }
+                    // Infeed Height
+                    else if (propertyName === 'infeedheight') {
+                        infeedValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                    }
+                    // Discharge Height
+                    else if (propertyName === 'dischargeheight') {
+                        dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                    }
+                    // Horsepower
+                    else if (propertyName === 'hp') {
+                        hpValue = valueElement.textContent;
+                    }
+                    // Feet per Minute (FPM)
+                    else if (propertyName === 'fpm') {
+                        speedValue = valueElement.textContent;
+                    }
+                    // Conveyor Weight
+                    else if (propertyName === 'conveyorweight') {
+                        weightValue = valueElement.textContent;
+                    }
+                    // Power Supply Size
+                    else if (propertyName === 'powersupplysize') {
+                        psAmpValue = valueElement.textContent;
+
+                        if (psAmpValue.toLowerCase() === 'less power supply') {
+                            psAmpValue = '';
+                        } else {
+                            const ampMatch = psAmpValue.match(/\d+/);
+                            psAmpValue = ampMatch ? ampMatch[0] : '';
+                        }
+                    }
+                    // Total Price
+                    else if (propertyName === 'TotalPrice') {
+                        priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`;
+                    }
                 });
+
+                // Construct the CSV row for each combination
+                const combinationKey = `${markedAttribute}_${modelValue}_${widthValue}_${railValue}_${iopCountValue}_${curveValue}_${lengthValue}_${infeedValue}_${dischargeValue}_${hpValue}_${speedValue}_${weightValue}_${psAmpValue}`;
+
+                // Handle multiple variations of psAmp for the same combination
+                if (combinationKey in quantityByCombination) {
+                    quantityByCombination[combinationKey].quantity++;
+                    if (psAmpValue !== '') {
+                        quantityByCombination[combinationKey].ampCount++;
+                        quantityByCombination[combinationKey].psAmpVariations.add(psAmpValue);
+                    }
+                } else {
+                    quantityByCombination[combinationKey] = {
+                        quantity: 1,
+                        ampCount: psAmpValue !== '' ? 1 : 0,
+                        psAmpVariations: new Set(psAmpValue !== '' ? [psAmpValue] : []),
+                        price: priceValue,
+                    };
+                }
             });
 
-            // Create a CSV data string
-            let csvData = 'Mark #,Model,Width,Rlr Ctrs,IOP Count, Curve, PS Qty,PS Amp\n';
+            // Processed CSV data will be stored here
+            let csvData = 'Mark #, Model, Width, Rail, IOP, Curve, Length, Infeed, Discharge, HP, Speed, Weight, Quantity, Amps, Price\n';
+            let totalPrice = 0;
+
+            // Flag to skip the first row
+            let skipFirstRow = true;
 
             for (const combinationKey in quantityByCombination) {
                 if (quantityByCombination.hasOwnProperty(combinationKey)) {
-                    const [marked, model, width, rail, iopcount, curve, psAmp] = combinationKey.split('_');
-                    const quantity = quantityByCombination[combinationKey];
+                    const { quantity, ampCount, psAmpVariations, price } = quantityByCombination[combinationKey];
+                    const [marked, model, width, rail, iopcount, curve, length, infeed, discharge, hp, speed, weight] = combinationKey.split('_');
 
-                    // Convert width and rail values to a formatted string
-                    const formattedWidth = formatInchesToFeetAndInches(width);
-                    const formattedRail = formatInchesToFeetAndInches(rail);
+                    // Separate quantities and amps with |
+                    const quantityRow = ampCount > 0 ? `${quantity}` : ' ';
 
-                    // Create a CSV row for the combination
-                    csvData += `${marked || '-'},${model || '-'},${formattedWidth || '-'},${formattedRail || '-'},${iopcount || '-'},${curve || '-'}, ${quantity}, ${psAmp || '-'}\n`;
+                    let ampsRow = '';
+                    if (ampCount > 0) {
+                        ampsRow = Array.from(psAmpVariations).join('|');
+                    }
+
+                    const csvRowWithComments = `${marked || ''},${model || ''},${width || ''},${rail || ''},${iopcount || ''},${curve || ''},${length || ''},${infeed || ''},${discharge || ''},${hp || ''},${speed || ''},${weight || ''},${quantityRow},${ampsRow},${price}`;
+                    csvData += csvRowWithComments + '\n';
+
+                    totalPrice += parseFloat(price.replace('$', '')) * quantity;
                 }
             }
 
+            // Add total row to CSV data
+            const totalRow = `, , , , , , , , , , , , , Total Price, $${totalPrice.toFixed(2)}`;
+            csvData += totalRow + '\n';
+
             // Create a Blob containing the CSV data
             const blob = new Blob([csvData], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
 
-            // Set the download link properties
-            downloadLink.href = url;
-            
-            // Remove spaces from the filename
-            const xmlFileName = xmlFile.name.replace(/\s+/g, '_');
-            downloadLink.download = `${xmlFileName}.csv`;  
-            downloadLink.style.display = 'block';
-        });
+            // Generate a download link for the CSV file
+            const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', '');
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = `${xmlFileName}.csv`;
 
-        // Function to format inches to feet and inches
-        function formatInchesToFeetAndInches(inches) {
-            const inchesFloat = parseFloat(inches || '0');
-            const feet = Math.floor(inchesFloat / 12);
-            const remainderInches = inchesFloat % 12;
-            let formattedString = '';
-            if (feet > 0) {
-                formattedString += `${feet} ft `;
-            }
-            
-            // Check if remainderInches is an integer (e.g., 5.00 or 3.00)
-            if (remainderInches === Math.floor(remainderInches)) {
-                formattedString += remainderInches.toFixed(0) + ' in';
+            // Display the "Download Output" link only if there is data to download
+            if (totalPrice > 0) {
+                downloadLink.style.display = 'block';
+                downloadLink.click();
+                URL.revokeObjectURL(downloadLink.href);
             } else {
-                formattedString += remainderInches.toFixed(2) + ' in';
+                alert('No data to download.');
+                downloadLink.style.display = 'none';
             }
-            
-            return formattedString;
-        }
+        });
     </script>
 </body>
+
 </html>

@@ -69,7 +69,7 @@
             let speedValue = '';
             let weightValue = '';
             let priceValue = '';
-            let psAmpValue = ''; // Initialize outside the loop
+            let psAmpValues = new Set();
 
             // Create an object to store quantities for each combination
             const quantityByCombination = {};
@@ -77,8 +77,7 @@
 
             // Iterate through 'Properties' elements
             propertiesElements.forEach(propertiesElement => {
-                // Initialize psAmpValue outside the loop
-                let psAmpValue = '';
+                psAmpValues = new Set();
 
                 const refNameElements = propertiesElement.querySelectorAll('RefName');
 
@@ -93,12 +92,12 @@
                     }
                     // Model
                     else if (propertyName === 'Model') {
-                        iopCountValue = ''; // Clear iopCountValue when a new model is encountered
+                        iopCountValue = '';
                         modelValue = valueElement.textContent;
                     }
                     // IOP Count
                     else if (propertyName === 'iopcount') {
-                        iopCountValue = iopCountValue || valueElement.textContent;
+                        iopCountValue = valueElement.textContent;
                     }
                     // Overall Width
                     else if (propertyName === 'overallwidth') {
@@ -138,13 +137,16 @@
                     }
                     // Power Supply Size
                     else if (propertyName === 'powersupplysize') {
-                        psAmpValue = valueElement.textContent;
+                        const psAmpValue = valueElement.textContent;
 
-                        if (psAmpValue.toLowerCase() === 'less power supply') {
-                            psAmpValue = '';
-                        } else {
+                        // Handling blank amp values
+                        if (psAmpValue.trim() === '') {
+                            psAmpValues.add(''); // Add blank value to set
+                        } else if (psAmpValue.toLowerCase() !== 'less power supply') {
                             const ampMatch = psAmpValue.match(/\d+/);
-                            psAmpValue = ampMatch ? ampMatch[0] : '';
+                            if (ampMatch) {
+                                psAmpValues.add(ampMatch[0]);
+                            }
                         }
                     }
                     // Total Price
@@ -154,51 +156,63 @@
                 });
 
                 // Construct the CSV row for each combination
-                const combinationKey = `${markedAttribute}_${modelValue}_${widthValue}_${railValue}_${iopCountValue}_${curveValue}_${lengthValue}_${infeedValue}_${dischargeValue}_${hpValue}_${speedValue}_${weightValue}_${psAmpValue}`;
+                const combinationKey = `${markedAttribute}_${modelValue}_${widthValue}_${railValue}_${iopCountValue}_${curveValue}_${lengthValue}_${infeedValue}_${dischargeValue}_${hpValue}_${speedValue}_${weightValue}`;
 
-                // Handle multiple variations of psAmp for the same combination
-                if (combinationKey in quantityByCombination) {
-                    quantityByCombination[combinationKey].quantity++;
-                    if (psAmpValue !== '') {
-                        quantityByCombination[combinationKey].ampCount++;
-                        quantityByCombination[combinationKey].psAmpVariations.add(psAmpValue);
-                    }
-                } else {
+                // Store the combination and its properties
+                if (!quantityByCombination[combinationKey]) {
                     quantityByCombination[combinationKey] = {
-                        quantity: 1,
-                        ampCount: psAmpValue !== '' ? 1 : 0,
-                        psAmpVariations: new Set(psAmpValue !== '' ? [psAmpValue] : []),
+                        quantity: 0,
+                        psAmpValues: new Set(),
                         price: priceValue,
                     };
                 }
+
+                // Increment quantity
+                psAmpValues.forEach(psAmp => {
+                    quantityByCombination[combinationKey].quantity += (psAmp === '' ? 0 : 1);
+                });
+
+                // Add psAmpValues to the combination
+                psAmpValues.forEach(psAmp => {
+                    quantityByCombination[combinationKey].psAmpValues.add(psAmp);
+                });
             });
+     // Processed CSV data will be stored here
+            let csvData = ''; // Initialize without headers
+            let totalPrice = 0; // Initialize total price variable
 
-            // Processed CSV data will be stored here
-            let csvData = 'Mark #, Model, Width, Rail, IOP, Curve, Length, Infeed, Discharge, HP, Speed, Weight, Quantity, Amps, Price\n';
-            let totalPrice = 0;
+            // Flag to track the first row
+            let isFirstRow = true;
 
-            // Flag to skip the first row
-            let skipFirstRow = true;
-
+            // Loop through each combination
             for (const combinationKey in quantityByCombination) {
                 if (quantityByCombination.hasOwnProperty(combinationKey)) {
-                    const { quantity, ampCount, psAmpVariations, price } = quantityByCombination[combinationKey];
+                    const { quantity, psAmpValues, price } = quantityByCombination[combinationKey];
                     const [marked, model, width, rail, iopcount, curve, length, infeed, discharge, hp, speed, weight] = combinationKey.split('_');
 
-                    // Separate quantities and amps with |
-                    const quantityRow = ampCount > 0 ? `${quantity}` : ' ';
-
-                    let ampsRow = '';
-                    if (ampCount > 0) {
-                        ampsRow = Array.from(psAmpVariations).join('|');
+                    // Check if it's not the second row and if the row has more than one item
+                    if (!isFirstRow && !(quantity === '' && model === '' && width === '' && rail === '' && iopcount === '' && curve === '' && length === '' && infeed === '' && discharge === '' && hp === '' && speed === '' && weight === '' && price !== '')) {
+                        // Generate CSV row
+                        const quantityRow = quantity > 0 ? `${quantity}` : ''; // Changed to blank when quantity is 0
+                        const ampsRow = psAmpValues.size > 0 ? Array.from(psAmpValues).join('|') : '';
+                        const csvRowWithComments = `${marked || ''},${model || ''},${width || ''},${rail || ''},${iopcount || ''},${curve || ''},${length || ''},${infeed || ''},${discharge || ''},${hp || ''},${speed || ''},${weight || ''},${quantityRow},${ampsRow},${price}`;
+                        csvData += csvRowWithComments + '\n';
                     }
 
-                    const csvRowWithComments = `${marked || ''},${model || ''},${width || ''},${rail || ''},${iopcount || ''},${curve || ''},${length || ''},${infeed || ''},${discharge || ''},${hp || ''},${speed || ''},${weight || ''},${quantityRow},${ampsRow},${price}`;
-                    csvData += csvRowWithComments + '\n';
+                    // Set the flag to false after processing the first row
+                    isFirstRow = false;
 
-                    totalPrice += parseFloat(price.replace('$', '')) * quantity;
+                    // Accumulate price for total price
+                    totalPrice += parseFloat(price.replace('$', '')); // Accumulate prices
                 }
             }
+
+            // Divide total price by 2 to get the actual total
+            totalPrice /= 2;
+
+            // Add headers to CSV data
+            const headersRow = 'Mark #, Model, Width, Rail, IOP, Curve, Length, Infeed, Discharge, HP, Speed, Weight, Quantity, Amps, Price\n';
+            csvData = headersRow + csvData; // Prepend headers to csvData
 
             // Add total row to CSV data
             const totalRow = `, , , , , , , , , , , , , Total Price, $${totalPrice.toFixed(2)}`;

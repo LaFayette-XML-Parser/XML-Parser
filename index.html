@@ -29,10 +29,21 @@
     <a id="downloadLink" style="display: none;">Download Output</a>
 
     <script>
-        // Function to format inches to feet and inches
+      // Function to format inches to feet and inches
         function formatInchesToFeetAndInches(inches) {
+            // Convert inches to feet and remaining inches
             const feet = Math.floor(inches / 12);
-            const remainingInches = inches % 12;
+            let remainingInches = inches % 12;
+
+            // Round or concatenate after 4 decimal places
+            remainingInches = parseFloat(remainingInches.toFixed(2));
+
+            // If the rounded inches exceed 12, adjust feet and inches
+            if (remainingInches >= 12) {
+                feet += 1;
+                remainingInches -= 12;
+            }
+
             return `${feet} ft ${remainingInches} in`;
         }
 

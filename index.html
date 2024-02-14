@@ -5,6 +5,10 @@
     <title>XML Parser</title>
     <link rel ="icon" type ="image/x-icon" href ="https://github.com/LaFayette-XML-Parser/XML/blob/main/Favicon.LEI.png?raw=true">
     <style>
+	.outer {
+            display: flex;
+            flex-direction: column;
+        }
         .inside {
             background-color: #f3f6f4;
             display: flex;
@@ -18,15 +22,16 @@
 </head>
 
 <body>
-    <div>    
-    <img src ="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true"> <p> Take your Hytrol XML Files and Convert them to Excel Sheets</p>
+    <div class ="outer">    
+	    <img src ="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true"> 
+	    <p> Take your Hytrol XML Files and Convert them to Excel Sheets</p>
     </div>
 	
     <div class = "inside">
-    <h1>XML Parser</h1>
-    <input type="file" id="xmlFileInput" accept=".xml">
-    <button id="processButton">Process XML</button>
-    <a id="downloadLink" style="display: none;">Download Output</a>
+	    <h1>XML Parser</h1>
+	    <input type="file" id="xmlFileInput" accept=".xml">
+	    <button id="processButton">Process XML</button>
+	    <a id="downloadLink" style="display: none;">Download Output</a>
     </div>
 	
     <script>

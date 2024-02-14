@@ -24,6 +24,10 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
+	    text-align: center;
+        }
+	.inside input[type="file"] {
+            margin: 0 auto;
         }
 	    
     </style>
@@ -36,13 +40,10 @@
     </div>
     <div class = "inside">
 	    <h1>XML Parser<br></h1>
-	    <input type="file" id="xmlFileInput" accept=".xml">
-    </div>
-    <div class = "inside">	    
+	    <input type="file" id="xmlFileInput" accept=".xml">  
 	    <button id="processButton">Process XML</button>
 	    <a id="downloadLink" style="display: none;">Download Output</a>
-    </div>
-	
+    </div>	
     <script>
       // Function to format inches to feet and inches
         function formatInchesToFeetAndInches(inches) {

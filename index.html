@@ -5,7 +5,15 @@
     <title>XML Parser</title>
     <link rel ="icon" type ="image/x-icon" href ="https://github.com/LaFayette-XML-Parser/XML/blob/main/Favicon.LEI.png?raw=true">
     <style>
-        body {
+	.outside {
+            background-color: #f3f6f4;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+        }
+        .inside {
             background-color: #f3f6f4;
             display: flex;
             flex-direction: column;
@@ -18,12 +26,17 @@
 </head>
 
 <body>
+    <div>    
+    <img src ="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true">
+    </div>
+	
+    <div class = "outside">
     <h1>XML Parser</h1>
-	<img src ="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true">
     <input type="file" id="xmlFileInput" accept=".xml">
     <button id="processButton">Process XML</button>
     <a id="downloadLink" style="display: none;">Download Output</a>
-
+    </div>
+	
     <script>
       // Function to format inches to feet and inches
         function formatInchesToFeetAndInches(inches) {

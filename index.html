@@ -12,30 +12,30 @@
 
 <body style="background-color: #f3f6f4">
 
-    <div class="flex-parent-element" style="background-color: white">
-        <div class="flex-child-element"><img src="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true"> </div>
-        <div class="flex-child-element">
-            <p><b> Take your Hytrol XML Files and Convert them to Excel Sheets </b> </p>
-        </div>
+   <div class="flex-parent-element">
+    <div class="flex-child-element"><img src="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true"> </div>
+    <div class="flex-child-element">
+        <p><b> Take your Hytrol XML Files and Convert them to Excel Sheets </b> </p>
     </div>
-    <div class="outside">
-        <h1>XML Parser<br><br></h1>
+</div>
+<div class="outside">
+    <h1>XML Parser<br><br></h1>
+</div>
+<div class="inside">
+    <div>
+        <p><b>Directions:</b><br> 1. In AutoCad 2021, launch Hytrol and create your conveyor. <br> 2. In the Hytrol menu click file, then Export Project (.XML)<br> 3. Once done loading, name your file and save.
+                <br> 4. Go to this website and press choose file.<br> 5. Choose your .xml file. <br> 6. Press the process button. <br> 7. It should download automatically, but if it does not, click the download link. <br> 8.Click on your
+                download to pull up the CSV.
+        </p>
     </div>
-    <div class="inside">
-        <div>
-            <p style="font-size: 10pt"><b style="font-size: 10pt">Directions:</b><br> 1. In AutoCad 2021, launch Hytrol and create your conveyor. <br> 2. In the Hytrol menu click file, then Export Project (.XML)<br> 3. Once done loading, name your file and save.
-                    <br> 4. Go to this website and press choose file.<br> 5. Choose your .xml file. <br> 6. Press the process button. <br> 7. It should download automatically, but if it does not, click the download link. <br> 8.Click on your
-                    download to pull up the CSV.
-            </p>
-        </div>
-        <br>
-        <!-- Added comments for input and button -->
-        <input type="file" id="xmlFileInput" accept=".xml">
-        <button id="processButton">Process XML</button>
-        <div>
-            <a id="downloadLink" style="display: none;">Download Output</a>
-        </div>
+    <br>
+    <!-- Added comments for input and button -->
+    <input type="file" id="xmlFileInput" accept=".xml">
+    <button id="processButton">Process XML</button>
+    <div>
+        <a id="downloadLink" style="display: none;">Download Output</a>
     </div>
+</div>
     <script>
       // Function to format inches to feet and inches
         function formatInchesToFeetAndInches(inches) {

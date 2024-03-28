@@ -2,40 +2,78 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XML Parser</title>
-    <!-- Corrected link to the CSS file -->
-    <link href="https://raw.githubusercontent.com/LaFayette-XML-Parser/XML/9a24ef0019fc92921d67cd813a462cfc389f9a63/styles.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="https://github.com/LaFayette-XML-Parser/XML/blob/main/Favicon.LEI.png?raw=true">
+    <link rel ="icon" type ="image/x-icon" href ="https://github.com/LaFayette-XML-Parser/XML/blob/main/Favicon.LEI.png?raw=true">
+    <style>
+	.flex-parent-element {
+	  display: flex;
+	  width: 125%;
+	}
+	.flex-child-element {
+	  font-family: "Times New Roman", Times, serif;
+	  flex: 1;
+	  margin: 0px;
+	}
+	.flex-child-element:first-child {
+	  margin-right: 20px;
+	}  
+        .inside {
+	    font-family: "Times New Roman", Times, serif;
+            background-color: #f3f6f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+	    width: 100vh;
+            margin: 0 auto;
+	    text-align-last: center;
+	    line-height: 1.4;
+        }
+	 .outside {
+            font-family: "Times New Roman", Times, serif;
+            background-color: #f3f6f4;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            height: 2vh;
+            margin: 0 auto;
+	    text-align-last: center;
+            line-height: 1.4;
+        }
+	    
+    </style>
 </head>
 
-<body style="background-color: #f3f6f4">
+<body style ="background-color: #f3f6f4">
 
-   <div class="flex-parent-element">
-    <div class="flex-child-element"><img src="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true"> </div>
-    <div class="flex-child-element">
-        <p><b> Take your Hytrol XML Files and Convert them to Excel Sheets </b> </p>
+    <div class="flex-parent-element" style ="background-color: white">
+	    <div class="flex-child-element"><img src ="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true"> </div>
+	    <div class="flex-child-element"><p><b> Take your Hytrol XML Files and Convert them to Excel Sheets </b> </p></div>
     </div>
-</div>
-<div class="outside">
-    <h1>XML Parser<br><br></h1>
-</div>
-<div class="inside">
-    <div>
-        <p><b>Directions:</b><br> 1. In AutoCad 2021, launch Hytrol and create your conveyor. <br> 2. In the Hytrol menu click file, then Export Project (.XML)<br> 3. Once done loading, name your file and save.
-                <br> 4. Go to this website and press choose file.<br> 5. Choose your .xml file. <br> 6. Press the process button. <br> 7. It should download automatically, but if it does not, click the download link. <br> 8.Click on your
-                download to pull up the CSV.
-        </p>
+    <div class = "outside">	    
+	    <h1>XML Parser<br><br></h1>
     </div>
-    <br>
-    <!-- Added comments for input and button -->
-    <input type="file" id="xmlFileInput" accept=".xml">
-    <button id="processButton">Process XML</button>
-    <div>
-        <a id="downloadLink" style="display: none;">Download Output</a>
-    </div>
-</div>
+    <div class = "inside">
+	 <div>   
+	    <p style="font-size:8pt"><b style="font-size:12pt">Directions:</b><br>
+		    1. In AutoCad 2021, launch Hytrol and create your conveyor. <br>
+		    2. In the Hytrol menu click file, then Export Project (.XML)<br>
+		    3. Once done loading, name your file and save. <br>
+		    4. Go to this website and press choose file.<br>
+		    5. Choose your .xml file. <br>
+		    6. Press the process button. <br>
+		    7. It should donwload automatically, but if it does not, click the download link. <br>
+		    8.Click on your download to pull up the CSV.
+	    </p>
+	 </div style ="line-height: 1.4;"> 
+	    <br>
+         <input type="file" id="xmlFileInput" accept=".xml">
+	 <button id="processButton">Process XML</button>
+	 <div>
+	    <a id="downloadLink" style="display: none;">Download Output</a>
+	    </div>
+    </div>	
     <script>
       // Function to format inches to feet and inches
         function formatInchesToFeetAndInches(inches) {

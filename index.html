@@ -7,21 +7,25 @@
     <link class="icon" rel="icon" type="image/x-icon" href="https://github.com/LaFayette-XML-Parser/XML/blob/main/Favicon.LEI.png?raw=true">
     <style>      
       body {
-        background-color: #f3f6f4
+        background-color: #f3f6f4;
+        margin: 0;
       }
-      .flex-parent-element {
+      .banner {
         display: flex;
-        width: 125%;
+        width: 100%;
         background-color: white;
+        padding: 10px;
+        box-shadow: 0 4px 2px -2px gray;
       }
-      .flex-child-element {
-        font-family: "Times New Roman", Times, serif;
-        flex: 1;
-        margin: 0px;
-        background-color: white;
-      }
-      .flex-child-element:first-child {
+      .banner img {
+        max-height: 50px;
         margin-right: 20px;
+      }
+      .banner p {
+        font-family: "Times New Roman", Times, serif;
+        margin: 0;
+        align-self: center;
+        font-size: 18px;
       }
       .inside {
         font-family: "Times New Roman", Times, serif;
@@ -31,9 +35,8 @@
         align-items: center;
         justify-content: center;
         height: 70vh;
-        width: 100vh;
         margin: 0 auto;
-        text-align-last: center;
+        text-align: center;
         line-height: 1.4;
       }
       .outside {
@@ -44,7 +47,7 @@
         justify-content: center;
         height: 2vh;
         margin: 0 auto;
-        text-align-last: center;
+        text-align: center;
         line-height: 1.4;
       }
       .collapsible {
@@ -73,13 +76,9 @@
     </style>
 </head>
 <body>
-    <div class="flex-parent-element" >
-        <div class="flex-child-element">
-		    <img src="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true">
-	    </div>
-        <div class="flex-child-element">
-            <p><b> Take your Hytrol XML Files and Convert them to Excel Sheets.</b></p>
-        </div>
+    <div class="banner">
+        <img src="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true" alt="LEI Logo">
+        <p><b>Take your Hytrol XML Files and Convert them to Excel Sheets.</b></p>
     </div>
     <div class="outside">
         <h1>XML Parser<br></h1>
@@ -87,7 +86,7 @@
     <div class="inside">
         <button type="button" class="collapsible"> Directions ▼ </button>
 	    <div class="content">
-		    <p> 1. In AutoCad 2021, launch Hytrol and create your conveyor. <br> 2. In the Hytrol menu click file, then export project(.XML)<br> 3. Once done loading, name your file and save. <br> 4. Go to this website and press choose file.<br> 5. Choose your .xml file. <br> 6. Press the process button. <br> 7. It should download automatically, but if it does not, click the 	download link. <br> 8. Click on your download to pull up the CSV. </p>
+		    <p> 1. In AutoCad 2021, launch Hytrol and create your conveyor. <br> 2. In the Hytrol menu click file, then export project(.XML)<br> 3. Once done loading, name your file and save. <br> 4. Go to this website and press choose file.<br> 5. Choose your .xml file. <br> 6. Press the process button. <br> 7. It should download automatically, but if it does not, click the download link. <br> 8. Click on your download to pull up the CSV. </p>
         </div>
         <br>
 	    <div class="buttons">
@@ -99,6 +98,9 @@
             <a id="downloadLink" style="display: none;">Download Output</a>
         </div>
     </div>
+</body>
+</html>
+
     <script>
 	    //Creates a collapsible section.
         var coll = document.getElementsByClassName("collapsible"); //Looks for elements with the style class "collapsible"

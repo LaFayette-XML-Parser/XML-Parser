@@ -1,118 +1,145 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XML Parser</title>
-    <link rel="icon" type="image/x-icon"
-        href="https://github.com/LaFayette-XML-Parser/XML/blob/main/Favicon.LEI.png?raw=true">
-    <style>
-        .flex-parent-element {
-            display: flex;
-            width: 125%;
-        }
-
-        .flex-child-element {
-            font-family: "Times New Roman", Times, serif;
-            flex: 1;
-            margin: 0px;
-        }
-
-        .flex-child-element:first-child {
-            margin-right: 20px;
-        }
-
-        .inside {
-            font-family: "Times New Roman", Times, serif;
-            background-color: #f3f6f4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 70vh;
-            width: 100vh;
-            margin: 0 auto;
-            text-align-last: center;
-            line-height: 1.4;
-        }
-
-        .outside {
-            font-family: "Times New Roman", Times, serif;
-            background-color: #f3f6f4;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            height: 2vh;
-            margin: 0 auto;
-            text-align-last: center;
-            line-height: 1.4;
-        }
+    <link class="icon" rel="icon" type="image/x-icon" href="https://github.com/LaFayette-XML-Parser/XML/blob/main/Favicon.LEI.png?raw=true">
+    <style>      
+      body {
+        background-color: #f3f6f4
+      }
+      .flex-parent-element {
+        display: flex;
+        width: 125%;
+        background-color: white;
+      }
+      .flex-child-element {
+        font-family: "Times New Roman", Times, serif;
+        flex: 1;
+        margin: 0px;
+        background-color: white;
+      }
+      .flex-child-element:first-child {
+        margin-right: 20px;
+      }
+      .inside {
+        font-family: "Times New Roman", Times, serif;
+        background-color: #f3f6f4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 70vh;
+        width: 100vh;
+        margin: 0 auto;
+        text-align-last: center;
+        line-height: 1.4;
+      }
+      .outside {
+        font-family: "Times New Roman", Times, serif;
+        background-color: #f3f6f4;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        height: 2vh;
+        margin: 0 auto;
+        text-align-last: center;
+        line-height: 1.4;
+      }
+      .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 2px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+      }
+      .active, .collapsible:hover {
+        background-color: #555;
+      }
+      .content {
+        padding: 0 18px;
+        display: none;
+        overflow: auto;
+        background-color: #f1f1f1;
+      }
+      .active, .button:hover {
+        cursor: pointer;
+      }
     </style>
 </head>
-
-<body style="background-color: #f3f6f4">
-
-    <div class="flex-parent-element" style="background-color: white">
-        <div class="flex-child-element"><img
-                src="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true"></div>
+<body>
+    <div class="flex-parent-element" >
         <div class="flex-child-element">
-            <p><b> Take your Hytrol XML Files and Convert them to Excel Sheets </b></p>
+		    <img src="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true">
+	    </div>
+        <div class="flex-child-element">
+            <p><b> Take your Hytrol XML Files and Convert them to Excel Sheets.</b></p>
         </div>
     </div>
     <div class="outside">
-        <h1>XML Parser<br><br></h1>
+        <h1>XML Parser<br></h1>
     </div>
     <div class="inside">
-        <div>
-            <p style="font-size:8pt"><b style="font-size:12pt">Directions:</b><br>
-                1. In AutoCad 2021, launch Hytrol and create your conveyor. <br>
-                2. In the Hytrol menu click file, then Export Project (.XML)<br>
-                3. Once done loading, name your file and save. <br>
-                4. Go to this website and press choose file.<br>
-                5. Choose your .xml file. <br>
-                6. Press the process button. <br>
-                7. It should download automatically, but if it does not, click the download link. <br>
-                8. Click on your download to pull up the CSV.
-            </p>
+        <button type="button" class="collapsible"> Directions ▼ </button>
+	    <div class="content">
+		    <p> 1. In AutoCad 2021, launch Hytrol and create your conveyor. <br> 2. In the Hytrol menu click file, then export project(.XML)<br> 3. Once done loading, name your file and save. <br> 4. Go to this website and press choose file.<br> 5. Choose your .xml file. <br> 6. Press the process button. <br> 7. It should download automatically, but if it does not, click the 	download link. <br> 8. Click on your download to pull up the CSV. </p>
         </div>
         <br>
-        <!-- Input file element -->
-        <input type="file" id="xmlFileInput" accept=".xml">
-        <!-- Process button -->
-        <button id="processButton">Process XML</button>
-        <!-- Download link -->
-        <div>
+	    <div class="buttons">
+            <input type="file" id="xmlFileInput" accept=".xml" class="button">
+            <br><br>
+            <button id="processButton" class="button">Process XML</button>
+	    </div>
+        <div class="download">
             <a id="downloadLink" style="display: none;">Download Output</a>
         </div>
     </div>
     <script>
+	    //Creates a collapsible section.
+        var coll = document.getElementsByClassName("collapsible"); //Looks for elements with the style class "collapsible"
+        var i; //itteration
+        for (i = 0; i < coll.length; i++) { //Until all elements are done.
+            coll[i].addEventListener("click", 
+            function() { 
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            }); //When clicked, open collapsible or close it.
+        }
         // Function to format inches to feet and inches
         function formatInchesToFeetAndInches(inches) {
             const feet = Math.floor(inches / 12);
             let remainingInches = inches % 12;
-            remainingInches = parseFloat(remainingInches.toFixed(2));
+            remainingInches = parseFloat(remainingInches.toFixed(2)); //Formats inches to two points after decimal.
             if (remainingInches >= 12) {
                 feet += 1;
                 remainingInches -= 12;
-            }
+            } 
             return `${feet} ft ${remainingInches} in`;
-        }
-
+        } //Takes any remainder greater than 12 and makes it a new foot.
         // Event listener for the process button
-        document.getElementById('processButton').addEventListener('click', async () => {
-            const fileInput = document.getElementById('xmlFileInput');
+        document.getElementById('processButton').addEventListener('click', async () => { //when button clicked, parsing process begins.
+            const fileInput = document.getElementById('xmlFileInput'); //looks for the file and any previous download links.
             const downloadLink = document.getElementById('downloadLink');
-
+	    //Checks to insure a file is submitted.
             if (fileInput.files.length === 0) {
                 alert('Please select an XML file.');
                 return;
             }
-
+	    //Set file data for parsing.
             const xmlFile = fileInput.files[0];
             const xmlData = await xmlFile.text();
-
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
-
             // Initialize variables for property values
             let markedAttribute = '';
             let iopCountValue = '';
@@ -130,17 +157,13 @@
             let psAmpValues = new Set();
             const quantityByCombination = {};
             const propertiesElements = xmlDoc.querySelectorAll('Properties');
-
             // Iterate through 'Properties' elements
             propertiesElements.forEach(propertiesElement => {
-                psAmpValues = new Set();
-
+                psAmpValues = new Set(); //Creates a set of values for amps.
                 const refNameElements = propertiesElement.querySelectorAll('RefName');
-
-                refNameElements.forEach(refNameElement => {
+                refNameElements.forEach(refNameElement => { //Parses through each ref name.
                     const propertyName = refNameElement.textContent;
                     const valueElement = refNameElement.nextElementSibling;
-
                     // Assign values based on property name
                     if (propertyName === 'MarkNumber') {
                         markedAttribute = valueElement.textContent;
@@ -149,7 +172,7 @@
                     } else if (propertyName === 'iopcount') {
                         iopCountValue = valueElement.textContent;
                     } else if (propertyName === 'overallwidth') {
-                        widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                        widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent)); //Formats to inches when called.
                     } else if (propertyName === 'rollercenters') {
                         railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
                     } else if (propertyName === 'curveangle') {
@@ -166,25 +189,23 @@
                         speedValue = valueElement.textContent;
                     } else if (propertyName === 'conveyorweight') {
                         weightValue = valueElement.textContent;
-                    } else if (propertyName === 'powersupplysize') {
+                    } else if (propertyName === 'powersupplysize') { //PS Amp.
                         const psAmpValue = valueElement.textContent;
-                        if (psAmpValue.trim() === '') {
-                            psAmpValues.add('');
-                        } else if (psAmpValue.toLowerCase() !== 'less power supply') {
+                        if (psAmpValue.trim() === '') { //If there is nothing, a zero is added.
+                            psAmpValues.add('0');
+                        } else if (psAmpValue.toLowerCase() !== 'less power supply') { //The case for the ref of LPS turned into a value.
                             const ampMatch = psAmpValue.match(/\d+/);
                             if (ampMatch) {
                                 psAmpValues.add(ampMatch[0]);
                             }
                         }
                     } else if (propertyName === 'TotalPrice') {
-                        priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`;
+                        priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`; //Make to two decimals out.
                     }
                 });
-
-                // Generate a unique key for this combination of properties
+                // Generate a unique key for this combination of properties to check for repeated lines.
                 const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
-
-                // Store or update the combination's properties and quantities
+                // Store or update the combination's properties and quantities for each new line.
                 if (!quantityByCombination[combinationKey]) {
                     quantityByCombination[combinationKey] = {
                         quantity: 0,
@@ -209,51 +230,44 @@
                     quantityByCombination[combinationKey].psAmpValues.add(psAmp);
                 });
             });
-
             // Prepare CSV data
             let csvData = '';
             let totalPrice = 0;
             let isFirstRow = true;
-
-            // Add headers to CSV data
+            // Add Column titles to CSV data
             const headersRow = 'Mark #, Model, IOP, Width, Rail, Curve, Length, Infeed, Discharge, HP, Speed, Weight, Quantity, Amps, Price\n';
             csvData = headersRow + csvData;
-
             // Loop through each combination
             for (const combinationKey in quantityByCombination) {
+		//If a unique row.
                 if (quantityByCombination.hasOwnProperty(combinationKey)) {
-                    const combination = quantityByCombination[combinationKey];
-                    const ampsRow = Array.from(combination.psAmpValues).join('|');
-                    const quantityRow = combination.psAmpValues.size;
-                    const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.iopCountValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${combination.speedValue},${combination.weightValue},${quantityRow},${ampsRow},${combination.price}\n`;
-
-                    // Skip the first row
+                    const combination = quantityByCombination[combinationKey]; // Add to combination key.
+                    const ampsRow = Array.from(combination.psAmpValues).join('|'); //Add psamp column.
+                    const quantityRow = combination.psAmpValues.size; //Add quantity(based on the size of psamp array).
+                    const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.iopCountValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${combination.speedValue},${combination.weightValue},${quantityRow},${ampsRow},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
+                    // Skip the first row (It always prints blank due to the combination process. Easiest solution.)
                     if (isFirstRow) {
                         isFirstRow = false;
                         continue;
                     }
-
+		    // Add the data to each row.
                     csvData += csvRow;
-
                     // Accumulate price for total price
                     totalPrice += parseFloat(combination.price.replace('$', ''));
                 }
             }
-
-            // Add total row to CSV data
+            // Add total price row to CSV data
             const totalRow = ` , , , , , , , , , , , , ,  Total Price, $${totalPrice.toFixed(2)}`;
             csvData += totalRow + '\n';
-
             // Create a Blob containing the CSV data
             const blob = new Blob([csvData], {
                 type: 'text/csv'
             });
-            const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', '');
-            downloadLink.href = URL.createObjectURL(blob);
+            const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', ''); // Create a unique file name correlated to the parsed file's name.
+            downloadLink.href = URL.createObjectURL(blob); // Create a download link for file.
             downloadLink.download = `${xmlFileName}.csv`;
-
             // Trigger the download
-            if (totalPrice > 0) {
+            if (totalPrice > 0) { //Starts as long as there is something there.
                 downloadLink.style.display = 'block';
                 downloadLink.click();
                 URL.revokeObjectURL(downloadLink.href);
@@ -264,5 +278,4 @@
         });
     </script>
 </body>
-
 </html>

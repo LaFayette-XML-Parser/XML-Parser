@@ -39,7 +39,7 @@
         text-align: center;
         line-height: 1.4;
       }
-      .outside {
+      .titles {
         font-family: "Times New Roman", Times, serif;
         background-color: #f3f6f4;
         display: flex;
@@ -49,27 +49,31 @@
         margin: 0 auto;
         text-align: center;
         line-height: 1.4;
+        padding: 18px;
       }
-      .collapsible {
-        background-color: #777;
-        color: white;
-        cursor: pointer;
-        padding: 2px;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
-        font-size: 15px;
-      }
-      .active, .collapsible:hover {
-        background-color: #555;
-      }
-      .content {
-        padding: 0 18px;
-        display: none;
-        overflow: auto;
-        background-color: #f1f1f1;
-      }
+    .collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  width: 557px;
+  padding: 2px;
+  border: none;
+  text-align: center;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: auto;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+}
       .active, .button:hover {
         cursor: pointer;
       }
@@ -79,11 +83,11 @@
     <div class="banner">
         <img src="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true" alt="LEI Logo">
         <p><b>Take your Hytrol XML Files and Convert them to Excel Sheets.</b></p>
-    </div>
-    <div class="outside">
-        <h1>XML Parser<br></h1>
-    </div>
+    </div>    
     <div class="inside">
+    	<div class="titles">
+        	<h1>XML Parser</h1>
+    	</div><br><br>
         <button type="button" class="collapsible"> Directions ▼ </button>
 	    <div class="content">
 		    <p> 1. In AutoCad 2021, launch Hytrol and create your conveyor. <br> 2. In the Hytrol menu click file, then export project(.XML)<br> 3. Once done loading, name your file and save. <br> 4. Go to this website and press choose file.<br> 5. Choose your .xml file. <br> 6. Press the process button. <br> 7. It should download automatically, but if it does not, click the download link. <br> 8. Click on your download to pull up the CSV. </p>
@@ -98,25 +102,21 @@
             <a id="downloadLink" style="display: none;">Download Output</a>
         </div>
     </div>
-</body>
-</html>
-
     <script>
-	    //Creates a collapsible section.
-        var coll = document.getElementsByClassName("collapsible"); //Looks for elements with the style class "collapsible"
-        var i; //itteration
-        for (i = 0; i < coll.length; i++) { //Until all elements are done.
-            coll[i].addEventListener("click", 
-            function() { 
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            }); //When clicked, open collapsible or close it.
-        }
+	    var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+}
         // Function to format inches to feet and inches
         function formatInchesToFeetAndInches(inches) {
             const feet = Math.floor(inches / 12);

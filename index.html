@@ -1,283 +1,221 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>XML Parser</title>
-    <link class="icon" rel="icon" type="image/x-icon" href="https://github.com/LaFayette-XML-Parser/XML/blob/main/Favicon.LEI.png?raw=true">
-    <style>      
-      body {
-        background-color: #f3f6f4;
-        margin: 0;
-      }
-      .banner {
-        display: flex;
-        width: 100%;
-        background-color: white;
-        padding: 10px;
-        box-shadow: 0 4px 2px -2px gray;
-      }
-      .banner img {
-        max-height: 50px;
-        margin-right: 20px;
-      }
-      .banner p {
-        font-family: "Times New Roman", Times, serif;
-        margin: 0;
-        align-self: center;
-        font-size: 18px;
-      }
-      .inside {
-        font-family: "Times New Roman", Times, serif;
-        background-color: #f3f6f4;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 70vh;
-        margin: 0 auto;
-        text-align: center;
-        line-height: 1.4;
-      }
-      .titles {
-        font-family: "Times New Roman", Times, serif;
-        background-color: #f3f6f4;
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        height: 2vh;
-        margin: 0 auto;
-        text-align: center;
-        line-height: 1.4;
-        padding: 18px;
-      }
-    .collapsible {
-  background-color: #777;
-  color: white;
-  cursor: pointer;
-  width: 557px;
-  padding: 2px;
-  border: none;
-  text-align: center;
-  outline: none;
-  font-size: 15px;
-}
-
-.active, .collapsible:hover {
-  background-color: #555;
-}
-
-.content {
-  padding: 0 18px;
-  max-height: 0;
-  overflow: auto;
-  transition: max-height 0.2s ease-out;
-  background-color: #f1f1f1;
-}
-      .active, .button:hover {
-        cursor: pointer;
-      }
-    </style>
-</head>
-<body>
-    <div class="banner">
-        <img src="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true" alt="LEI Logo">
-        <p><b>Take your Hytrol XML Files and Convert them to Excel Sheets.</b></p>
-    </div>    
-    <div class="inside">
-    	<div class="titles">
-        	<h1>XML Parser</h1>
-    	</div><br><br>
-        <button type="button" class="collapsible"> Directions ▼ </button>
-	    <div class="content">
-		    <p> 1. In AutoCad 2021, launch Hytrol and create your conveyor. <br> 2. In the Hytrol menu click file, then export project(.XML)<br> 3. Once done loading, name your file and save. <br> 4. Go to this website and press choose file.<br> 5. Choose your .xml file. <br> 6. Press the process button. <br> 7. It should download automatically, but if it does not, click the download link. <br> 8. Click on your download to pull up the CSV. </p>
-        </div>
-        <br>
-	    <div class="buttons">
-            <input type="file" id="xmlFileInput" accept=".xml" class="button">
-            <br><br>
-            <button id="processButton" class="button">Process XML</button>
+	<head>
+		<meta charset="utf-8" />
+	    	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	    	<title>XML Parser</title>
+	    	<link class="icon" rel="icon" type="image/x-icon" href="https://github.com/LaFayette-XML-Parser/XML/blob/main/Favicon.LEI.png?raw=true">
+	    	<style>      
+	      		body {background-color: #f3f6f4; margin: 0;}
+	      		.banner {display: flex; width: 100%; background-color: white; padding: 10px; box-shadow: 0 4px 2px -2px gray;}
+	      		.banner img {max-height: 50px; margin-right: 20px;}
+	      		.banner p {font-family: "Times New Roman", Times, serif; margin: 0; align-self: center; font-size: 18px;}
+	      		.inside {font-family: "Times New Roman", Times, serif; background-color: #f3f6f4; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh; margin: 0 auto; text-align: center; line-height: 1.4;}
+	      		.titles {font-family: "Times New Roman", Times, serif; background-color: #f3f6f4; display: flex; align-items: flex-start; justify-content: center; height: 2vh; margin: 0 auto; text-align: center; line-height: 1.4; padding: 18px;}
+	    		.collapsible {background-color: #777; color: white; cursor: pointer; width: 557px; padding: 2px; border: none; text-align: center; outline: none; font-size: 15px;}
+			    .active, .collapsible:hover {background-color: #555;}
+			    .content {padding: 0 18px; max-height: 0; overflow: auto; transition: max-height 0.2s ease-out; background-color: #f1f1f1;}
+	      		.active, .button:hover {cursor: pointer;}
+	    	</style>
+	</head>
+	<body>
+	    <div class="banner">
+	        <img src="https://github.com/LaFayette-XML-Parser/XML/blob/main/LEI%20Logo.png?raw=true" alt="LEI Logo">
+	        <p> <b> Take your Hytrol XML Files and Convert them to Excel Sheets. </b> </p>
+	    </div>    
+	    <div class="inside">
+	    	<div class="titles">
+	        	<h1>XML Parser</h1>
+	    	</div> <br> <br>
+	        <button type="button" class="collapsible"> Directions ▼ </button>
+		    <div class="content">
+			    <p> 1. In AutoCad 2021, launch Hytrol and create your conveyor. <br> 2. In the Hytrol menu click file, then export project(.XML)<br> 3. Once done loading, name your file and save. <br> 4. Go to this website and press choose file.<br> 5. Choose your .xml file. <br> 6. Press the process button. <br> 7. It should download automatically, but if it does not, click the download link. <br> 8. Click on your download to pull up the CSV. </p>
+	        </div> <br>
+		    <div class="buttons">
+	            <input type="file" id="xmlFileInput" accept=".xml" class="button"> <br> <br>
+	            <button id="processButton" class="button">Process XML</button>
+		    </div>
+			<div class="download">
+	            <a id="downloadLink" style="display: none;">Download Output</a>
+	        </div>
 	    </div>
-        <div class="download">
-            <a id="downloadLink" style="display: none;">Download Output</a>
-        </div>
-    </div>
-    <script>
-	    var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.maxHeight){
-      content.style.maxHeight = null;
-    } else {
-      content.style.maxHeight = content.scrollHeight + "px";
-    } 
-  });
-}
-        // Function to format inches to feet and inches
-        function formatInchesToFeetAndInches(inches) {
-            const feet = Math.floor(inches / 12);
-            let remainingInches = inches % 12;
-            remainingInches = parseFloat(remainingInches.toFixed(2)); //Formats inches to two points after decimal.
-            if (remainingInches >= 12) {
-                feet += 1;
-                remainingInches -= 12;
-            } 
-            return `${feet} ft ${remainingInches} in`;
-        } //Takes any remainder greater than 12 and makes it a new foot.
-        // Event listener for the process button
-        document.getElementById('processButton').addEventListener('click', async () => { //when button clicked, parsing process begins.
-            const fileInput = document.getElementById('xmlFileInput'); //looks for the file and any previous download links.
-            const downloadLink = document.getElementById('downloadLink');
-	    //Checks to insure a file is submitted.
-            if (fileInput.files.length === 0) {
-                alert('Please select an XML file.');
-                return;
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+            for (i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", 
+                    function() {
+                        this.classList.toggle("active");
+                        var content = this.nextElementSibling;
+                        if (content.style.maxHeight){
+                            content.style.maxHeight = null;
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                        } 
+                    }
+                );
             }
-	    //Set file data for parsing.
-            const xmlFile = fileInput.files[0];
-            const xmlData = await xmlFile.text();
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
-            // Initialize variables for property values
-            let markedAttribute = '';
-            let iopCountValue = '';
-            let modelValue = '';
-            let widthValue = '';
-            let railValue = '';
-            let curveValue = '';
-            let lengthValue = '';
-            let infeedValue = '';
-            let dischargeValue = '';
-            let hpValue = '';
-            let speedValue = '';
-            let weightValue = '';
-            let priceValue = '';
-            let psAmpValues = new Set();
-            const quantityByCombination = {};
-            const propertiesElements = xmlDoc.querySelectorAll('Properties');
-            // Iterate through 'Properties' elements
-            propertiesElements.forEach(propertiesElement => {
-                psAmpValues = new Set(); //Creates a set of values for amps.
-                const refNameElements = propertiesElement.querySelectorAll('RefName');
-                refNameElements.forEach(refNameElement => { //Parses through each ref name.
-                    const propertyName = refNameElement.textContent;
-                    const valueElement = refNameElement.nextElementSibling;
-                    // Assign values based on property name
-                    if (propertyName === 'MarkNumber') {
-                        markedAttribute = valueElement.textContent;
-                    } else if (propertyName === 'Model') {
-                        modelValue = valueElement.textContent;
-                    } else if (propertyName === 'iopcount') {
-                        iopCountValue = valueElement.textContent;
-                    } else if (propertyName === 'overallwidth') {
-                        widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent)); //Formats to inches when called.
-                    } else if (propertyName === 'rollercenters') {
-                        railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                    } else if (propertyName === 'curveangle') {
-                        curveValue = valueElement.textContent;
-                    } else if (propertyName === 'overalllength') {
-                        lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                    } else if (propertyName === 'infeedheight') {
-                        infeedValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                    } else if (propertyName === 'dischargeheight') {
-                        dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                    } else if (propertyName === 'hp') {
-                        hpValue = valueElement.textContent;
-                    } else if (propertyName === 'fpm') {
-                        speedValue = valueElement.textContent;
-                    } else if (propertyName === 'conveyorweight') {
-                        weightValue = valueElement.textContent;
-                    } else if (propertyName === 'powersupplysize') { //PS Amp.
-                        const psAmpValue = valueElement.textContent;
-                        if (psAmpValue.trim() === '') { //If there is nothing, a zero is added.
-                            psAmpValues.add('0');
-                        } else if (psAmpValue.toLowerCase() !== 'less power supply') { //The case for the ref of LPS turned into a value.
-                            const ampMatch = psAmpValue.match(/\d+/);
-                            if (ampMatch) {
-                                psAmpValues.add(ampMatch[0]);
+            // Function to format inches to feet and inches
+            function formatInchesToFeetAndInches(inches) {
+                const feet = Math.floor(inches / 12);
+                let remainingInches = inches % 12;
+                remainingInches = parseFloat(remainingInches.toFixed(2)); //Formats inches to two points after decimal.
+                if (remainingInches >= 12) {
+                    feet += 1;
+                    remainingInches -= 12;
+                } 
+                    return `${feet} ft ${remainingInches} in`;
+            } //Takes any remainder greater than 12 and makes it a new foot.
+            // Event listener for the process button
+            document.getElementById('processButton').addEventListener('click', async () => { //when button clicked, parsing process begins.
+                const fileInput = document.getElementById('xmlFileInput'); //looks for the file and any previous download links.
+                const downloadLink = document.getElementById('downloadLink');
+                //Checks to insure a file is submitted.
+                if (fileInput.files.length === 0) {
+                    alert('Please select an XML file.');
+                    return;
+                }
+                //Set file data for parsing.
+                const xmlFile = fileInput.files[0];
+                const xmlData = await xmlFile.text();
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
+                // Initialize variables for property values
+                let markedAttribute = '';
+                let iopCountValue = '';
+                let modelValue = '';
+                let widthValue = '';
+                let railValue = '';
+                let curveValue = '';
+                let lengthValue = '';
+                let infeedValue = '';
+                let dischargeValue = '';
+                let hpValue = '';
+                let speedValue = '';
+                let weightValue = '';
+                let priceValue = '';
+                let psAmpValues = new Set();
+                const quantityByCombination = {};
+                const propertiesElements = xmlDoc.querySelectorAll('Properties');
+                // Iterate through 'Properties' elements
+                propertiesElements.forEach(propertiesElement => {
+                    psAmpValues = new Set(); //Creates a set of values for amps.
+                    const refNameElements = propertiesElement.querySelectorAll('RefName');
+                    refNameElements.forEach(refNameElement => { //Parses through each ref name.
+                        const propertyName = refNameElement.textContent;
+                        const valueElement = refNameElement.nextElementSibling;
+                        // Assign values based on property name
+                        if (propertyName === 'MarkNumber') {
+                            markedAttribute = valueElement.textContent;
+                        } else if (propertyName === 'Model') {
+                            modelValue = valueElement.textContent;
+                        } else if (propertyName === 'iopcount') {
+                            iopCountValue = valueElement.textContent;
+                        } else if (propertyName === 'overallwidth') {
+                            widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent)); //Formats to inches when called.
+                        } else if (propertyName === 'rollercenters') {
+                            railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                        } else if (propertyName === 'curveangle') {
+                            curveValue = valueElement.textContent;
+                        } else if (propertyName === 'overalllength') {
+                            lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                        } else if (propertyName === 'infeedheight') {
+                            infeedValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                        } else if (propertyName === 'dischargeheight') {
+                            dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                        } else if (propertyName === 'hp') {
+                            hpValue = valueElement.textContent;
+                        } else if (propertyName === 'fpm') {
+                            speedValue = valueElement.textContent;
+                        } else if (propertyName === 'conveyorweight') {
+                            weightValue = valueElement.textContent;
+                        } else if (propertyName === 'powersupplysize') { //PS Amp.
+                            const psAmpValue = valueElement.textContent;
+                            if (psAmpValue.trim() === '') { //If there is nothing, a zero is added.
+                                psAmpValues.add('0');
+                            } else if (psAmpValue.toLowerCase() !== 'less power supply') { //The case for the ref of LPS turned into a value.
+                                const ampMatch = psAmpValue.match(/\d+/);
+                                if (ampMatch) {
+                                    psAmpValues.add(ampMatch[0]);
+                                }
                             }
+                        } else if (propertyName === 'TotalPrice') {
+                            priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`; //Make to two decimals out.
                         }
-                    } else if (propertyName === 'TotalPrice') {
-                        priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`; //Make to two decimals out.
+                    });
+                    // Generate a unique key for this combination of properties to check for repeated lines.
+                    const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
+                    // Store or update the combination's properties and quantities for each new line.
+                    if (!quantityByCombination[combinationKey]) {
+                        quantityByCombination[combinationKey] = {
+                            quantity: 0,
+                            psAmpValues: new Set(),
+                            price: priceValue,
+                            modelValue: modelValue,
+                            markedAttribute: markedAttribute,
+                            iopCountValue: iopCountValue,
+                            widthValue: widthValue,
+                            railValue: railValue,
+                            curveValue: curveValue,
+                            lengthValue: lengthValue,
+                            infeedValue: infeedValue,
+                            dischargeValue: dischargeValue,
+                            hpValue: hpValue,
+                            speedValue: speedValue,
+                            weightValue: weightValue
+                        };
                     }
+                    // Add the current amps to the combination's set of amps
+                    psAmpValues.forEach(psAmp => {
+                        quantityByCombination[combinationKey].psAmpValues.add(psAmp);
+                    });
                 });
-                // Generate a unique key for this combination of properties to check for repeated lines.
-                const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
-                // Store or update the combination's properties and quantities for each new line.
-                if (!quantityByCombination[combinationKey]) {
-                    quantityByCombination[combinationKey] = {
-                        quantity: 0,
-                        psAmpValues: new Set(),
-                        price: priceValue,
-                        modelValue: modelValue,
-                        markedAttribute: markedAttribute,
-                        iopCountValue: iopCountValue,
-                        widthValue: widthValue,
-                        railValue: railValue,
-                        curveValue: curveValue,
-                        lengthValue: lengthValue,
-                        infeedValue: infeedValue,
-                        dischargeValue: dischargeValue,
-                        hpValue: hpValue,
-                        speedValue: speedValue,
-                        weightValue: weightValue
-                    };
-                }
-                // Add the current amps to the combination's set of amps
-                psAmpValues.forEach(psAmp => {
-                    quantityByCombination[combinationKey].psAmpValues.add(psAmp);
-                });
-            });
-            // Prepare CSV data
-            let csvData = '';
-            let totalPrice = 0;
-            let isFirstRow = true;
-            // Add Column titles to CSV data
-            const headersRow = 'Mark #, Model, IOP, Width, Rail, Curve, Length, Infeed, Discharge, HP, Speed, Weight, Quantity, Amps, Price\n';
-            csvData = headersRow + csvData;
-            // Loop through each combination
-            for (const combinationKey in quantityByCombination) {
-		//If a unique row.
-                if (quantityByCombination.hasOwnProperty(combinationKey)) {
-                    const combination = quantityByCombination[combinationKey]; // Add to combination key.
-                    const ampsRow = Array.from(combination.psAmpValues).join('|'); //Add psamp column.
-                    const quantityRow = combination.psAmpValues.size; //Add quantity(based on the size of psamp array).
-                    const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.iopCountValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${combination.speedValue},${combination.weightValue},${quantityRow},${ampsRow},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
-                    // Skip the first row (It always prints blank due to the combination process. Easiest solution.)
-                    if (isFirstRow) {
-                        isFirstRow = false;
-                        continue;
+                // Prepare CSV data
+                let csvData = '';
+                let totalPrice = 0;
+                let isFirstRow = true;
+                // Add Column titles to CSV data
+                const headersRow = 'Mark #, Model, IOP, Width, Rail, Curve, Length, Infeed, Discharge, HP, Speed, Weight, Quantity, Amps, Price\n';
+                csvData = headersRow + csvData;
+                // Loop through each combination
+                for (const combinationKey in quantityByCombination) {
+                    //If a unique row.
+                    if (quantityByCombination.hasOwnProperty(combinationKey)) {
+                        const combination = quantityByCombination[combinationKey]; // Add to combination key.
+                        const ampsRow = Array.from(combination.psAmpValues).join('|'); //Add psamp column.
+                        const quantityRow = combination.psAmpValues.size; //Add quantity(based on the size of psamp array).
+                        const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.iopCountValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${combination.speedValue},${combination.weightValue},${quantityRow},${ampsRow},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
+                        // Skip the first row (It always prints blank due to the combination process. Easiest solution.)
+                        if (isFirstRow) {
+                            isFirstRow = false;
+                            continue;
+                        }
+                        // Add the data to each row.
+                        csvData += csvRow;
+                        // Accumulate price for total price
+                        totalPrice += parseFloat(combination.price.replace('$', ''));
                     }
-		    // Add the data to each row.
-                    csvData += csvRow;
-                    // Accumulate price for total price
-                    totalPrice += parseFloat(combination.price.replace('$', ''));
                 }
-            }
-            // Add total price row to CSV data
-            const totalRow = ` , , , , , , , , , , , , ,  Total Price, $${totalPrice.toFixed(2)}`;
-            csvData += totalRow + '\n';
-            // Create a Blob containing the CSV data
-            const blob = new Blob([csvData], {
-                type: 'text/csv'
+                // Add total price row to CSV data
+                const totalRow = ` , , , , , , , , , , , , ,  Total Price, $${totalPrice.toFixed(2)}`;
+                csvData += totalRow + '\n';
+                // Create a Blob containing the CSV data
+                const blob = new Blob([csvData], {
+                    type: 'text/csv'
+                });
+                const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', ''); // Create a unique file name correlated to the parsed file's name.
+                downloadLink.href = URL.createObjectURL(blob); // Create a download link for file.
+                downloadLink.download = `${xmlFileName}.csv`;
+                // Trigger the download
+                if (totalPrice > 0) { //Starts as long as there is something there.
+                    downloadLink.style.display = 'block';
+                    downloadLink.click();
+                    URL.revokeObjectURL(downloadLink.href);
+                } else {
+                    alert('No data to download.');
+                    downloadLink.style.display = 'none';
+                }
             });
-            const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', ''); // Create a unique file name correlated to the parsed file's name.
-            downloadLink.href = URL.createObjectURL(blob); // Create a download link for file.
-            downloadLink.download = `${xmlFileName}.csv`;
-            // Trigger the download
-            if (totalPrice > 0) { //Starts as long as there is something there.
-                downloadLink.style.display = 'block';
-                downloadLink.click();
-                URL.revokeObjectURL(downloadLink.href);
-            } else {
-                alert('No data to download.');
-                downloadLink.style.display = 'none';
-            }
-        });
-    </script>
-</body>
+        </script>
+	</body>
 </html>

@@ -198,27 +198,34 @@
             const headersRow = 'Unit Mark, Model, Width, Rlr Ctrs, Curve, Length, Inf El, Dis El, HP, PS Qty, PS Amp, IOP Qty, Speed, Weight, List Price, Cost\n';
             csvData = headersRow + csvData;
 
-            // Loop through each combination
-            for (const combinationKey in quantityByCombination) {
-                // If a unique row.
-                if (quantityByCombination.hasOwnProperty(combinationKey)) {
-                    const combination = quantityByCombination[combinationKey]; // Add to combination key.
-                    const ampsRow = Array.from(combination.psAmpValues).join('|'); // Add psamp column.
-                    const quantityRow = combination.psAmpValues.size; // Add quantity(based on the size of psamp array).
-                    const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantityRow},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
-                    
-                    // Skip the first row (It always prints blank due to the combination process. Easiest solution.)
-                    if (isFirstRow) {
-                        isFirstRow = false;
-                        continue;
-                    }
-                    
-                    // Add the data to each row.
-                    csvData += csvRow;
-                    // Accumulate price for total price
-                    totalPrice += parseFloat(combination.price.replace('$', ''));
-                }
-            }
+// Loop through each combination
+for (const combinationKey in quantityByCombination) {
+    // If a unique row.
+    if (quantityByCombination.hasOwnProperty(combinationKey)) {
+        const combination = quantityByCombination[combinationKey]; // Add to combination key.
+        let ampsRow = Array.from(combination.psAmpValues).join('|'); // Add psamp column.
+        const quantityRow = combination.psAmpValues.size; // Add quantity(based on the size of psamp array).
+        
+        // Replace blanks with zero
+        if (ampsRow === '') {
+            ampsRow = '0';
+        }
+        
+        const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantityRow},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
+        
+        // Skip the first row (It always prints blank due to the combination process. Easiest solution.)
+        if (isFirstRow) {
+            isFirstRow = false;
+            continue;
+        }
+        
+        // Add the data to each row.
+        csvData += csvRow;
+        // Accumulate price for total price
+        totalPrice += parseFloat(combination.price.replace('$', ''));
+    }
+}
+
 
             // Add total price row to CSV data
             const totalRow = ` , , , , , , , , , , , , ,  Total Prices, $${totalPrice.toFixed(2)}, $`;

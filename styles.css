@@ -7,8 +7,8 @@ body {
     background-color: #DBE2EF;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px;
-    width: 100%;
 }
 
 .banner img {
@@ -20,8 +20,8 @@ body {
     font-family: "Times New Roman", Times, serif;
     font-size: 12px;
     align-self: center;
-    margin: 0;
-    padding-left: 30px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .inside {

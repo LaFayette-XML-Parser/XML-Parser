@@ -56,7 +56,7 @@ body {
     background-color: #3F72AF;
     color: white;
     cursor: pointer;
-    width: 557px;
+    width: 550px;
     padding: 6px;
     border: none;
     text-align: center;
@@ -73,7 +73,6 @@ body {
     transition: max-height 1s ease-out;
     max-height: 0;
     padding: 0 18px;
-    overflow: auto;
 }
 
 .button {

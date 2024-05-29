@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 	<head>
 		<meta charset="utf-8" />
 	    	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,11 +10,13 @@
 	      		.banner {display: flex; width: 100%; background-color: #DBE2EF; padding: 10px; box-shadow: 0 4px 2px -2px gray;}
 	      		.banner img {max-height: 50px; margin-right: 20px;}
 	      		.banner p {font-family: "Times New Roman", Times, serif; margin: 0; align-self: center; font-size: 12px;}
-	      		.inside {font-family: "Times New Roman", Times, serif; background-color: #F9F7F7; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh; margin: 0 auto; text-align: center; line-height: 1.4; padding: 10px;}
+	      		.inside {font-family: "Times New Roman", Times, serif; background-color: #F9F7F7; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh; margin: 0 auto; text-align: center; line-height: 1.4; padding: 14px;}
 	      		.titles {font-family: "Times New Roman", Times, serif; background-color: #F9F7F7; display: flex; align-items: flex-start; justify-content: center; height: 2vh; margin: 0 auto; text-align: center; line-height: 1.4; padding: 18px;}
-	    		.collapsible {background-color: #3F72AF; color: white; cursor: pointer; width: 557px; padding: 2px; border: none; text-align: center; outline: none; font-size: 15px;}
+	    		.collapsible {background-color: #3F72AF; color: white; cursor: pointer; width: 557px; padding: 6px; border: none; text-align: center; outline: none; font-size: 15px;}
 			.active, .collapsible:hover {background-color: #112D4E;}
 			.content {padding: 0 18px; max-height: 0; overflow: auto; transition: max-height 1s ease-out; background-color: #DBE2EF;}
+           .info-a {font-family: "Times New Roman", Times, serif; font-size: 8px; text-align: left;}
+            .info-b {font-family: "Times New Roman", Times, serif; font-size: 8px; text-align: right;}
 	      		.active, .button:hover {cursor: pointer;}
 	    	</style>
 	</head>
@@ -39,6 +41,9 @@
 	            <a id="downloadLink" style="display: none;">Download Output</a>
 	        </div>
 	    </div>
+        <div>
+        <p class="info-a">   For questions and sugestions, email<a href='mailto: lafayette.xmlparser@gmail.com'> lafayette.xmlparser@gmail.com</a></p><p class="info-b">LaFayette Phone Number<a href="tel:(859) 236-6884"> (859) 236-6884</a></p>
+        </div>
         <script>
             var coll = document.getElementsByClassName("collapsible");
             var i;
@@ -81,19 +86,19 @@
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
                 // Initialize variables for property values
-                let markedAttribute = '';
-                let iopCountValue = '';
-                let modelValue = '';
-                let widthValue = '';
-                let railValue = '';
-                let curveValue = '';
-                let lengthValue = '';
-                let infeedValue = '';
-                let dischargeValue = '';
-                let hpValue = '';
-                let speedValue = '';
-                let weightValue = '';
-                let priceValue = '';
+                let markedAttribute = ' ';
+                let iopCountValue = '0';
+                let modelValue = '0';
+                let widthValue = '0';
+                let railValue = '0';
+                let curveValue = '0';
+                let lengthValue = '0';
+                let infeedValue = '0';
+                let dischargeValue = '0';
+                let hpValue = '0';
+                let speedValue = '0';
+                let weightValue = '0';
+                let priceValue = '0';
                 let psAmpValues = new Set();
                 const quantityByCombination = {};
                 const propertiesElements = xmlDoc.querySelectorAll('Properties');
@@ -175,7 +180,7 @@
                 let totalPrice = 0;
                 let isFirstRow = true;
                 // Add Column titles to CSV data
-                const headersRow = 'Mark #, Model, IOP, Width, Rail, Curve, Length, Infeed, Discharge, HP, Speed, Weight, Quantity, Amps, Price\n';
+                const headersRow = 'Unit Mark, Model, Width, Rlr Ctrs, Curve, Length, Inf El, Dis El, HP, PS Qty, PS Amp, IOP Qty, Speed, Weight, List Price, Cost\n';
                 csvData = headersRow + csvData;
                 // Loop through each combination
                 for (const combinationKey in quantityByCombination) {
@@ -184,7 +189,7 @@
                         const combination = quantityByCombination[combinationKey]; // Add to combination key.
                         const ampsRow = Array.from(combination.psAmpValues).join('|'); //Add psamp column.
                         const quantityRow = combination.psAmpValues.size; //Add quantity(based on the size of psamp array).
-                        const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.iopCountValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${combination.speedValue},${combination.weightValue},${quantityRow},${ampsRow},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
+                        const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantityRow},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
                         // Skip the first row (It always prints blank due to the combination process. Easiest solution.)
                         if (isFirstRow) {
                             isFirstRow = false;
@@ -197,7 +202,7 @@
                     }
                 }
                 // Add total price row to CSV data
-                const totalRow = ` , , , , , , , , , , , , ,  Total Price, $${totalPrice.toFixed(2)}`;
+                const totalRow = ` , , , , , , , , , , , , ,  Total Prices, $${totalPrice.toFixed(2)}, $Discount`;
                 csvData += totalRow + '\n';
                 // Create a Blob containing the CSV data
                 const blob = new Blob([csvData], {

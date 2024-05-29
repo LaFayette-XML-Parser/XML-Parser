@@ -1,25 +1,25 @@
-	body {
+body {
     background-color: #DBE2EF;
     margin: 0;
   }
-	.banner {
+.banner {
     background-color: #DBE2EF;
     display: flex;
     padding: 10px; 
     width: 100%; 
     box-shadow: 0 4px 2px -2px gray;
    }
-	.banner img {
+.banner img {
     max-height: 50px; 
     margin-right: 20px;
   }
-	.banner p {
+.banner p {
     font-family: "Times New Roman", Times, serif; 
     font-size: 12px;
     align-self: center;
     margin: 0;  
   }
-	.inside {    
+.inside {    
     background-color: #F9F7F7; 
     font-family: "Times New Roman", Times, serif;     
     text-align: center; 
@@ -32,7 +32,7 @@
     margin: 0 auto; 
     padding: 14px;
   }
-	.titles {    
+.titles {    
     background-color: #F9F7F7; 
     font-family: "Times New Roman", Times, serif;    
     text-align: center; 
@@ -44,7 +44,7 @@
     margin: 0 auto;
     padding: 18px;
   }
-	.collapsible {
+.collapsible {
     background-color: #3F72AF; 
     color: white; 
     cursor: pointer; 
@@ -55,10 +55,10 @@
     outline: none; 
     font-size: 15px;
   }
-	.active, .collapsible:hover {
+.active, .collapsible:hover {
     background-color: #112D4E;
   }
-	.content {    
+.content {    
     background-color: #DBE2EF; 
     transition: max-height 1s ease-out;
     max-height: 0; 
@@ -77,7 +77,7 @@
     text-align: right; 
     padding-right: 16px;
   }
-	.button {
+.button {
     cursor: pointer;
   }
   .flex{

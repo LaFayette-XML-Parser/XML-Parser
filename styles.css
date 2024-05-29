@@ -72,9 +72,8 @@ body {
     background-color: #DBE2EF;
     transition: max-height 1s ease-out;
     max-height: 0;
-    width: auto;
-    overflow: hidden;
-    padding: 6px;
+    width: 30%;
+    overflow: scroll;
 }
 
 .button {

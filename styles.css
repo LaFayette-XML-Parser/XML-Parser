@@ -1,40 +1,86 @@
-.flex-parent-element {
-  display: flex;
-  width: 125%;
-}
-
-.flex-child-element {
-  font-family: "Times New Roman", Times, serif;
-  flex: 1;
-  margin: 0px;
-}
-
-.flex-child-element:first-child {
-  margin-right: 20px;
-}
-
-.inside {
-  font-family: "Times New Roman", Times, serif;
-  background-color: #f3f6f4;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 70vh;
-  width: 70vh;
-  margin: 0 auto;
-  text-align-last: center;
-  line-height: 1.4;
-}
-
-.outside {
-  font-family: "Times New Roman", Times, serif;
-  background-color: #f3f6f4;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center; 
-  height: 5vh;
-  margin: 0 auto;
-  text-align-last: center;
-  line-height: 0.4;
-}
+	body {
+    background-color: #DBE2EF;
+    margin: 0;
+  }
+	.banner {
+    background-color: #DBE2EF;
+    display: flex;
+    padding: 10px; 
+    width: 100%; 
+    box-shadow: 0 4px 2px -2px gray;
+   }
+	.banner img {
+    max-height: 50px; 
+    margin-right: 20px;
+  }
+	.banner p {
+    font-family: "Times New Roman", Times, serif; 
+    font-size: 12px;
+    align-self: center;
+    margin: 0;  
+  }
+	.inside {    
+    background-color: #F9F7F7; 
+    font-family: "Times New Roman", Times, serif;     
+    text-align: center; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    height: 70vh;     
+    line-height: 1.4; 
+    margin: 0 auto; 
+    padding: 14px;
+  }
+	.titles {    
+    background-color: #F9F7F7; 
+    font-family: "Times New Roman", Times, serif;    
+    text-align: center; 
+    display: flex; 
+    align-items: flex-start; 
+    justify-content: center; 
+    height: 2vh;     
+    line-height: 1.4; 
+    margin: 0 auto;
+    padding: 18px;
+  }
+	.collapsible {
+    background-color: #3F72AF; 
+    color: white; 
+    cursor: pointer; 
+    width: 557px; 
+    padding: 6px; 
+    border: none; 
+    text-align: center; 
+    outline: none; 
+    font-size: 15px;
+  }
+	.active, .collapsible:hover {
+    background-color: #112D4E;
+  }
+	.content {    
+    background-color: #DBE2EF; 
+    transition: max-height 1s ease-out;
+    max-height: 0; 
+    padding: 0 18px;
+    overflow: auto;
+  }
+  .info-a {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 8px; 
+    text-align: left; 
+    padding-left: 16px;
+  }
+  .info-b {
+    font-family: "Times New Roman", Times, serif; 
+    font-size: 8px; 
+    text-align: right; 
+    padding-right: 16px;
+  }
+	.button {
+    cursor: pointer;
+  }
+  .flex{
+    display: flex;
+    justify-content: space-between;
+  }

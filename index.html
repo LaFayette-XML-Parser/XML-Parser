@@ -122,11 +122,11 @@
                             speedValue = valueElement.textContent;
                         } else if (propertyName === 'conveyorweight') {
                             weightValue = valueElement.textContent;
-                        } else if (propertyName === 'powersupplysize') { //PS Amp.
-                            const psAmpValue = valueElement.textContent;
-                            if (psAmpValue.trim() === '') { //If there is nothing, a zero is added.
-                                psAmpValues.add('0');
-                            } else if (psAmpValue.toLowerCase() !== 'less power supply') { //The case for the ref of LPS turned into a value.
+                       else if (propertyName === 'powersupplysize') { // PS Amp.
+    		            let psAmpValue = valueElement.textContent.trim(); // Trim whitespace
+    			    if (psAmpValue === '') { // If it's empty, set it to zero
+        		        psAmpValue = '0';
+                            } else if (psAmpValue.toLowerCase() !== 'less power supply') { // The case for the ref of LPS turned into a value.
                                 const ampMatch = psAmpValue.match(/\d+/);
                                 if (ampMatch) {
                                     psAmpValues.add(ampMatch[0]);

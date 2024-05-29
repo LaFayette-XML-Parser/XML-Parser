@@ -65,18 +65,12 @@ body {
     padding: 0 18px;
     overflow: auto;
   }
-  .info-a {
-    
-  }
-  .info-b {
-     
-  }
 .button {
     cursor: pointer;
   }
   .flex{
     font-family: "Times New Roman", Times, serif; 
-    font-size: 10px; 
+    font-size: 8px; 
     text-align: right; 
     padding-top: 8px;  
     padding-right: 16px;

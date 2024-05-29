@@ -87,15 +87,17 @@ body {
     background-color: #DBE2EF;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px;
     font-family: "Times New Roman", Times, serif;
     font-size: 8px;
 }
 
 .info-a {
-    padding-right: 16px;
+    margin-right: auto;
 }
 
 .info-b {
-    padding-left: 16px;
+    margin-left: auto; 
 }
+

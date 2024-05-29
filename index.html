@@ -194,39 +194,28 @@
             let totalPrice = 0;
             let isFirstRow = true;
 
-            // Add Column titles to CSV data
-            const headersRow = 'Unit Mark, Model, Width, Rlr Ctrs, Curve, Length, Inf El, Dis El, HP, PS Qty, PS Amp, IOP Qty, Speed, Weight, List Price, Cost\n';
+            // Add Column titles to CSV data with Excel styles
+            const headersRow = '<div class="excel-header">Unit Mark</div>,<div class="excel-header">Model</div>,<div class="excel-header">Width</div>,<div class="excel-header">Rlr Ctrs</div>,<div class="excel-header">Curve</div>,<div class="excel-header">Length</div>,<div class="excel-header">Inf El</div>,<div class="excel-header">Dis El</div>,<div class="excel-header">HP</div>,<div class="excel-header">PS Qty</div>,<div class="excel-header">PS Amp</div>,<div class="excel-header">IOP Qty</div>,<div class="excel-header">Speed</div>,<div class="excel-header">Weight</div>,<div class="excel-header">List Price</div>,<div class="excel-header">Cost</div>\n';
             csvData = headersRow + csvData;
 
-// Loop through each combination
-for (const combinationKey in quantityByCombination) {
-    // If a unique row.
-    if (quantityByCombination.hasOwnProperty(combinationKey)) {
-        const combination = quantityByCombination[combinationKey]; // Add to combination key.
-        let ampsRow = Array.from(combination.psAmpValues).join('|'); // Add psamp column.
-        const quantityRow = combination.psAmpValues.size; // Add quantity(based on the size of psamp array).
+            // Loop through each combination
+            for (const combinationKey in quantityByCombination) {
+                if (quantityByCombination.hasOwnProperty(combinationKey)) {
+                    const combination = quantityByCombination[combinationKey];
+                    let ampsRow = Array.from(combination.psAmpValues).join('|');
+                    const quantityRow = combination.psAmpValues.size;
         
-        // Replace blanks with zero
-        if (ampsRow === '') {
-            ampsRow = '0';
-        }
+                    if (ampsRow === '') {
+                        ampsRow = '0';
+                    }
         
-        const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantityRow},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
+                    // Apply Excel cell styles to each cell in the row
+                    const csvRow = `<div class="excel-cell">${combination.markedAttribute}</div>,<div class="excel-cell">${combination.modelValue}</div>,<div class="excel-cell">${combination.widthValue}</div>,<div class="excel-cell">${combination.railValue}</div>,<div class="excel-cell">${combination.curveValue}</div>,<div class="excel-cell">${combination.lengthValue}</div>,<div class="excel-cell">${combination.infeedValue}</div>,<div class="excel-cell">${combination.dischargeValue}</div>,<div class="excel-cell">${combination.hpValue}</div>,<div class="excel-cell">${quantityRow}</div>,<div class="excel-cell">${ampsRow}</div>,<div class="excel-cell">${combination.iopCountValue}</div>,<div class="excel-cell">${combination.speedValue}</div>,<div class="excel-cell">${combination.weightValue}</div>,<div class="excel-cell">${combination.price}</div>,<div class="excel-cell"></div>\n`;
         
-        // Skip the first row (It always prints blank due to the combination process. Easiest solution.)
-        if (isFirstRow) {
-            isFirstRow = false;
-            continue;
-        }
-        
-        // Add the data to each row.
-        csvData += csvRow;
-        // Accumulate price for total price
-        totalPrice += parseFloat(combination.price.replace('$', ''));
-    }
-}
-
-
+                    csvData += csvRow;
+                    totalPrice += parseFloat(combination.price.replace('$', ''));
+                }
+            }
             // Add total price row to CSV data
             const totalRow = ` , , , , , , , , , , , , ,  Total Prices, $${totalPrice.toFixed(2)}, $`;
             csvData += totalRow + '\n';

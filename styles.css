@@ -56,7 +56,7 @@ body {
     background-color: #3F72AF;
     color: white;
     cursor: pointer;
-    width: 545px;
+    width: 30%;
     padding: 6px;
     border: none;
     text-align: center;
@@ -72,6 +72,7 @@ body {
     background-color: #DBE2EF;
     transition: max-height 1s ease-out;
     max-height: 0;
+    width: 30%;
     overflow: hidden;
     padding: 0 18px;
 }

@@ -1,0 +1,771 @@
+<Group Internal="FALSE" source="Jonesboro" projectID="39baba9530ac4b178ba3b8080ad38ceb" Salesperson="Carmindy Phillips" TotalPrice="3947.8" Customer="" PO="" HasError="False" IsHycad="False" dataVersion="2301" h4versionID="4.10.2023.35">
+  <Properties>
+    <Property type="Double">
+      <Name>Total Price</Name>
+      <RefName>TotalPrice</RefName>
+      <Value>3947.8000</Value>
+      <Price>3947.8</Price>
+    </Property>
+    <Property type="Double">
+      <Name>Surcharge Amount</Name>
+      <RefName>surcharge</RefName>
+      <Value>  0.0000</Value>
+      <Price>0.0</Price>
+    </Property>
+    <Property type="Double">
+      <Name>Surcharge Percentage</Name>
+      <RefName>surchargepct</RefName>
+      <Value>  0.0000</Value>
+    </Property>
+    <Property type="String">
+      <Name>Finish Color</Name>
+      <RefName>finishname</RefName>
+      <Value>UNCHOSEN</Value>
+      <Description>UNCHOSEN</Description>
+    </Property>
+    <Property type="Boolean">
+      <Name>Guards Painted Safety Yellow</Name>
+      <RefName>GuardsYellow</RefName>
+      <Value>FALSE</Value>
+    </Property>
+    <Property type="Boolean">
+      <Name>Supports Painted Safety Yellow</Name>
+      <RefName>IncludeSupports</RefName>
+      <Value>FALSE</Value>
+    </Property>
+    <Property type="Int32">
+      <Name>Distributor Number</Name>
+      <RefName>DistributorNumber</RefName>
+      <Value>89227</Value>
+    </Property>
+    <Property type="String">
+      <Name>Distributor Name</Name>
+      <RefName>DistributorName</RefName>
+      <Value>Southern Conveyor Systems</Value>
+    </Property>
+    <Property type="Double">
+      <Name>Distributor Discount</Name>
+      <RefName>distdiscount</RefName>
+      <Value>  0.3000</Value>
+    </Property>
+    <Property type="String">
+      <Name>Shipped From</Name>
+      <RefName>ShipFrom</RefName>
+      <Value>Jonesboro</Value>
+      <Description>Jonesboro</Description>
+    </Property>
+    <Property type="String">
+      <Name>Est. Lead Time</Name>
+      <RefName>leadTime</RefName>
+      <Value>TwoWeeks</Value>
+      <Description>BLACK</Description>
+    </Property>
+    <Property type="Double">
+      <Name>Estimated Spare Parts</Name>
+      <RefName>EstSpareParts</RefName>
+      <Value>474.0000</Value>
+      <Price>474.0</Price>
+    </Property>
+    <Property type="String">
+      <Name>Sent From Email</Name>
+      <RefName>useremail</RefName>
+      <Value>carmindy.phillips@lafayette-engineering.com</Value>
+    </Property>
+    <Property type="Boolean">
+      <Name>Is Quote</Name>
+      <RefName>isquote</RefName>
+      <Value>FALSE</Value>
+    </Property>
+    <Property type="String">
+      <Name>HyCAD Layer</Name>
+      <RefName>hycadlayer</RefName>
+      <Value>0</Value>
+    </Property>
+    <Property type="String">
+      <Name>HyCAD Color Mode</Name>
+      <RefName>colormode</RefName>
+      <Value>Realistic</Value>
+      <Description>REALISTIC</Description>
+    </Property>
+    <Property type="String">
+      <Name>FOB</Name>
+      <RefName>FOB</RefName>
+      <Value>DistributorPayFreight</Value>
+      <Description>Int. Partner to pay Freight Charges (Prepaid 3rd Party Int. Partner)</Description>
+    </Property>
+    <Property type="Double">
+      <Name>Floor Elevation</Name>
+      <RefName>floorelevation</RefName>
+      <Value>0</Value>
+    </Property>
+    <Property type="String">
+      <Name>Quoted By</Name>
+      <RefName>quotedby</RefName>
+      <Value>
+      </Value>
+    </Property>
+    <Property type="Boolean">
+      <Name>Use Simple Graphics</Name>
+      <RefName>usesimplegraphics</RefName>
+      <Value>FALSE</Value>
+    </Property>
+    <Property type="String">
+      <Name>Crating Type</Name>
+      <RefName>cratingtype</RefName>
+      <Value>Standard</Value>
+    </Property>
+    <Property type="Boolean">
+      <Name>Amazon Order</Name>
+      <RefName>AmazonOrder</RefName>
+      <Value>FALSE</Value>
+    </Property>
+    <Property type="String">
+      <Name>Name</Name>
+      <RefName>GroupName</RefName>
+      <Value>New Project</Value>
+    </Property>
+    <Property type="String">
+      <Name>Country</Name>
+      <RefName>ShipToCountry</RefName>
+      <Value>United States</Value>
+    </Property>
+    <Property type="String">
+      <Name>Salesperson</Name>
+      <RefName>SalesPersonID</RefName>
+      <Value>Carmindy Phillips</Value>
+    </Property>
+    <Property type="String">
+      <Name>User Name</Name>
+      <Value>carmindy.phillips</Value>
+    </Property>
+    <Property type="String">
+      <Name>UserLocation</Name>
+      <Value>EXTERNAL</Value>
+    </Property>
+  </Properties>
+  <Conveyors>
+    <Conveyor model="190-ACC" FO="" ID="1" RefChain="Root.Document_1.Root.factoryordercollection._190ACC1" Marked="" Submitted="False" IsGravity="False" HasError="False" PaintCode="" Type="STRAIGHT" XCoord="9.05220301864084" YCoord="15.302619220968" RotationAngle="270">
+      <BasePrice>3789.0</BasePrice>
+      <Properties>
+        <Property type="String">
+          <Name>Belt Side</Name>
+          <RefName>beltside</RefName>
+          <Value>Left</Value>
+          <Description>Left</Description>
+        </Property>
+        <Property type="Boolean">
+          <Name>Has Low Elevation Sheave Ret Brkt</Name>
+          <RefName>LowElevationBrackets</RefName>
+          <Value>FALSE</Value>
+        </Property>
+        <Property type="Double">
+          <Name>FPM</Name>
+          <RefName>fpm</RefName>
+          <Value> 65.0000</Value>
+        </Property>
+        <Property type="Double">
+          <Name>Overall Width</Name>
+          <RefName>overallwidth</RefName>
+          <Value> 18.0000</Value>
+        </Property>
+        <Property type="Double">
+          <Name>Roller Centers</Name>
+          <RefName>rollercenters</RefName>
+          <Value>  3.0000</Value>
+        </Property>
+        <Property type="Double">
+          <Name>Min Required HP</Name>
+          <RefName>RequiredHP</RefName>
+          <Value>  0.5000</Value>
+        </Property>
+        <Property type="Double">
+          <Name>Horsepower</Name>
+          <RefName>hp</RefName>
+          <Value>  0.5000</Value>
+        </Property>
+        <Property type="Double">
+          <Name>Between Rail Width</Name>
+          <RefName>brwidth</RefName>
+          <Value> 15.0000</Value>
+        </Property>
+        <Property type="Double">
+          <Name>Overall Length</Name>
+          <RefName>overalllength</RefName>
+          <Value>120.0000</Value>
+        </Property>
+        <Property type="String">
+          <Name>Fixed End</Name>
+          <RefName>fixedend</RefName>
+          <Value>infeed</Value>
+          <Description>INFEED</Description>
+        </Property>
+        <Property type="Double">
+          <Name>Discharge Elevation</Name>
+          <RefName>dischargeheight</RefName>
+          <Value> 32.0000</Value>
+        </Property>
+        <Property type="Double">
+          <Name>Infeed Elevation</Name>
+          <RefName>infeedheight</RefName>
+          <Value> 32.0000</Value>
+        </Property>
+        <Property type="Double">
+          <Name>Floor Elevation</Name>
+          <RefName>floorelevation</RefName>
+          <Value>  0.0000</Value>
+        </Property>
+        <Property type="String">
+          <Name>Default Support Type</Name>
+          <RefName>defaultsupporttype</RefName>
+          <Value>MS_SUPPORT</Value>
+        </Property>
+        <Property type="Boolean">
+          <Name>Intermediate Conveyor</Name>
+          <RefName>Intermediate?</RefName>
+          <Value>FALSE</Value>
+        </Property>
+        <Property type="Boolean">
+          <Name>Special Pricing?</Name>
+          <RefName>SpecialPricing</RefName>
+          <Value>FALSE</Value>
+        </Property>
+        <Property type="String">
+          <Name>Model Name</Name>
+          <RefName>Model</RefName>
+          <Value>190-ACC</Value>
+          <Price>3789.0</Price>
+        </Property>
+        <Property type="String">
+          <Name>HyCAD Layer</Name>
+          <RefName>hycadlayer</RefName>
+          <Value>0</Value>
+        </Property>
+        <Property type="String">
+          <Name>HyCAD Color Mode</Name>
+          <RefName>colormode</RefName>
+          <Value>Realistic</Value>
+          <Description>REALISTIC</Description>
+        </Property>
+        <Property type="Int32">
+          <Name>Temperature</Name>
+          <RefName>temperature</RefName>
+          <Value>75</Value>
+        </Property>
+        <Property type="Double">
+          <Name>Estimated Conveyor Weight</Name>
+          <RefName>conveyorweight</RefName>
+          <Value>392.0000</Value>
+        </Property>
+        <Property type="Double">
+          <Name>True Elevation</Name>
+          <RefName>zposition</RefName>
+          <Value> 32.0000</Value>
+        </Property>
+        <Property type="String">
+          <Name>Coordinates</Name>
+          <RefName>Coordinates</RefName>
+          <Value>( 9.05,15.30, 0.00)</Value>
+        </Property>
+        <Property type="String">
+          <Name>Support Hardware</Name>
+          <RefName>SupportHardware</RefName>
+          <Value>Standard</Value>
+          <Description>STANDARD</Description>
+        </Property>
+        <Property type="String">
+          <Name>Factory Spec</Name>
+          <RefName>FactorySpec</RefName>
+          <Value>JONESBORO</Value>
+        </Property>
+        <Property type="String">
+          <Name>Quoted By</Name>
+          <RefName>quotedby</RefName>
+          <Value>
+          </Value>
+        </Property>
+        <Property type="Boolean">
+          <Name>Alternate Ship To</Name>
+          <RefName>AltShipTo</RefName>
+          <Value>FALSE</Value>
+        </Property>
+        <Property type="Int32">
+          <Name>Change Count</Name>
+          <RefName>ChangeNumber</RefName>
+          <Value>0</Value>
+        </Property>
+        <Property type="Double">
+          <Name>Total Price</Name>
+          <RefName>TotalPrice</RefName>
+          <Value>3947.8000</Value>
+          <Price>3947.8</Price>
+        </Property>
+        <Property type="Boolean">
+          <Name>Previously Submitted?</Name>
+          <RefName>Submitted</RefName>
+          <Value>FALSE</Value>
+        </Property>
+        <Property type="String">
+          <Name>Conveyor GUID</Name>
+          <RefName>conveyorguid</RefName>
+          <Value>F11FDE8E14F9465EBDC5B6AE3B49ED55</Value>
+        </Property>
+        <Property type="Double">
+          <Name>Surcharge Amount</Name>
+          <RefName>surcharge</RefName>
+          <Value>  0.0000</Value>
+          <Price>0.0</Price>
+        </Property>
+        <Property type="Double">
+          <Name>Surcharge Percentage</Name>
+          <RefName>surchargepct</RefName>
+          <Value>  0.0000</Value>
+        </Property>
+        <Property type="String">
+          <Name>Graphic Detail Level</Name>
+          <RefName>GraphicLevel</RefName>
+          <Value>high</Value>
+          <Description>HIGH</Description>
+        </Property>
+        <Property type="String">
+          <Name>Est. Lead Time</Name>
+          <RefName>leadTime</RefName>
+          <Value>TwoWeeks</Value>
+          <Description>BLACK</Description>
+        </Property>
+        <Property type="String">
+          <Name>FormattedFOID</Name>
+          <Value>(0001)</Value>
+        </Property>
+        <Property type="String">
+          <Name>buildwith</Name>
+          <Value>
+          </Value>
+        </Property>
+        <Property type="String">
+          <Name>Finish Color</Name>
+          <RefName>finishname</RefName>
+          <Value>UNCHOSEN</Value>
+          <Description>UNCHOSEN</Description>
+        </Property>
+        <Property type="Boolean">
+          <Name>Guards Painted Safety Yellow</Name>
+          <RefName>GuardsYellow</RefName>
+          <Value>FALSE</Value>
+        </Property>
+        <Property type="Boolean">
+          <Name>Supports Painted Safety Yellow</Name>
+          <RefName>IncludeSupports</RefName>
+          <Value>FALSE</Value>
+        </Property>
+        <Property type="Int32">
+          <Name>Distributor Number</Name>
+          <RefName>DistributorNumber</RefName>
+          <Value>89227</Value>
+        </Property>
+        <Property type="String">
+          <Name>Distributor Name</Name>
+          <RefName>DistributorName</RefName>
+          <Value>Southern Conveyor Systems</Value>
+        </Property>
+        <Property type="Double">
+          <Name>Distributor Discount</Name>
+          <RefName>distdiscount</RefName>
+          <Value>  0.3000</Value>
+        </Property>
+        <Property type="String">
+          <Name>Shipped From</Name>
+          <RefName>ShipFrom</RefName>
+          <Value>Jonesboro</Value>
+          <Description>Jonesboro</Description>
+        </Property>
+        <Property type="Double">
+          <Name>Estimated Spare Parts</Name>
+          <RefName>EstSpareParts</RefName>
+          <Value>474.0000</Value>
+          <Price>474.0</Price>
+        </Property>
+        <Property type="String">
+          <Name>Sent From Email</Name>
+          <RefName>useremail</RefName>
+          <Value>carmindy.phillips@lafayette-engineering.com</Value>
+        </Property>
+        <Property type="Boolean">
+          <Name>Is Quote</Name>
+          <RefName>isquote</RefName>
+          <Value>FALSE</Value>
+        </Property>
+        <Property type="String">
+          <Name>FOB</Name>
+          <RefName>FOB</RefName>
+          <Value>DistributorPayFreight</Value>
+          <Description>Int. Partner to pay Freight Charges (Prepaid 3rd Party Int. Partner)</Description>
+        </Property>
+        <Property type="Boolean">
+          <Name>Use Simple Graphics</Name>
+          <RefName>usesimplegraphics</RefName>
+          <Value>FALSE</Value>
+        </Property>
+        <Property type="String">
+          <Name>Crating Type</Name>
+          <RefName>cratingtype</RefName>
+          <Value>Standard</Value>
+        </Property>
+        <Property type="Boolean">
+          <Name>Amazon Order</Name>
+          <RefName>AmazonOrder</RefName>
+          <Value>FALSE</Value>
+        </Property>
+        <Property type="String">
+          <Name>Name</Name>
+          <RefName>GroupName</RefName>
+          <Value>New Project</Value>
+        </Property>
+        <Property type="String">
+          <Name>Country</Name>
+          <RefName>ShipToCountry</RefName>
+          <Value>United States</Value>
+        </Property>
+        <Property type="String">
+          <Name>Salesperson</Name>
+          <RefName>SalesPersonID</RefName>
+          <Value>Carmindy Phillips</Value>
+        </Property>
+        <Property type="String">
+          <Name>UserLocation</Name>
+          <Value>EXTERNAL</Value>
+        </Property>
+      </Properties>
+      <AnchorPart>ROOT.FACTORYORDERCOLLECTION._190ACC1.INFEEDCONNECTFRAME</AnchorPart>
+      <PartHost>ROOT.OFFSETCOLLECTION.OFFSET1.TARGETCONNECTFRAME</PartHost>
+      <PartHostID>0</PartHostID>
+      <LineItems>
+        <LineItem dynamicpart="FALSE" design="DriveWrapper" special="FALSE">
+          <QTY>1</QTY>
+          <Category>61</Category>
+          <CategoryName>Drive Assemblies</CategoryName>
+          <SequenceNumber>2</SequenceNumber>
+          <PartNumber>
+          </PartNumber>
+          <Description>Standard Underside C-Face Drive Located On (Right side) (Infeed of section 1)</Description>
+          <UnitPrice>0.0</UnitPrice>
+          <UnitOfMeasure>EA</UnitOfMeasure>
+          <TotalPrice>0.0</TotalPrice>
+          <LeadTime>ThreeDay</LeadTime>
+          <LineItemID>21521</LineItemID>
+          <LineItemConfigID>326301</LineItemConfigID>
+          <LineItemPartName>drive</LineItemPartName>
+          <Properties>
+            <Property type="String">
+              <Name>Drive Type</Name>
+              <RefName>drivetype</RefName>
+              <Value>Underside Drive</Value>
+            </Property>
+            <Property type="String">
+              <Name>Drive Side</Name>
+              <RefName>driveside</RefName>
+              <Value>Right side</Value>
+            </Property>
+            <Property type="Int32">
+              <Name>Drive Section</Name>
+              <RefName>drivesection</RefName>
+              <Value>1</Value>
+            </Property>
+            <Property type="String">
+              <Name>Drive Section End</Name>
+              <RefName>sectionend</RefName>
+              <Value>sectioninfeed</Value>
+              <Description>SECTIONINFEED</Description>
+            </Property>
+          </Properties>
+        </LineItem>
+        <LineItem dynamicpart="FALSE" design="motor" special="FALSE">
+          <QTY>1</QTY>
+          <Category>82</Category>
+          <CategoryName>Motors</CategoryName>
+          <SequenceNumber>3</SequenceNumber>
+          <PartNumber>030.7134</PartNumber>
+          <Description>1/2 HP- 230/3/60 TEFC Energy Efficient Unit Handling Motor 
+Note: When Used With A Variable Speed Controller, The Maximum Speed Ratio Is 4:1</Description>
+          <UnitPrice>0.0</UnitPrice>
+          <UnitOfMeasure>EA</UnitOfMeasure>
+          <TotalPrice>0.0</TotalPrice>
+          <LeadTime>ThreeDay</LeadTime>
+          <LineItemID>18719</LineItemID>
+          <LineItemConfigID>174254</LineItemConfigID>
+          <LineItemPartName>motor</LineItemPartName>
+          <Properties>
+            <Property type="Int32">
+              <Name>Motor Voltage</Name>
+              <RefName>Voltage</RefName>
+              <Value>230</Value>
+            </Property>
+            <Property type="Int32">
+              <Name>Motor Hertz</Name>
+              <RefName>motorhertz</RefName>
+              <Value>60</Value>
+            </Property>
+            <Property type="String">
+              <Name>Motor Type</Name>
+              <RefName>motortype</RefName>
+              <Value>Totally Enclosed</Value>
+            </Property>
+            <Property type="Int32">
+              <Name>Motor Phase</Name>
+              <RefName>Phase</RefName>
+              <Value>3</Value>
+            </Property>
+            <Property type="Boolean">
+              <Name>Motor is Variable Speed</Name>
+              <RefName>VariableSpeed</RefName>
+              <Value>FALSE</Value>
+            </Property>
+            <Property type="Double">
+              <Name>Horsepower</Name>
+              <RefName>hp</RefName>
+              <Value>  0.5000</Value>
+            </Property>
+          </Properties>
+        </LineItem>
+        <LineItem dynamicpart="FALSE" design="reducer" special="FALSE">
+          <QTY>1</QTY>
+          <Category>22</Category>
+          <CategoryName>Reducer</CategoryName>
+          <SequenceNumber>4</SequenceNumber>
+          <PartNumber>
+          </PartNumber>
+          <Description>4AC Reducer (For standard speeds)</Description>
+          <UnitPrice>0.0</UnitPrice>
+          <UnitOfMeasure>EA</UnitOfMeasure>
+          <TotalPrice>0.0</TotalPrice>
+          <LeadTime>ThreeDay</LeadTime>
+          <LineItemID>21459</LineItemID>
+          <LineItemConfigID>324444</LineItemConfigID>
+          <LineItemPartName>reducer</LineItemPartName>
+          <Properties>
+            <Property type="String">
+              <Name>Reducer Input</Name>
+              <RefName>reducerinput</RefName>
+              <Value>CFace</Value>
+              <Description>CFACE</Description>
+            </Property>
+            <Property type="String">
+              <Name>Reducer Output</Name>
+              <RefName>reduceroutput</RefName>
+              <Value>chaindriven</Value>
+              <Description>CHAINDRIVEN</Description>
+            </Property>
+            <Property type="String">
+              <Name>Reducer Size</Name>
+              <RefName>reducersize</RefName>
+              <Value>_4</Value>
+              <Description>_4</Description>
+            </Property>
+          </Properties>
+        </LineItem>
+        <LineItem dynamicpart="FALSE" design="BeltSideNote" special="FALSE">
+          <QTY>1</QTY>
+          <Category>157</Category>
+          <CategoryName>V-Belt Side</CategoryName>
+          <SequenceNumber>3</SequenceNumber>
+          <PartNumber>
+          </PartNumber>
+          <Description>V-Belt Located On Left Hand Side</Description>
+          <UnitPrice>0.0</UnitPrice>
+          <UnitOfMeasure>EA</UnitOfMeasure>
+          <TotalPrice>0.0</TotalPrice>
+          <LeadTime>OneDay</LeadTime>
+          <LineItemID>161035</LineItemID>
+          <LineItemConfigID>477345</LineItemConfigID>
+          <LineItemPartName>BeltSideNote</LineItemPartName>
+        </LineItem>
+        <LineItem dynamicpart="FALSE" design="Sectionlengths" special="FALSE">
+          <QTY>1</QTY>
+          <Category>167</Category>
+          <CategoryName>Sections</CategoryName>
+          <SequenceNumber>0</SequenceNumber>
+          <PartNumber>
+          </PartNumber>
+          <Description>Standard Section Lengths (in.) starting at infeed: 120</Description>
+          <UnitPrice>0.0</UnitPrice>
+          <UnitOfMeasure>
+          </UnitOfMeasure>
+          <TotalPrice>0.0</TotalPrice>
+          <LeadTime>QuotedLeadTime</LeadTime>
+          <LineItemID>0</LineItemID>
+          <LineItemConfigID>0</LineItemConfigID>
+          <LineItemPartName>SectionLengthsLineItem</LineItemPartName>
+        </LineItem>
+        <LineItem dynamicpart="FALSE" design="oversupport" special="FALSE">
+          <QTY>1</QTY>
+          <Category>76</Category>
+          <CategoryName>Floor Supports</CategoryName>
+          <SequenceNumber>7</SequenceNumber>
+          <PartNumber>
+          </PartNumber>
+          <Description>MS-06-18  (without knee braces)</Description>
+          <UnitPrice>79.4</UnitPrice>
+          <UnitOfMeasure>EA</UnitOfMeasure>
+          <TotalPrice>79.4</TotalPrice>
+          <LeadTime>TwoWeeks</LeadTime>
+          <LineItemID>17822</LineItemID>
+          <LineItemConfigID>324495</LineItemConfigID>
+          <LineItemPartName>Support_1</LineItemPartName>
+          <Properties>
+            <Property type="String">
+              <Name>Type of Supports</Name>
+              <RefName>SupportType</RefName>
+              <Value>MS_SUPPORT</Value>
+            </Property>
+            <Property type="Boolean">
+              <Name>Casters</Name>
+              <RefName>hascasters?</RefName>
+              <Value>FALSE</Value>
+            </Property>
+            <Property type="Boolean">
+              <Name>Caster Pad Only</Name>
+              <RefName>CasterPadOnly</RefName>
+              <Value>FALSE</Value>
+            </Property>
+            <Property type="Boolean">
+              <Name>Knee Braces</Name>
+              <RefName>hasbraces?</RefName>
+              <Value>FALSE</Value>
+            </Property>
+            <Property type="Double">
+              <Name>Support Elevation to top of conveyor</Name>
+              <RefName>supportheight</RefName>
+              <Value> 32.0000</Value>
+            </Property>
+            <Property type="Double">
+              <Name>Horizontal Adjustment</Name>
+              <RefName>supportadjust</RefName>
+              <Value>0</Value>
+            </Property>
+          </Properties>
+        </LineItem>
+        <LineItem dynamicpart="FALSE" design="oversupport" special="FALSE">
+          <QTY>1</QTY>
+          <Category>76</Category>
+          <CategoryName>Floor Supports</CategoryName>
+          <SequenceNumber>7</SequenceNumber>
+          <PartNumber>
+          </PartNumber>
+          <Description>MS-06-18  (without knee braces)</Description>
+          <UnitPrice>79.4</UnitPrice>
+          <UnitOfMeasure>EA</UnitOfMeasure>
+          <TotalPrice>79.4</TotalPrice>
+          <LeadTime>TwoWeeks</LeadTime>
+          <LineItemID>17822</LineItemID>
+          <LineItemConfigID>324495</LineItemConfigID>
+          <LineItemPartName>Support_2</LineItemPartName>
+          <Properties>
+            <Property type="String">
+              <Name>Type of Supports</Name>
+              <RefName>SupportType</RefName>
+              <Value>MS_SUPPORT</Value>
+            </Property>
+            <Property type="Boolean">
+              <Name>Casters</Name>
+              <RefName>hascasters?</RefName>
+              <Value>FALSE</Value>
+            </Property>
+            <Property type="Boolean">
+              <Name>Caster Pad Only</Name>
+              <RefName>CasterPadOnly</RefName>
+              <Value>FALSE</Value>
+            </Property>
+            <Property type="Boolean">
+              <Name>Knee Braces</Name>
+              <RefName>hasbraces?</RefName>
+              <Value>FALSE</Value>
+            </Property>
+            <Property type="Double">
+              <Name>Support Elevation to top of conveyor</Name>
+              <RefName>supportheight</RefName>
+              <Value> 32.0000</Value>
+            </Property>
+            <Property type="Double">
+              <Name>Horizontal Adjustment</Name>
+              <RefName>supportadjust</RefName>
+              <Value>0</Value>
+            </Property>
+          </Properties>
+        </LineItem>
+        <LineItem dynamicpart="FALSE" design="Finish" special="FALSE">
+          <QTY>1</QTY>
+          <Category>21</Category>
+          <CategoryName>Finish</CategoryName>
+          <SequenceNumber>0</SequenceNumber>
+          <PartNumber>
+          </PartNumber>
+          <Description>Unchosen Finish Type. Please select a default finish in the properties of the order header.</Description>
+          <UnitPrice>0.0</UnitPrice>
+          <UnitOfMeasure>
+          </UnitOfMeasure>
+          <TotalPrice>0.0</TotalPrice>
+          <LeadTime>QuotedLeadTime</LeadTime>
+          <LineItemID>0</LineItemID>
+          <LineItemConfigID>0</LineItemConfigID>
+          <LineItemPartName>Finish</LineItemPartName>
+          <Properties>
+            <Property type="String">
+              <Name>Finish Color</Name>
+              <RefName>finishname</RefName>
+              <Value>UNCHOSEN</Value>
+              <Description>UNCHOSEN</Description>
+            </Property>
+            <Property type="Boolean">
+              <Name>Guards Painted Safety Yellow</Name>
+              <RefName>GuardsYellow</RefName>
+              <Value>FALSE</Value>
+            </Property>
+            <Property type="Boolean">
+              <Name>Supports Painted Safety Yellow</Name>
+              <RefName>IncludeSupports</RefName>
+              <Value>FALSE</Value>
+            </Property>
+            <Property type="String">
+              <Name>guardFinish</Name>
+              <Value>UNCHOSEN</Value>
+            </Property>
+            <Property type="String">
+              <Name>supportfinish</Name>
+              <Value>UNCHOSEN</Value>
+            </Property>
+            <Property type="String">
+              <Name>GRfinish</Name>
+              <Value>UNCHOSEN</Value>
+            </Property>
+            <Property type="String">
+              <Name>bedcoverfinish</Name>
+              <Value>UNCHOSEN</Value>
+            </Property>
+          </Properties>
+        </LineItem>
+        <LineItem dynamicpart="FALSE" design="Crating" special="FALSE">
+          <QTY>1</QTY>
+          <Category>175</Category>
+          <CategoryName>Crating</CategoryName>
+          <SequenceNumber>1</SequenceNumber>
+          <PartNumber>
+          </PartNumber>
+          <Description>Supply Hytrol Standard Wooden Crating And Skids (Width: 18.000)</Description>
+          <UnitPrice>0.0</UnitPrice>
+          <UnitOfMeasure>EA</UnitOfMeasure>
+          <TotalPrice>0.0</TotalPrice>
+          <LeadTime>OneDay</LeadTime>
+          <LineItemID>166987</LineItemID>
+          <LineItemConfigID>499206</LineItemConfigID>
+          <LineItemPartName>cratinglineitem</LineItemPartName>
+          <Properties>
+            <Property type="String">
+              <Name>Crating Type</Name>
+              <RefName>cratingtype</RefName>
+              <Value>Standard</Value>
+            </Property>
+          </Properties>
+        </LineItem>
+      </LineItems>
+    </Conveyor>
+  </Conveyors>
+</Group>

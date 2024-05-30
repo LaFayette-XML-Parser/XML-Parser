@@ -42,5 +42,21 @@
         <p class="info-a">For questions and suggestions, email: <a href='mailto:afayette.xmlparser@gmail.com'>LaFayette.XmlParser@Gmail.Com</a></p>
         <p class="info-b">LaFayette Phone Number: <a href="tel:(859) 236-6884">(859) 236-6884</a></p>
     </div>
+    <script>//Creates an event for clicking on the collapsible directions.
+var coll = document.getElementsByClassName("collapsible");
+var i;
+for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", 
+        function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight){
+                        content.style.maxHeight = null;
+                } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                } ;
+        });
+};
+</script>
 </body>
 </html>

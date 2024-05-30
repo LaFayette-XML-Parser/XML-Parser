@@ -46,10 +46,8 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    height: 2vh;
     line-height: 1.4;
     margin: 0 auto;
-    padding: 18px;
 }
 
 .collapsible {

@@ -39,7 +39,7 @@ body {
     height: 75vh;
 }
 
-.titles {
+.inside h1 {
     background-color: #F9F7F7;
     font-family: "Times New Roman", Times, serif;
     text-align: center;

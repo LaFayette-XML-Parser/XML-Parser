@@ -6,6 +6,6 @@
 
   To save time, this XML parsing website has been created and can be used to create excel sheets with accurate information for the buyers.
 
-  The js code documents how each section is created in order for the website to be maintained and updated after the original creator has finished their internship. If there are any questions, please contact carmindy.work@gmail.com.
+  The js code documents how each section is created in order for the website to be maintained and updated after the original creator has finished their internship.
 
   Please make sure to continue to maintain notes and documentation for further preservation of the site. Thank you.

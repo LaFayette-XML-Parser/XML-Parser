@@ -132,11 +132,11 @@
     <Property type="String">
       <Name>Salesperson</Name>
       <RefName>SalesPersonID</RefName>
-      <Value>Carmindy Phillips</Value>
+      <Value></Value>
     </Property>
     <Property type="String">
       <Name>User Name</Name>
-      <Value>carmindy.phillips</Value>
+      <Value></Value>
     </Property>
     <Property type="String">
       <Name>UserLocation</Name>
@@ -389,7 +389,7 @@
         <Property type="String">
           <Name>Sent From Email</Name>
           <RefName>useremail</RefName>
-          <Value>carmindy.phillips@lafayette-engineering.com</Value>
+          <Value></Value>
         </Property>
         <Property type="Boolean">
           <Name>Is Quote</Name>
@@ -430,7 +430,7 @@
         <Property type="String">
           <Name>Salesperson</Name>
           <RefName>SalesPersonID</RefName>
-          <Value>Carmindy Phillips</Value>
+          <Value></Value>
         </Property>
         <Property type="String">
           <Name>UserLocation</Name>
@@ -979,7 +979,7 @@ NOTE: Maximum (40) Motors Per Power Supply</Description>
         <Property type="String">
           <Name>Sent From Email</Name>
           <RefName>useremail</RefName>
-          <Value>carmindy.phillips@lafayette-engineering.com</Value>
+          <Value></Value>
         </Property>
         <Property type="Boolean">
           <Name>Is Quote</Name>
@@ -1020,7 +1020,7 @@ NOTE: Maximum (40) Motors Per Power Supply</Description>
         <Property type="String">
           <Name>Salesperson</Name>
           <RefName>SalesPersonID</RefName>
-          <Value>Carmindy Phillips</Value>
+          <Value></Value>
         </Property>
         <Property type="String">
           <Name>UserLocation</Name>

@@ -156,6 +156,9 @@ main h1 {
     color: var(--font-color-banner);
     font-weight: bold;
     font-size: normal;
+    transition: max-height 1s ease-out;
+    max-height: 0;
+    overflow: scroll;
 }
 
 /* Used to emphasize text */

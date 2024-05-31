@@ -69,7 +69,7 @@
     <Property type="String">
       <Name>Sent From Email</Name>
       <RefName>useremail</RefName>
-      <Value>carmindy.phillips@lafayette-engineering.com</Value>
+      <Value></Value>
     </Property>
     <Property type="Boolean">
       <Name>Is Quote</Name>

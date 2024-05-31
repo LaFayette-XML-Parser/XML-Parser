@@ -1,32 +1,56 @@
+/* Import google poppins font as Poppins, Helvetica, and similar fonts are standard, Times is used more for articles and such */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* Import Bootstrap for styling icons */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+:root{
+    --banner-color: #DBE2EF;
+    --footer-color: #DBE2EF;
+    --main-color: #f6f6f6;
+    --font-color-banner: #013466;
+    --link-default: #53595F;
+    --disabled-color: #cad0db;
+    --disabled-font-color: #a8afbd;
+}
+
+html, body {
+    font-family: "Poppins", Arial, sans-serif;
+    padding: 0px;
+    margin: 0px;
+}
+
 body {
-    background-color: #DBE2EF;
-    margin: 0;
+    background-color: var(--main-color);
+    overflow-x: hidden;
+    
 }
 
 .banner {
-    background-color: #DBE2EF;
+    background-color: var(--banner-color);
+    color: var(--font-color-banner);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px;
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
 }
 
 .banner img {
     max-height: 50px;
     margin-right: 20px;
+    image-rendering: optimizeQuality;
 }
 
 .banner p {
-    font-family: "Times New Roman", Times, serif;
+    font-family: "Poppins", Times, serif;
     font-size: 12px;
     align-self: center;
     margin-left: auto;
 
 }
 
-.inside {
-    background-color: #F9F7F7;
-    font-family: "Times New Roman", Times, serif;
+main {
+    font-family: "Poppins", Times, serif;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -34,20 +58,219 @@ body {
     justify-content: center;
     line-height: 1.4;
     margin: 0 auto;
-    padding: 18px;
+    box-sizing: border-box;
     width: 100%;
-    height: 75vh;
+    height: 100%;
+    flex: 1;
+    padding: 1rem;
+    min-height: calc(100vh - 135px);
 }
 
-.inside h1 {
-    background-color: #F9F7F7;
-    font-family: "Times New Roman", Times, serif;
+main h1 {
+    font-family: "Poppins", Times, serif;
     text-align: center;
     display: flex;
     align-items: flex-start;
     justify-content: center;
     line-height: 1.4;
     margin: 0 auto;
+    margin-bottom: 1rem;
+    color: var(--font-color-banner);
+    font-size: 3rem;
+    text-transform: uppercase;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    width: 100%;
+    max-width: 1200px;
+    max-height: max-content;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.directions, .file-zone {
+    flex: 1;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 380px;
+    height: 100%;
+    border-radius: 5px;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.directions{
+    background-color: var(--banner-color);
+    font-size: normal;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.content h2{
+    font-family: "Poppins", Times, serif;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    background: var(--font-color-banner);
+    color: var(--main-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 5px;
+}
+
+.directions ol{
+    padding: 0.25rem 2rem;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    list-style-position: inside;
+    text-align: left;
+    gap: 1rem;
+    color: var(--font-color-banner);
+    font-weight: bold;
+    font-size: normal;
+}
+
+.directions em{
+    font-weight: bold;
+    color: var(--font-color-banner);
+}
+
+.file-zone{
+    gap: 1rem;
+}
+
+.file-zone h2{
+    background: transparent;
+    color: var(--font-color-banner);
+}
+
+.wide{
+    width: 100%;
+}
+
+.file-input{
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    border-radius: 5px;
+    overflow: hidden;
+    height: fit-content;
+    border: 1px solid var(--banner-color);
+    cursor: pointer;
+}
+
+.file-input span{
+    font-family: "Poppins", Times, serif;
+    font-size: normal;
+    color: var(--font-color-banner);
+    font-weight: bold;
+    text-indent: 1rem;
+}
+
+.btn{
+    font-family: "Poppins", Times, serif;
+    font-size: large;
+    color: var(--font-color-banner);
+    padding: 0.5rem 2rem;
+    font-weight: bold;
+    background-color: var(--footer-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn[data-icon]::before{
+    content: attr(data-icon);
+    font-family: "Bootstrap-icons";
+    font-size: inherit;
+    margin-right: 0.5rem;
+    color: inherit;
+    font-weight: normal;
+}
+
+.btn:disabled, .btn:disabled:hover{
+    background-color: var( --disabled-color);
+    color: var(--disabled-font-color);
+    cursor: default;
+}
+
+.btn:hover{
+    background-color: var(--font-color-banner);
+    color: var(--footer-color);
+}
+
+footer {
+    background-color: var(--footer-color);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100vw;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Poppins", Times, serif;
+    font-size: small;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
+    color: var(--font-color-banner);
+}
+
+footer *:first-child {
+    justify-content: flex-start;
+    flex: 1;
+    width: 100%;
+}
+
+footer *:last-child {
+    justify-content: flex-end;
+    flex: 1;
+    width: 100%;
+    text-align: right;
+}
+
+a {
+    color: var(--link-default);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--font-color-banner);
+    text-decoration: underline;
 }
 
 .collapsible {
@@ -66,39 +289,10 @@ body {
     background-color: #112D4E;
 }
 
-.content {
+.directions ol {
     background-color: #DBE2EF;
     transition: max-height 1s ease-out;
     max-height: 0;
     width: 30%;
     overflow: scroll;
-}
-
-.button {
-    cursor: pointer;
-}
-
-.download {
-    text-align: center;
-    padding: 10px;
-}
-
-.info-banner {
-    background-color: #DBE2EF;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 6vh;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 8px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.info-a {
-    margin-right: auto;
-}
-
-.info-b {
-    margin-left: auto; 
 }

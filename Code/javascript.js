@@ -202,11 +202,11 @@ document.getElementById('processButton').addEventListener('click', async () => {
                 
         // Create a unique file name correlated to the parsed file's name.
         const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', ''); 
-        //use set attribute if the element does not have the href or download attribute.
+        
         // set blob filename to download link
         var url = URL.createObjectURL(blob);
         var downloadAnchor = document.getElementById('downloadanchor');
-        downloadAnchor.setAttribute('href', url); // Set the download link to the file name.
+        downloadAnchor.setAttribute('href', url);
         downloadAnchor.setAttribute('download', `${xmlFileName}.csv`); // Set the download link to the file name.
 
         // Add click event to download link to trigger download anchor

@@ -1,19 +1,3 @@
-//Creates an event for clicking on the collapsible directions.
-var coll = document.getElementsByClassName("collapsible");
-var i;
-for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", 
-        function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.maxHeight){
-                        content.style.maxHeight = null;
-                } else {
-                        content.style.maxHeight = content.scrollHeight + "px";
-                } ;
-        });
-};
-
 // Function to format inches to feet and inches
 function formatInchesToFeetAndInches(inches) {
         const feet = Math.floor(inches / 12);
@@ -27,6 +11,22 @@ function formatInchesToFeetAndInches(inches) {
         // Takes any remainder greater than 12 and makes it a new foot.
         return `${feet} ft ${remainingInches} in`;
 }; 
+
+// Add event listener for the file input 'file-input' to display file name in span child element
+document.getElementById('xmlFileInput').addEventListener('change', () => {
+        const fileInput = document.getElementById('xmlFileInput');
+        const fileLabel = document.getElementById('file-input');
+        const fileName = fileInput.files[0].name;
+        fileLabel.querySelector('span').textContent = fileName;
+
+        // if valid file set process button to active
+        document.getElementById('processButton').disabled = false;
+});
+
+// Add event listener for the file input 'file-input' to display file name in span child element
+document.getElementById('file-input').querySelector('.btn').addEventListener('click', () => {
+        document.getElementById('xmlFileInput').click();
+});
 
 // Event listener for the process button
 document.getElementById('processButton').addEventListener('click', async () => {
@@ -202,17 +202,30 @@ document.getElementById('processButton').addEventListener('click', async () => {
                 
         // Create a unique file name correlated to the parsed file's name.
         const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', ''); 
-        downloadLink.href = URL.createObjectURL(blob); // Create a download link for file.
-        downloadLink.download = `${xmlFileName}.csv`;
+        //use set attribute if the element does not have the href or download attribute.
+        // set blob filename to download link
+        var url = URL.createObjectURL(blob);
+        var downloadAnchor = document.getElementById('downloadanchor');
+        downloadAnchor.setAttribute('href', url); // Set the download link to the file name.
+        downloadAnchor.setAttribute('download', `${xmlFileName}.csv`); // Set the download link to the file name.
+
+        // Add click event to download link to trigger download anchor
+        downloadLink.addEventListener('click', function() {
+                downloadAnchor.click();
+        });
         
         // Trigger the download
         if (totalPrice > 0) { // Starts as long as there is something there.
-                downloadLink.style.display = 'block';
-                downloadLink.click();
-                URL.revokeObjectURL(downloadLink.href);
+                downloadLink.style.display = 'flex';
+                downloadAnchor.click();
+                URL.revokeObjectURL(url);
         } else {
                 alert('No data to download.');
                 downloadLink.style.display = 'none';
+                downloadAnchor.removeAttribute('href'); // remove href attribute
+                downloadAnchor.removeAttribute('download'); // remove download attribute
+                // remove click event listener
+                downloadLink.removeEventListener('click');
         };
 });
 

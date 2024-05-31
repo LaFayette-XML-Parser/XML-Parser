@@ -1,8 +1,9 @@
-/* Import google poppins font as Poppins, Helvetica, and similar fonts. */
+/* Import google poppins font as Poppins, Helvetica, and similar fonts are standard, Times is used more for articles and such */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 /* Import Bootstrap for styling icons */
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 
+/* Use Variables for colors or commonly used settings */
 :root{
     --banner-color: #DBE2EF;
     --footer-color: #DBE2EF;
@@ -13,6 +14,7 @@
     --disabled-font-color: #a8afbd;
 }
 
+/* Set body and html to flex with no margins to remove clipping issues */
 html, body {
     font-family: "Poppins", Arial, sans-serif;
     padding: 0px;
@@ -25,12 +27,14 @@ body {
     
 }
 
+/* Great use of flex!! Flex is where it's at! Changed colors to match main site */
 .banner {
     background-color: var(--banner-color);
     color: var(--font-color-banner);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* Corrected Padding so that you don't have to use margins for positioning like with the footer, having box-sizing will shift content inward instead of growing the width & height when using padding */
     padding: 0.5rem 1rem;
     box-sizing: border-box;
 }
@@ -38,6 +42,7 @@ body {
 .banner img {
     max-height: 50px;
     margin-right: 20px;
+    /* This will ensure we optimize loading the image as quality to ensure no bluring or jagged edges */
     image-rendering: optimizeQuality;
 }
 
@@ -49,6 +54,7 @@ body {
 
 }
 
+/* Changed from inside to main tag */
 main {
     font-family: "Poppins", Times, serif;
     text-align: center;
@@ -80,11 +86,12 @@ main h1 {
     text-transform: uppercase;
 }
 
+/* modified content (not nessessary I just like the drop area a bit more, I would align list items left instead of center, as it reads better.) */
 .content {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: stretch;
+    align-items: stretch; /* Ensure children stretch to the same height */
     justify-content: center;
     gap: 0.5rem;
     padding: 0 1rem;
@@ -96,14 +103,14 @@ main h1 {
 }
 
 .directions, .file-zone {
-    flex: 1;
+    flex: 1; /* Ensure both elements grow and shrink equally */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-width: 380px;
-    height: 100%;
+    height: 100%; /* Ensure they take the full height of the parent */
     border-radius: 5px;
     padding: 1rem;
     box-sizing: border-box;
@@ -128,12 +135,14 @@ main h1 {
     width: 100%;
     background: var(--font-color-banner);
     color: var(--main-color);
+    /* Force uppercase for header */
     text-transform: uppercase;
     letter-spacing: 1px;
     border-radius: 5px;
 }
 
 .directions ol{
+    /* Set padding to be slightly off (more l/r instead of t/b) */
     padding: 0.25rem 2rem;
     width: 100%;
     box-sizing: border-box;
@@ -147,10 +156,9 @@ main h1 {
     color: var(--font-color-banner);
     font-weight: bold;
     font-size: normal;
-    transition: max-height 1s ease-out;
-    overflow: scroll;
 }
 
+/* Used to emphasize text */
 .directions em{
     font-weight: bold;
     color: var(--font-color-banner);
@@ -210,6 +218,7 @@ main h1 {
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 0.5rem;
+    /* Add transitions to add some spice to your elements (this can also be used between states of elements) */
     transition: background-color 0.2s, color 0.2s;
 }
 
@@ -243,9 +252,11 @@ footer {
     justify-content: space-between;
     align-items: center;
     font-family: "Poppins", Times, serif;
+    /* Using name sizes allows the browser to format the size to the device so it appears correctly on mobile, desktop, or old / new PCs */
     font-size: small;
     font-weight: bold;
     padding: 0.5rem 1rem;
+    /* Border box ensures that content grows inwards not outwards with padding */
     box-sizing: border-box;
     color: var(--font-color-banner);
 }
@@ -263,6 +274,7 @@ footer *:last-child {
     text-align: right;
 }
 
+/* Style global a elements */
 a {
     color: var(--link-default);
     text-decoration: none;
@@ -274,20 +286,3 @@ a:hover {
     color: var(--font-color-banner);
     text-decoration: underline;
 }
-
-.collapsible {
-    background-color: #3F72AF;
-    color: white;
-    cursor: pointer;
-    width: 30%;
-    padding: 6px;
-    border: none;
-    text-align: center;
-    outline: none;
-    font-size: 15px;
-}
-
-.active, .collapsible:hover {
-    background-color: #112D4E;
-}
-

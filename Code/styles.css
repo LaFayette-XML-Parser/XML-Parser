@@ -147,6 +147,8 @@ main h1 {
     color: var(--font-color-banner);
     font-weight: bold;
     font-size: normal;
+    transition: max-height 1s ease-out;
+    overflow: scroll;
 }
 
 .directions em{
@@ -289,10 +291,3 @@ a:hover {
     background-color: #112D4E;
 }
 
-.directions ol {
-    background-color: #DBE2EF;
-    transition: max-height 1s ease-out;
-    max-height: 0;
-    width: 30%;
-    overflow: scroll;
-}

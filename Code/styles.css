@@ -286,3 +286,18 @@ a:hover {
     color: var(--font-color-banner);
     text-decoration: underline;
 }
+.collapsible {
+    background-color: var(--font-color-banner);
+    color: white;
+    cursor: pointer;
+    width: 30%;
+    padding: 6px;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+}
+
+.active, .collapsible:hover {
+    background-color: #112D4E;
+}

@@ -1,4 +1,4 @@
-<Group Internal="FALSE" source="Jonesboro" projectID="39baba9530ac4b178ba3b8080ad38ceb" Salesperson="Carmindy Phillips" TotalPrice="3947.8" Customer="" PO="" HasError="False" IsHycad="False" dataVersion="2301" h4versionID="4.10.2023.35">
+<Group Internal="FALSE" source="Jonesboro" projectID="39baba9530ac4b178ba3b8080ad38ceb" Salesperson="" TotalPrice="3947.8" Customer="" PO="" HasError="False" IsHycad="False" dataVersion="2301" h4versionID="4.10.2023.35">
   <Properties>
     <Property type="Double">
       <Name>Total Price</Name>
@@ -69,7 +69,7 @@
     <Property type="String">
       <Name>Sent From Email</Name>
       <RefName>useremail</RefName>
-      <Value>carmindy.phillips@lafayette-engineering.com</Value>
+      <Value></Value>
     </Property>
     <Property type="Boolean">
       <Name>Is Quote</Name>

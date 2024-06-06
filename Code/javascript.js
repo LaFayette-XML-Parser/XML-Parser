@@ -132,6 +132,9 @@ document.getElementById('processButton').addEventListener('click', async () => {
         psAmpValues.forEach(psAmp => {
             quantityByCombination[combinationKey].psAmpValues.add(psAmp);
         });
+
+        // Update quantity for each combination
+        quantityByCombination[combinationKey].quantity++;
     });
 
     let csvData = '';
@@ -155,13 +158,13 @@ document.getElementById('processButton').addEventListener('click', async () => {
             });
 
             let ampsRow = Object.entries(ampCounts).map(([amp, count]) => count > 1 ? `${count} ${amp}` : amp).join('|');
-            const quantityRow = combination.psAmpValues.size;
+            const psQty = combination.psAmpValues.size;
 
             if (ampsRow === '') {
                 ampsRow = '0';
             }
 
-            const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantityRow},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`;
+            const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${psQty},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`;
 
             if (isFirstRow) {
                 isFirstRow = false;

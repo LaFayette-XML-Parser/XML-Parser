@@ -9,18 +9,6 @@ function formatInchesToFeetAndInches(inches) {
     return `${feet} ft ${remainingInches} in`;
 }
 
-document.getElementById('xmlFileInput').addEventListener('change', () => {
-    const fileInput = document.getElementById('xmlFileInput');
-    const fileLabel = document.getElementById('file-input');
-    const fileName = fileInput.files[0].name;
-    fileLabel.querySelector('span').textContent = fileName;
-    document.getElementById('processButton').disabled = false;
-});
-
-document.getElementById('file-input').querySelector('.btn').addEventListener('click', () => {
-    document.getElementById('xmlFileInput').click();
-});
-
 document.getElementById('processButton').addEventListener('click', async () => {
     const fileInput = document.getElementById('xmlFileInput');
     const downloadLink = document.getElementById('downloadLink');
@@ -133,8 +121,15 @@ document.getElementById('processButton').addEventListener('click', async () => {
             quantityByCombination[combinationKey].psAmpValues.add(psAmp);
         });
 
-        // Update quantity for each combination
-        quantityByCombination[combinationKey].quantity++;
+        // Update quantity based on amp count conditions
+        const ampCount = psAmpValues.size;
+        if (ampCount === 2) {
+            quantityByCombination[combinationKey].quantity += 1;
+        } else if (ampCount === 3) {
+            quantityByCombination[combinationKey].quantity += 3;
+        } else {
+            quantityByCombination[combinationKey].quantity++;
+        }
     });
 
     let csvData = '';

@@ -1,4 +1,4 @@
- // Function to format inches to feet and inches
+   // Function to format inches to feet and inches
     function formatInchesToFeetAndInches(inches) {
         const feet = Math.floor(inches / 12);
         let remainingInches = inches % 12;
@@ -62,100 +62,105 @@
         const quantityByCombination = {};
         const propertiesElements = xmlDoc.querySelectorAll('Properties');
         
-        // Iterate through 'Properties' elements
-        propertiesElements.forEach(propertiesElement => {
-            const psAmpValuesMap = new Map(); // Creates a map to count amp values.
-            const refNameElements = propertiesElement.querySelectorAll('RefName');
+    // Iterate through 'Properties' elements
+    propertiesElements.forEach(propertiesElement => {
+        const psAmpValuesMap = new Map(); // Creates a map to count amp values.
+        const refNameElements = propertiesElement.querySelectorAll('RefName');
 
-            // Reset variables for each new Properties element
-            curveValue = '0';
-            infeedValue = '0';
-            dischargeValue = '0';
-            hpValue = '0';
-            iopCountValue = '0';
-            speedValue = '0';
-            
-            // Parses through each ref name.
-            refNameElements.forEach(refNameElement => { 
-                const propertyName = refNameElement.textContent;
-                const valueElement = refNameElement.nextElementSibling;
+        // Reset variables for each new Properties element
+        curveValue = '0';
+        infeedValue = '0';
+        dischargeValue = '0';
+        hpValue = '0';
+        iopCountValue = '0';
+        speedValue = '0';
 
-                // Assign values based on property name
-                if (propertyName === 'MarkNumber') {
-                    markedAttribute = valueElement.textContent;
-                } else if (propertyName === 'Model') {
-                    modelValue = valueElement.textContent;
-                } else if (propertyName === 'iopcount') {
-                    iopCountValue = valueElement.textContent;
-                } else if (propertyName === 'overallwidth') {
-                    widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent)); // Formats to inches when called.
-                } else if (propertyName === 'rollercenters') {
-                    railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                } else if (propertyName === 'curveangle') {
-                    curveValue = valueElement.textContent;
-                } else if (propertyName === 'overalllength') {
-                    lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                } else if (propertyName === 'infeedheight') {
-                    infeedValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                } else if (propertyName === 'dischargeheight') {
-                    dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                } else if (propertyName === 'hp') {
-                    hpValue = valueElement.textContent;
-                } else if (propertyName === 'fpm') {
-                    speedValue = valueElement.textContent;
-                } else if (propertyName === 'conveyorweight') {
-                    weightValue = valueElement.textContent;
-                } else if (propertyName === 'powersupplysize') {
-                    const psAmpValue = valueElement.textContent;
+        // Parse through each ref name.
+        refNameElements.forEach(refNameElement => { 
+            const propertyName = refNameElement.textContent;
+            const valueElement = refNameElement.nextElementSibling;
+
+            // Assign values based on property name
+            if (propertyName === 'MarkNumber') {
+                markedAttribute = valueElement.textContent;
+            } else if (propertyName === 'Model') {
+                modelValue = valueElement.textContent;
+            } else if (propertyName === 'iopcount') {
+                iopCountValue = valueElement.textContent;
+            } else if (propertyName === 'overallwidth') {
+                widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent)); // Formats to inches when called.
+            } else if (propertyName === 'rollercenters') {
+                railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+            } else if (propertyName === 'curveangle') {
+                curveValue = valueElement.textContent;
+            } else if (propertyName === 'overalllength') {
+                lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+            } else if (propertyName === 'infeedheight') {
+                infeedValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+            } else if (propertyName === 'dischargeheight') {
+                dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+            } else if (propertyName === 'hp') {
+                // Check if 'E24' is part of the model name before setting hpValue
+                if (!/e24/i.test(modelValue)) {
+                    hpValue = valueElement.textContent; // Set hpValue to the actual value if 'E24' is not found
+                } else {
+                    hpValue = '0'; // Set hpValue to 0 if 'E24' is found in the model
+                }
+            } else if (propertyName === 'fpm') {
+                speedValue = valueElement.textContent;
+            } else if (propertyName === 'conveyorweight') {
+                weightValue = valueElement.textContent;
+            } else if (propertyName === 'powersupplysize') {
+                const psAmpValue = valueElement.textContent;
+                
+                // If there is nothing, a zero is added.
+                if (psAmpValue.trim() === '') { 
+                    psAmpValuesMap.set('0', (psAmpValuesMap.get('0') || 0) + 1);
+                } else if (psAmpValue.toLowerCase() !== 'less power supply') {
+                    const ampMatch = psAmpValue.match(/\d+/); 
                     
-                    // If there is nothing, a zero is added.
-                    if (psAmpValue.trim() === '') { 
-                        psAmpValuesMap.set('0', (psAmpValuesMap.get('0') || 0) + 1);
-                    } else if (psAmpValue.toLowerCase() !== 'less power supply') {
-                        const ampMatch = psAmpValue.match(/\d+/); 
-                        
-                        // The case for the ref of LPS turned into a value.
-                        if (ampMatch) {
-                            const amp = ampMatch[0];
-                            psAmpValuesMap.set(amp, (psAmpValuesMap.get(amp) || 0) + 1);
-                        }
+                    // The case for the ref of LPS turned into a value.
+                    if (ampMatch) {
+                        const amp = ampMatch[0];
+                        psAmpValuesMap.set(amp, (psAmpValuesMap.get(amp) || 0) + 1);
                     }
-                } else if (propertyName === 'TotalPrice') {
-                    priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`; // Make to two decimals out.
-                };
-            });
-
-            // Generate a unique key for this combination of properties to check for repeated lines.
-            const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
-
-            // Store or update the combination's properties and quantities for each new line.
-            if (!quantityByCombination[combinationKey]) {
-                quantityByCombination[combinationKey] = {
-                    quantity: 0,
-                    psAmpValuesMap: new Map(),
-                    price: priceValue,
-                    modelValue: modelValue,
-                    markedAttribute: markedAttribute,
-                    iopCountValue: iopCountValue,
-                    widthValue: widthValue,
-                    railValue: railValue,
-                    curveValue: curveValue,
-                    lengthValue: lengthValue,
-                    infeedValue: infeedValue,
-                    dischargeValue: dischargeValue,
-                    hpValue: hpValue,
-                    speedValue: speedValue,
-                    weightValue: weightValue
-                };
+                }
+            } else if (propertyName === 'TotalPrice') {
+                priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`; // Make to two decimals out.
             }
-
-            // Add the current amps to the combination's map of amps
-            psAmpValuesMap.forEach((count, amp) => {
-                const existingCount = quantityByCombination[combinationKey].psAmpValuesMap.get(amp) || 0;
-                quantityByCombination[combinationKey].psAmpValuesMap.set(amp, existingCount + count);
-            });
         });
-        
+
+        // Generate a unique key for this combination of properties to check for repeated lines.
+        const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
+
+        // Store or update the combination's properties and quantities for each new line.
+        if (!quantityByCombination[combinationKey]) {
+            quantityByCombination[combinationKey] = {
+                quantity: 0,
+                psAmpValuesMap: new Map(),
+                price: priceValue,
+                modelValue: modelValue,
+                markedAttribute: markedAttribute,
+                iopCountValue: iopCountValue,
+                widthValue: widthValue,
+                railValue: railValue,
+                curveValue: curveValue,
+                lengthValue: lengthValue,
+                infeedValue: infeedValue,
+                dischargeValue: dischargeValue,
+                hpValue: hpValue,
+                speedValue: speedValue,
+                weightValue: weightValue
+            };
+        }
+
+        // Add the current amps to the combination's map of amps
+        psAmpValuesMap.forEach((count, amp) => {
+            const existingCount = quantityByCombination[combinationKey].psAmpValuesMap.get(amp) || 0;
+            quantityByCombination[combinationKey].psAmpValuesMap.set(amp, existingCount + count);
+        });
+    });
+
         // Prepare CSV data
         let csvData = '';
         let totalPrice = 0;

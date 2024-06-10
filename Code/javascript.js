@@ -1,19 +1,19 @@
-// Function to format inches to feet and inches
-function formatInchesToFeetAndInches(inches) {
+ // Function to format inches to feet and inches
+    function formatInchesToFeetAndInches(inches) {
         const feet = Math.floor(inches / 12);
         let remainingInches = inches % 12;
         remainingInches = parseFloat(remainingInches.toFixed(2)); // Formats inches to two points after decimal.
         if (remainingInches >= 12) {
-                feet += 1;
-                remainingInches -= 12;
+            feet += 1;
+            remainingInches -= 12;
         };
         
         // Takes any remainder greater than 12 and makes it a new foot.
         return `${feet} ft ${remainingInches} in`;
-}; 
+    }
 
-// Add event listener for the file input 'file-input' to display file name in span child element
-document.getElementById('xmlFileInput').addEventListener('change', () => {
+    // Add event listener for the file input 'file-input' to display file name in span child element
+    document.getElementById('xmlFileInput').addEventListener('change', () => {
         const fileInput = document.getElementById('xmlFileInput');
         const fileLabel = document.getElementById('file-input');
         const fileName = fileInput.files[0].name;
@@ -21,22 +21,22 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
 
         // if valid file set process button to active
         document.getElementById('processButton').disabled = false;
-});
+    });
 
-// Add event listener for the file input 'file-input' to display file name in span child element
-document.getElementById('file-input').querySelector('.btn').addEventListener('click', () => {
+    // Add event listener for the file input 'file-input' to display file name in span child element
+    document.getElementById('file-input').querySelector('.btn').addEventListener('click', () => {
         document.getElementById('xmlFileInput').click();
-});
+    });
 
-// Event listener for the process button
-document.getElementById('processButton').addEventListener('click', async () => {
+    // Event listener for the process button
+    document.getElementById('processButton').addEventListener('click', async () => {
         const fileInput = document.getElementById('xmlFileInput'); // Looks for the file and any previous download links.
         const downloadLink = document.getElementById('downloadLink');
                 
         // Checks to ensure a file is submitted.
         if (fileInput.files.length === 0) {
-                alert('Please select an XML file.');
-                return;
+            alert('Please select an XML file.');
+            return;
         };
                 
         // Set file data for parsing.
@@ -59,100 +59,101 @@ document.getElementById('processButton').addEventListener('click', async () => {
         let speedValue = '0';
         let weightValue = '0';
         let priceValue = '0';
-        let psAmpValues = new Set();
         const quantityByCombination = {};
         const propertiesElements = xmlDoc.querySelectorAll('Properties');
         
         // Iterate through 'Properties' elements
         propertiesElements.forEach(propertiesElement => {
-                psAmpValues = new Set(); // Creates a set of values for amps.
-                const refNameElements = propertiesElement.querySelectorAll('RefName');
-        
-                // Reset variables for each new Properties element
-                curveValue = '0';
-                infeedValue = '0';
-                dischargeValue = '0';
-                hpValue = '0';
-                iopCountValue = '0';
-                speedValue = '0';
-                
-                // Parses through each ref name.
-                refNameElements.forEach(refNameElement => { 
-                        const propertyName = refNameElement.textContent;
-                        const valueElement = refNameElement.nextElementSibling;
-        
-                        // Assign values based on property name
-                        if (propertyName === 'MarkNumber') {
-                                markedAttribute = valueElement.textContent;
-                        } else if (propertyName === 'Model') {
-                                modelValue = valueElement.textContent;
-                        } else if (propertyName === 'iopcount') {
-                                iopCountValue = valueElement.textContent;
-                        } else if (propertyName === 'overallwidth') {
-                                widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent)); // Formats to inches when called.
-                        } else if (propertyName === 'rollercenters') {
-                                railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                        } else if (propertyName === 'curveangle') {
-                                curveValue = valueElement.textContent;
-                        } else if (propertyName === 'overalllength') {
-                                lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                        } else if (propertyName === 'infeedheight') {
-                                infeedValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                        } else if (propertyName === 'dischargeheight') {
-                                dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                        } else if (propertyName === 'hp') {
-                                hpValue = valueElement.textContent;
-                        } else if (propertyName === 'fpm') {
-                                speedValue = valueElement.textContent;
-                        } else if (propertyName === 'conveyorweight') {
-                                weightValue = valueElement.textContent;
-                        } else if (propertyName === 'powersupplysize') {
-                                const psAmpValue = valueElement.textContent;
-                                
-                                // If there is nothing, a zero is added.
-                                if (psAmpValue.trim() === '') { 
-                                        psAmpValues.add('0');
-                                } else if (psAmpValue.toLowerCase() !== 'less power supply') {
-                                        const ampMatch = psAmpValue.match(/\d+/); 
-                                        
-                                        // The case for the ref of LPS turned into a value.
-                                        if (ampMatch) {
-                                                psAmpValues.add(ampMatch[0]);
-                                        };
-                                };
-                        } else if (propertyName === 'TotalPrice') {
-                                priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`; // Make to two decimals out.
-                        };
-                });
-        
-                // Generate a unique key for this combination of properties to check for repeated lines.
-                const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
-        
-                // Store or update the combination's properties and quantities for each new line.
-                if (!quantityByCombination[combinationKey]) {
-                        quantityByCombination[combinationKey] = {
-                                quantity: 0,
-                                psAmpValues: new Set(),
-                                price: priceValue,
-                                modelValue: modelValue,
-                                markedAttribute: markedAttribute,
-                                iopCountValue: iopCountValue,
-                                widthValue: widthValue,
-                                railValue: railValue,
-                                curveValue: curveValue,
-                                lengthValue: lengthValue,
-                                infeedValue: infeedValue,
-                                dischargeValue: dischargeValue,
-                                hpValue: hpValue,
-                                speedValue: speedValue,
-                                weightValue: weightValue
-                        };
+            const psAmpValuesMap = new Map(); // Creates a map to count amp values.
+            const refNameElements = propertiesElement.querySelectorAll('RefName');
+
+            // Reset variables for each new Properties element
+            curveValue = '0';
+            infeedValue = '0';
+            dischargeValue = '0';
+            hpValue = '0';
+            iopCountValue = '0';
+            speedValue = '0';
+            
+            // Parses through each ref name.
+            refNameElements.forEach(refNameElement => { 
+                const propertyName = refNameElement.textContent;
+                const valueElement = refNameElement.nextElementSibling;
+
+                // Assign values based on property name
+                if (propertyName === 'MarkNumber') {
+                    markedAttribute = valueElement.textContent;
+                } else if (propertyName === 'Model') {
+                    modelValue = valueElement.textContent;
+                } else if (propertyName === 'iopcount') {
+                    iopCountValue = valueElement.textContent;
+                } else if (propertyName === 'overallwidth') {
+                    widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent)); // Formats to inches when called.
+                } else if (propertyName === 'rollercenters') {
+                    railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                } else if (propertyName === 'curveangle') {
+                    curveValue = valueElement.textContent;
+                } else if (propertyName === 'overalllength') {
+                    lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                } else if (propertyName === 'infeedheight') {
+                    infeedValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                } else if (propertyName === 'dischargeheight') {
+                    dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                } else if (propertyName === 'hp') {
+                    hpValue = valueElement.textContent;
+                } else if (propertyName === 'fpm') {
+                    speedValue = valueElement.textContent;
+                } else if (propertyName === 'conveyorweight') {
+                    weightValue = valueElement.textContent;
+                } else if (propertyName === 'powersupplysize') {
+                    const psAmpValue = valueElement.textContent;
+                    
+                    // If there is nothing, a zero is added.
+                    if (psAmpValue.trim() === '') { 
+                        psAmpValuesMap.set('0', (psAmpValuesMap.get('0') || 0) + 1);
+                    } else if (psAmpValue.toLowerCase() !== 'less power supply') {
+                        const ampMatch = psAmpValue.match(/\d+/); 
+                        
+                        // The case for the ref of LPS turned into a value.
+                        if (ampMatch) {
+                            const amp = ampMatch[0];
+                            psAmpValuesMap.set(amp, (psAmpValuesMap.get(amp) || 0) + 1);
+                        }
+                    }
+                } else if (propertyName === 'TotalPrice') {
+                    priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`; // Make to two decimals out.
                 };
-        
-                // Add the current amps to the combination's set of amps
-                psAmpValues.forEach(psAmp => {
-                        quantityByCombination[combinationKey].psAmpValues.add(psAmp);
-                });
+            });
+
+            // Generate a unique key for this combination of properties to check for repeated lines.
+            const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
+
+            // Store or update the combination's properties and quantities for each new line.
+            if (!quantityByCombination[combinationKey]) {
+                quantityByCombination[combinationKey] = {
+                    quantity: 0,
+                    psAmpValuesMap: new Map(),
+                    price: priceValue,
+                    modelValue: modelValue,
+                    markedAttribute: markedAttribute,
+                    iopCountValue: iopCountValue,
+                    widthValue: widthValue,
+                    railValue: railValue,
+                    curveValue: curveValue,
+                    lengthValue: lengthValue,
+                    infeedValue: infeedValue,
+                    dischargeValue: dischargeValue,
+                    hpValue: hpValue,
+                    speedValue: speedValue,
+                    weightValue: weightValue
+                };
+            }
+
+            // Add the current amps to the combination's map of amps
+            psAmpValuesMap.forEach((count, amp) => {
+                const existingCount = quantityByCombination[combinationKey].psAmpValuesMap.get(amp) || 0;
+                quantityByCombination[combinationKey].psAmpValuesMap.set(amp, existingCount + count);
+            });
         });
         
         // Prepare CSV data
@@ -166,29 +167,37 @@ document.getElementById('processButton').addEventListener('click', async () => {
         
         // Loop through each combination
         for (const combinationKey in quantityByCombination) {
-                // If a unique row.
-                if (quantityByCombination.hasOwnProperty(combinationKey)) {
-                        const combination = quantityByCombination[combinationKey]; // Add to combination key.
-                        let ampsRow = Array.from(combination.psAmpValues).join('|'); // Add psamp column.
-                        const quantityRow = combination.psAmpValues.size; // Add quantity(based on the size of psamp array).
-                
-                        // Replace blanks with zero
-                        if (ampsRow === '') {
-                                ampsRow = '0';
-                        };
-                        const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantityRow},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
-                
-                        // Skip the first row (It always prints blank due to the combination process. Easiest solution.)
-                        if (isFirstRow) {
-                                isFirstRow = false;
-                                continue;
-                        };
-                
-                        // Add the data to each row.
-                        csvData += csvRow;
-                        // Accumulate price for total price
-                        totalPrice += parseFloat(combination.price.replace('$', ''));
+            // If a unique row.
+            if (quantityByCombination.hasOwnProperty(combinationKey)) {
+                const combination = quantityByCombination[combinationKey]; // Add to combination key.
+                const ampsArray = [];
+                let quantitySum = 0;
+
+                // Add psamp column.
+                combination.psAmpValuesMap.forEach((count, amp) => {
+                    ampsArray.push(`${count}x${amp}`);
+                    quantitySum += count;
+                });
+
+                let ampsRow = ampsArray.join('|'); // Combine counts and amps.
+
+                // Replace blanks with zero
+                if (ampsRow === '') {
+                    ampsRow = '0';
+                }
+                const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantitySum},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
+        
+                // Skip the first row (It always prints blank due to the combination process. Easiest solution.)
+                if (isFirstRow) {
+                    isFirstRow = false;
+                    continue;
                 };
+        
+                // Add the data to each row.
+                csvData += csvRow;
+                // Accumulate price for total price
+                totalPrice += parseFloat(combination.price.replace('$', ''));
+            };
         };
         
         // Add total price row to CSV data
@@ -197,7 +206,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
         
         // Create a Blob containing the CSV data
         const blob = new Blob([csvData], {
-                type: 'text/csv'
+            type: 'text/csv'
         });
                 
         // Create a unique file name correlated to the parsed file's name.
@@ -211,24 +220,20 @@ document.getElementById('processButton').addEventListener('click', async () => {
 
         // Add click event to download link to trigger download anchor
         downloadLink.addEventListener('click', function() {
-                downloadAnchor.click();
+            downloadAnchor.click();
         });
         
         // Trigger the download
         if (totalPrice > 0) { // Starts as long as there is something there.
-                downloadLink.style.display = 'flex';
-                downloadAnchor.click();
-                URL.revokeObjectURL(url);
+            downloadLink.style.display = 'flex';
+            downloadAnchor.click();
+            URL.revokeObjectURL(url);
         } else {
-                alert('No data to download.');
-                downloadLink.style.display = 'none';
-                downloadAnchor.removeAttribute('href'); // remove href attribute
-                downloadAnchor.removeAttribute('download'); // remove download attribute
-                // remove click event listener
-                downloadLink.removeEventListener('click');
+            alert('No data to download.');
+            downloadLink.style.display = 'none';
+            downloadAnchor.removeAttribute('href'); // remove href attribute
+            downloadAnchor.removeAttribute('download'); // remove download attribute
+            // remove click event listener
+            downloadLink.removeEventListener('click');
         };
-});
-
-//Note: May change from csv to xlxs. However, this would require libraries not native to github. Xlxs allows for stylisation of the excel sheet beforehand. This could
-//prevent excel sheets from considering mark numbers like- 03-11-1453 as dates. This isn't a big issue currently though. So I'm focusing on completing the accuracy. May take
-//this note out later if I end up getting to that. Will work on it-may take too long to find a proper solution.
+    });

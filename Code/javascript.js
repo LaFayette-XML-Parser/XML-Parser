@@ -180,7 +180,7 @@
 
                 // Add psamp column.
                 combination.psAmpValuesMap.forEach((count, amp) => {
-                    ampsArray.push(`${count}-${amp}`);
+                    ampsArray.push(`${count}:${amp}`);
                     quantitySum += count;
                 });
 

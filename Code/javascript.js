@@ -135,14 +135,12 @@ propertiesElements.forEach(propertiesElement => {
     });
 
     // Adjust length and rail centers based on hasCloserollers and model containing 'c' for curve.
-    if(/c/i.test(modelValue)){
-        lengthValue = '0';
-        if (hasCloserollers) {
+        if (hasCloserollers || /c/i.test(modelValue)) {
+            lengthValue = '0';
             railValue = '0 ft 2 in';
         } else if (!hasCloserollers) {
             railValue = '0 ft 3 in';
         }
-    }
 
     // Generate a unique key for this combination of properties to check for repeated lines.
     const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;

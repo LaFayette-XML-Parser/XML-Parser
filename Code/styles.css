@@ -214,7 +214,6 @@ main h1 {
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 0.5rem;
-    /* Add transitions to add some spice to your elements (this can also be used between states of elements) */
     transition: background-color 0.2s, color 0.2s;
 }
 
@@ -248,8 +247,6 @@ footer {
     justify-content: space-between;
     align-items: center;
     font-family: "Poppins", Times, serif;
-    /* Using name sizes allows the browser to format the size to the device so it appears correctly on mobile, desktop, or old / new PCs */
-    font-size: small;
     font-weight: bold;
     padding: 0.5rem 1rem;
     /* Border box ensures that content grows inwards not outwards with padding */

@@ -114,7 +114,7 @@ propertiesElements.forEach(propertiesElement => {
             weightValue = valueElement.textContent;
         } else if (propertyName === 'powersupplysize') {
             const psAmpValue = valueElement.textContent;
-        
+            
             // If there is nothing, a zero is added.
             if (psAmpValue.trim() === '') { 
                 psAmpValuesMap.set('0', (psAmpValuesMap.get('0') || 0) + 1);
@@ -134,13 +134,14 @@ propertiesElements.forEach(propertiesElement => {
         }
     });
 
-    // Adjust length and rail centers based on hasCloserollers and model containing 'c' for curve.  
+    // Adjust length and rail centers based on hasCloserollers and model containing 'c' for curve.
     if (hasCloserollers && /c/i.test(modelValue)) {
         lengthValue = '0';
         railValue = '0 ft 2 in';
     } else if (!hasCloserollers) {
         railValue = '0 ft 3 in';
     }
+
     // Generate a unique key for this combination of properties to check for repeated lines.
     const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
 

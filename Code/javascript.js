@@ -2,7 +2,9 @@
     function formatInchesToFeetAndInches(inches) {
         const feet = Math.floor(inches / 12);
         let remainingInches = inches % 12;
-        remainingInches = parseFloat(remainingInches.toFixed(2)); // Formats inches to two points after decimal.
+        
+        // Formats inches to two points after decimal.
+        remainingInches = parseFloat(remainingInches.toFixed(2)); 
         if (remainingInches >= 12) {
             feet += 1;
             remainingInches -= 12;
@@ -29,8 +31,9 @@
     });
 
     // Event listener for the process button.
-    document.getElementById('processButton').addEventListener('click', async () => {
-        const fileInput = document.getElementById('xmlFileInput'); // Looks for the file and any previous download links.
+    document.getElementById('processButton').addEventListener('click', async () => { 
+        // Looks for the file and any previous download links.
+        const fileInput = document.getElementById('xmlFileInput');
         const downloadLink = document.getElementById('downloadLink');
                 
         // Checks to ensure a file is submitted.
@@ -87,8 +90,9 @@
                 modelValue = valueElement.textContent;
             } else if (propertyName === 'iopcount') {
                 iopCountValue = valueElement.textContent;
-            } else if (propertyName === 'overallwidth') {
-                widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent)); // Formats to inches when called.
+            } else if (propertyName === 'overallwidth') { 
+                // Formats to inches when called.
+                widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'rollercenters') {
                 railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'curveangle') {
@@ -100,12 +104,14 @@
             } else if (propertyName === 'dischargeheight') {
                 dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'hp') {
+                
                 // Check if 'E24' is part of the model name before setting hpValue.
                 if (!/e24/i.test(modelValue)) {
                     hpValue = valueElement.textContent;
                 } else {
                     hpValue = '0';
                 }
+                
             } else if (propertyName === 'fpm') {
                 speedValue = valueElement.textContent;
             } else if (propertyName === 'conveyorweight') {
@@ -125,22 +131,21 @@
                         psAmpValuesMap.set(amp, (psAmpValuesMap.get(amp) || 0) + 1);
                     }
                 }
+                
             } else if (propertyName === 'TotalPrice') {
-                priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`; // Make to two decimals out.
+                // Make to two decimals out.
+                priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`; 
             } else if (propertyName === 'hascloserollers') {
-            hasCloserollers = valueElement.textContent.toLowerCase() === 'true'; // Check for 'hascloserollers' value.
-            if (hasCloserollers) {
-        railValue = '0 ft 2 in';
-    } else if (!hasCloserollers) {
-    	lengthValue = '0';
-        railValue = '0 ft 3 in';
-    }
-        }
-        
-
+                // Check for 'hascloserollers' value.
+                hasCloserollers = valueElement.textContent.toLowerCase() === 'true'; 
+                if (hasCloserollers) {
+                    railValue = '0 ft 2 in';
+                } else if (!hasCloserollers) {
+    	            lengthValue = '0';
+                    railValue = '0 ft 3 in';
+                }
+            }
         });
-        
-
 
         // Generate a unique key for this combination of properties to check for repeated lines.
         const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
@@ -166,23 +171,23 @@
             };
         }
 
-        // Add the current amps to the combination's map of amps
+        // Add the current amps to the combination's map of amps.
         psAmpValuesMap.forEach((count, amp) => {
             const existingCount = quantityByCombination[combinationKey].psAmpValuesMap.get(amp) || 0;
             quantityByCombination[combinationKey].psAmpValuesMap.set(amp, existingCount + count);
         });
     });
 
-        // Prepare CSV data
+        // Prepare CSV data.
         let csvData = '';
         let totalPrice = 0;
         let isFirstRow = true;
         
-        // Add Column titles to CSV data
+        // Add Column titles to CSV data.
         const headersRow = 'Unit Mark, Model, Width, Rlr Ctrs, Curve, Length, Inf El, Dis El, HP, PS Qty, PS Amp, IOP Qty, Speed, Weight, List Price, Cost\n';
         csvData = headersRow + csvData;
         
-        // Loop through each combination
+        // Loop through each combination.
         for (const combinationKey in quantityByCombination) {
             // If a unique row.
             if (quantityByCombination.hasOwnProperty(combinationKey)) {
@@ -202,7 +207,8 @@
                 if (ampsRow === '') {
                     ampsRow = '0';
                 }
-                const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantitySum},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
+                // Declaration of order that the columns from the combinations is placed in each row.
+                const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantitySum},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; 
         
                 // Skip the first row (It always prints blank due to the combination process. Easiest solution.)
                 if (isFirstRow) {
@@ -217,11 +223,11 @@
             };
         };
         
-        // Add total price row to CSV data
+        // Add total price row to CSV data.
         const totalRow = ` , , , , , , , , , , , , ,  Total Prices, $${totalPrice.toFixed(2)}, $`;
         csvData += totalRow + '\n';
         
-        // Create a Blob containing the CSV data
+        // Create a Blob containing the CSV data.
         const blob = new Blob([csvData], {
             type: 'text/csv'
         });
@@ -229,28 +235,30 @@
         // Create a unique file name correlated to the parsed file's name.
         const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', ''); 
         
-        // set blob filename to download link
+        // set blob filename to download link.
         var url = URL.createObjectURL(blob);
         var downloadAnchor = document.getElementById('downloadanchor');
         downloadAnchor.setAttribute('href', url);
-        downloadAnchor.setAttribute('download', `${xmlFileName}.csv`); // Set the download link to the file name.
+        
+        // Set the download link to the file name.
+        downloadAnchor.setAttribute('download', `${xmlFileName}.csv`); 
 
-        // Add click event to download link to trigger download anchor
+        // Add click event to download link to trigger download anchor.
         downloadLink.addEventListener('click', function() {
             downloadAnchor.click();
         });
         
         // Trigger the download
-        if (totalPrice > 0) { // Starts as long as there is something there.
+        if (totalPrice > 0) { 
+            // Starts as long as there is something there.
             downloadLink.style.display = 'flex';
             downloadAnchor.click();
             URL.revokeObjectURL(url);
         } else {
             alert('No data to download.');
             downloadLink.style.display = 'none';
-            downloadAnchor.removeAttribute('href'); // remove href attribute
-            downloadAnchor.removeAttribute('download'); // remove download attribute
-            // remove click event listener
+            downloadAnchor.removeAttribute('href'); 
+            downloadAnchor.removeAttribute('download'); 
             downloadLink.removeEventListener('click');
         };
     });

@@ -33,7 +33,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* Corrected Padding so that you don't have to use margins for positioning like with the footer, having box-sizing will shift content inward instead of growing the width & height when using padding */
     padding: 0.5rem 1rem;
     box-sizing: border-box;
 }
@@ -41,7 +40,6 @@ body {
 .banner img {
     max-height: 50px;
     margin-right: 20px;
-    /* This will ensure we optimize loading the image as quality to ensure no bluring or jagged edges */
     image-rendering: optimizeQuality;
 }
 

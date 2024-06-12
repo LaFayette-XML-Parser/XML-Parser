@@ -185,7 +185,7 @@
         let isFirstRow = true;
         
         // Add Column titles to CSV data.
-        const headersRow = 'Unit Mark, Model, Width, Rlr Ctrs, Curve, Length, Inf El, Dis El, HP, PS Qty, PS Amps, IOP Qty, Speed, Weight, List Price\n';
+        const headersRow = 'Unit Mark, Model, Width, Rlr Ctrs, Curve, Length, Inf El, Dis El, HP, PS Qty, PS Amp, IOP Qty, Speed, Weight, List Price, Cost\n';
         csvData = headersRow + csvData;
         
         // Loop through each combination.
@@ -208,9 +208,7 @@
                 if (ampsRow === '') {
                     ampsRow = '0';
                 }
-                
-                // Declaration of order that the columns from the combinations is placed in each row.
-                const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantitySum},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; 
+                const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantitySum},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
         
                 // Skip the first row (It always prints blank due to the combination process. Easiest solution.)
                 if (isFirstRow) {
@@ -226,7 +224,7 @@
         };
         
         // Add total price row to CSV data.
-        const totalRow = ` , , , , , , , , , , , , ,  Total Price, $${totalPrice.toFixed(2)},`;
+        const totalRow = ` , , , , , , , , , , , , ,  Total Prices, $${totalPrice.toFixed(2)}, $`;
         csvData += totalRow + '\n';
         
         // Create a Blob containing the CSV data.

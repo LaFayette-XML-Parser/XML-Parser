@@ -1,4 +1,4 @@
-   // Function to format inches to feet and inches
+// Function to format inches to feet and inches.
     function formatInchesToFeetAndInches(inches) {
         const feet = Math.floor(inches / 12);
         let remainingInches = inches % 12;
@@ -12,23 +12,23 @@
         return `${feet} ft ${remainingInches} in`;
     }
 
-    // Add event listener for the file input 'file-input' to display file name in span child element
+    // Add event listener for the file input 'file-input' to display file name in span child element.
     document.getElementById('xmlFileInput').addEventListener('change', () => {
         const fileInput = document.getElementById('xmlFileInput');
         const fileLabel = document.getElementById('file-input');
         const fileName = fileInput.files[0].name;
         fileLabel.querySelector('span').textContent = fileName;
 
-        // if valid file set process button to active
+        // if valid file set process button to active.
         document.getElementById('processButton').disabled = false;
     });
 
-    // Add event listener for the file input 'file-input' to display file name in span child element
+    // Add event listener for the file input 'file-input' to display file name in span child element.
     document.getElementById('file-input').querySelector('.btn').addEventListener('click', () => {
         document.getElementById('xmlFileInput').click();
     });
 
-    // Event listener for the process button
+    // Event listener for the process button.
     document.getElementById('processButton').addEventListener('click', async () => {
         const fileInput = document.getElementById('xmlFileInput'); // Looks for the file and any previous download links.
         const downloadLink = document.getElementById('downloadLink');
@@ -45,7 +45,7 @@
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
                 
-        // Initialize variables for property values
+        // Initialize variables for property values.
         let markedAttribute = '';
         let iopCountValue = '0';
         let modelValue = '0';
@@ -62,12 +62,12 @@
         const quantityByCombination = {};
         const propertiesElements = xmlDoc.querySelectorAll('Properties');
         
-    // Iterate through 'Properties' elements
+    // Iterate through 'Properties' elements.
     propertiesElements.forEach(propertiesElement => {
         const psAmpValuesMap = new Map(); // Creates a map to count amp values.
         const refNameElements = propertiesElement.querySelectorAll('RefName');
 
-        // Reset variables for each new Properties element
+        // Reset variables for each new Properties element.
         curveValue = '0';
         infeedValue = '0';
         dischargeValue = '0';
@@ -80,7 +80,7 @@
             const propertyName = refNameElement.textContent;
             const valueElement = refNameElement.nextElementSibling;
 
-            // Assign values based on property name
+            // Assign values based on property name.
             if (propertyName === 'MarkNumber') {
                 markedAttribute = valueElement.textContent;
             } else if (propertyName === 'Model') {
@@ -93,18 +93,18 @@
                 railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'curveangle') {
                 curveValue = valueElement.textContent;
-            } else if (propertyName === 'overalllength') {
+            } else if (propertyName === 'overalllength') {  
                 lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'infeedheight') {
                 infeedValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'dischargeheight') {
                 dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'hp') {
-                // Check if 'E24' is part of the model name before setting hpValue
+                // Check if 'E24' is part of the model name before setting hpValue.
                 if (!/e24/i.test(modelValue)) {
-                    hpValue = valueElement.textContent; // Set hpValue to the actual value if 'E24' is not found
+                    hpValue = valueElement.textContent;
                 } else {
-                    hpValue = '0'; // Set hpValue to 0 if 'E24' is found in the model
+                    hpValue = '0';
                 }
             } else if (propertyName === 'fpm') {
                 speedValue = valueElement.textContent;
@@ -127,8 +127,20 @@
                 }
             } else if (propertyName === 'TotalPrice') {
                 priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`; // Make to two decimals out.
-            }
+            } else if (propertyName === 'hascloserollers') {
+            hasCloserollers = valueElement.textContent.toLowerCase() === 'true'; // Check for 'hascloserollers' value.
+            if (hasCloserollers) {
+        railValue = '0 ft 2 in';
+    } else if (!hasCloserollers) {
+    	lengthValue = '0';
+        railValue = '0 ft 3 in';
+    }
+        }
+        
+
         });
+        
+
 
         // Generate a unique key for this combination of properties to check for repeated lines.
         const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;

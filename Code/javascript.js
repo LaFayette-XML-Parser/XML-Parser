@@ -110,10 +110,10 @@
                 dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'hp') {
                 // Check if 'E24' is part of the model name before setting hpValue.
-                if (!/e24/i.test(modelValue)) {
-                    hpValue = valueElement.textContent;
-                } else {
+                if (/e24/i.test(modelValue)) {
                     hpValue = '0';
+                } else {
+                    hpValue = valueElement.textContent;
                 }
                 
             } else if (propertyName === 'fpm') {

@@ -1,4 +1,4 @@
- // Function to format inches to feet and inches.
+// Function to format inches to feet and inches.
     function formatInchesToFeetAndInches(inches) {
         const feet = Math.floor(inches / 12);
         let remainingInches = inches % 12;

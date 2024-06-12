@@ -71,13 +71,18 @@
         const refNameElements = propertiesElement.querySelectorAll('RefName');
 
         // Reset variables for each new Properties element.
+        iopCountValue = '0';
+        widthValue = '0';
+        railValue = '0';
         curveValue = '0';
+        lengthValue = '0';
         infeedValue = '0';
         dischargeValue = '0';
         hpValue = '0';
-        iopCountValue = '0';
         speedValue = '0';
-
+        weightValue = '0';
+        priceValue = '0';
+        
         // Parse through each ref name.
         refNameElements.forEach(refNameElement => { 
             const propertyName = refNameElement.textContent;
@@ -104,7 +109,6 @@
             } else if (propertyName === 'dischargeheight') {
                 dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'hp') {
-                
                 // Check if 'E24' is part of the model name before setting hpValue.
                 if (!/e24/i.test(modelValue)) {
                     hpValue = valueElement.textContent;

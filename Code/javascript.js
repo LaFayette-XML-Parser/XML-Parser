@@ -26,7 +26,7 @@ document.getElementById('file-input').querySelector('.btn').addEventListener('cl
     document.getElementById('xmlFileInput').click();
 });
 
-// When the process button is clicked, it takes the file input selected, selects the dowload link name, then it parses.
+// When the process button is clicked, it takes the file input selected, selects the download link name, then it parses.
 document.getElementById('processButton').addEventListener('click', async () => {
     const fileInput = document.getElementById('xmlFileInput');
     const downloadLink = document.getElementById('downloadLink');
@@ -45,17 +45,17 @@ document.getElementById('processButton').addEventListener('click', async () => {
             
     // Initialize variables for property values. More can be added as needed. 
     let markedAttribute = '';
-    let iopCountValue = '0';
-    let modelValue = '0';
-    let widthValue = '0';
-    let railValue = '0';
-    let curveValue = '0';
-    let lengthValue = '0';
-    let infeedValue = '0';
-    let dischargeValue = '0';
-    let hpValue = '0';
-    let speedValue = '0';
-    let weightValue = '0';
+    let iopCountValue = '';
+    let modelValue = '';
+    let widthValue = '';
+    let railValue = '';
+    let curveValue = '';
+    let lengthValue = '';
+    let infeedValue = '';
+    let dischargeValue = '';
+    let hpValue = '';
+    let speedValue = '';
+    let weightValue = '';
     let priceValue = '0';
     const quantityByCombination = {};
     const propertiesElements = xmlDoc.querySelectorAll('Properties');
@@ -66,14 +66,15 @@ document.getElementById('processButton').addEventListener('click', async () => {
         const refNameElements = propertiesElement.querySelectorAll('RefName');
 
         // Reset variables for each new Properties element.
-        curveValue = '0';
-        infeedValue = '0';
-        dischargeValue = '0';
-        hpValue = '0';
-        iopCountValue = '0';
-        speedValue = '0';
+        curveValue = '';
+        infeedValue = '';
+        dischargeValue = '';
+        hpValue = '';
+        iopCountValue = '';
+        speedValue = '';
+        weightValue = '';
 
-        // Parse through each ref name and find the value to record. Format and contitionals are within.
+        // Parse through each ref name and find the value to record. Format and conditionals are within.
         refNameElements.forEach(refNameElement => { 
             const propertyName = refNameElement.textContent;
             const valueElement = refNameElement.nextElementSibling;
@@ -107,7 +108,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
                 const psAmpValue = valueElement.textContent;
                 // If there is nothing, a zero is added.
                 if (psAmpValue.trim() === '') { 
-                    psAmpValuesMap.set('0', (psAmpValuesMap.get('0') || 0) + 1);
+                    psAmpValuesMap.set('', (psAmpValuesMap.get('') || 0) + 1);
                 } else if (psAmpValue.toLowerCase() !== 'less power supply') {
                     const ampMatch = psAmpValue.match(/\d+/);     
                     // The case for the ref of LPS turned into a value.
@@ -132,11 +133,20 @@ document.getElementById('processButton').addEventListener('click', async () => {
 
 	// Ensures curve models have a length value set to 0.
         if (/C/.test(modelValue)) {
-            lengthValue = '0';
+            lengthValue = '';
         }
-	// Ensures all E24 do not print the half HP. Since it is not needed.
+	// Ensures all E24 do not print the half HP.
+    //Since it is not needed.
         if (/E24/.test(modelValue)) {
-           hpValue = '0';
+           hpValue = '';
+        }
+        
+   //Turns the natural zeroes to blank to match the rest of the CSV.
+        if (iopCountValue === '0'){
+        	iopCountValue = '';
+        }
+               if (weightValue == '0.0000'){
+        	weightValue = '';
         }
 
         // Generate a unique key for this combination of properties to check for repeated lines.
@@ -159,7 +169,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
                 dischargeValue: dischargeValue,
                 hpValue: hpValue,
                 speedValue: speedValue,
-                weightValue: weightValue
+                weightValue: weightValue,
             };
         }
 
@@ -185,7 +195,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
         if (quantityByCombination.hasOwnProperty(combinationKey)) {
             const combination = quantityByCombination[combinationKey]; // Add to combination key.
             const ampsArray = [];
-            let quantitySum = 0;
+            let quantitySum = '';
 
             // Add psamp column.
             combination.psAmpValuesMap.forEach((count, amp) => {
@@ -194,14 +204,12 @@ document.getElementById('processButton').addEventListener('click', async () => {
             });
 
             let ampsRow = ampsArray.join('|'); // Combine counts and amps.
-
-            // Replace blanks with zero
-            if (ampsRow === '') {
-                ampsRow = '0';
-            }
-            const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantitySum},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; // Declaration of order that the columns from the combinations is placed in each row.
+            // Declaration of order that the columns 
+            // from the combinations is placed in each row.
+            const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantitySum},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; 
     
-            // Skip the first row (It always prints blank due to the combination process. Easiest solution.)
+            // Skip the first row (It always prints blank due to 
+            // the combination process. Easiest solution.)
             if (isFirstRow) {
                 isFirstRow = false;
                 continue;

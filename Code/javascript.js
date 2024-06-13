@@ -136,17 +136,17 @@ document.getElementById('processButton').addEventListener('click', async () => {
             lengthValue = '';
         }
 	// Ensures all E24 do not print the half HP.
-    //Since it is not needed.
+        //Since it is not needed.
         if (/E24/.test(modelValue)) {
            hpValue = '';
         }
         
-   //Turns the natural zeroes to blank to match the rest of the CSV.
+        //Turns the natural zeroes to blank to match the rest of the CSV.
         if (iopCountValue === '0'){
-        	iopCountValue = '';
+            iopCountValue = '';
         }
-               if (weightValue == '0.0000'){
-        	weightValue = '';
+        if (weightValue === '0'){
+            weightValue = '';
         }
 
         // Generate a unique key for this combination of properties to check for repeated lines.

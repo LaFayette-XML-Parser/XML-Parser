@@ -1,36 +1,34 @@
-// Function to format inches to feet and inches.
+// Formats inches to feet and inches by dividing by 12 and taking the remainder two points after the decimal. 
+// Then it takes any remainder greater than 12 and makes it a new foot.
 function formatInchesToFeetAndInches(inches) {
     const feet = Math.floor(inches / 12);
     let remainingInches = inches % 12;
-    remainingInches = parseFloat(remainingInches.toFixed(2)); // Formats inches to two points after decimal.
+    remainingInches = parseFloat(remainingInches.toFixed(2));
     if (remainingInches >= 12) {
         feet += 1;
         remainingInches -= 12;
     };
-    
-    // Takes any remainder greater than 12 and makes it a new foot.
     return `${feet} ft ${remainingInches} in`;
 }
 
-// Add event listener for the file input 'file-input' to display file name in span child element.
+// Add event listener for the file input 'file-input' to display file name in span child element. 
+// If valid file set process button to active.
 document.getElementById('xmlFileInput').addEventListener('change', () => {
     const fileInput = document.getElementById('xmlFileInput');
     const fileLabel = document.getElementById('file-input');
     const fileName = fileInput.files[0].name;
     fileLabel.querySelector('span').textContent = fileName;
-
-    // if valid file set process button to active.
     document.getElementById('processButton').disabled = false;
 });
 
-// Add event listener for the file input 'file-input' to display file name in span child element.
+// When button clicked, files pop up with the XML selector pre-selected.
 document.getElementById('file-input').querySelector('.btn').addEventListener('click', () => {
     document.getElementById('xmlFileInput').click();
 });
 
-// Event listener for the process button.
+// When the process button is clicked, it takes the file input selected, selects the dowload link name, then it parses.
 document.getElementById('processButton').addEventListener('click', async () => {
-    const fileInput = document.getElementById('xmlFileInput'); // Looks for the file and any previous download links.
+    const fileInput = document.getElementById('xmlFileInput');
     const downloadLink = document.getElementById('downloadLink');
             
     // Checks to ensure a file is submitted.
@@ -45,7 +43,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
             
-    // Initialize variables for property values.
+    // Initialize variables for property values. More can be added as needed. 
     let markedAttribute = '';
     let iopCountValue = '0';
     let modelValue = '0';
@@ -67,15 +65,20 @@ document.getElementById('processButton').addEventListener('click', async () => {
         const psAmpValuesMap = new Map(); // Creates a map to count amp values.
         const refNameElements = propertiesElement.querySelectorAll('RefName');
 
-        // Reset variables for each new Properties element.
+        // Reset variables for each new Properties element. (Ensures no accidental run over glitches)
+        iopCountValue = '0';
+        widthValue = '0';
+        railValue = '0';
         curveValue = '0';
+        lengthValue = '0';
         infeedValue = '0';
         dischargeValue = '0';
         hpValue = '0';
-        iopCountValue = '0';
         speedValue = '0';
+        weightValue = '0';
+        priceValue = '0';
 
-        // Parse through each ref name.
+        // Parse through each ref name and find the value to record. Format and contitionals are within.
         refNameElements.forEach(refNameElement => { 
             const propertyName = refNameElement.textContent;
             const valueElement = refNameElement.nextElementSibling;
@@ -88,7 +91,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
             } else if (propertyName === 'iopcount') {
                 iopCountValue = valueElement.textContent;
             } else if (propertyName === 'overallwidth') {
-                widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent)); // Formats to inches when called.
+                widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'rollercenters') {
                 railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'curveangle') {
@@ -100,21 +103,18 @@ document.getElementById('processButton').addEventListener('click', async () => {
             } else if (propertyName === 'dischargeheight') {
                 dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'hp') {
-				hpValue = valueElement.textContent;
-
+		hpValue = valueElement.textContent;
             } else if (propertyName === 'fpm') {
                 speedValue = valueElement.textContent;
             } else if (propertyName === 'conveyorweight') {
                 weightValue = valueElement.textContent;
             } else if (propertyName === 'powersupplysize') {
                 const psAmpValue = valueElement.textContent;
-                
                 // If there is nothing, a zero is added.
                 if (psAmpValue.trim() === '') { 
                     psAmpValuesMap.set('0', (psAmpValuesMap.get('0') || 0) + 1);
                 } else if (psAmpValue.toLowerCase() !== 'less power supply') {
-                    const ampMatch = psAmpValue.match(/\d+/); 
-                    
+                    const ampMatch = psAmpValue.match(/\d+/);     
                     // The case for the ref of LPS turned into a value.
                     if (ampMatch) {
                         const amp = ampMatch[0];
@@ -122,9 +122,10 @@ document.getElementById('processButton').addEventListener('click', async () => {
                     }
                 }
             } else if (propertyName === 'TotalPrice') {
-                priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`; // Make to two decimals out.
+                priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`;
             } else if (propertyName === 'hascloserollers') {
-                const hasCloserollers = valueElement.textContent.toLowerCase() === 'true'; // Check for 'hascloserollers' value.
+                const hasCloserollers = valueElement.textContent.toLowerCase() === 'true'; 
+		// False closed rollers usually means a curve. This sets the rail value to represent that curve.
                 if (hasCloserollers) {
                     railValue = '0 ft 2 in';
                 } else {
@@ -134,10 +135,11 @@ document.getElementById('processButton').addEventListener('click', async () => {
 
         });
 
-        // Ensure E24EZCT model has length value set to 0 after all other conditions
+	// Ensures curve models have a length value set to 0.
         if (/C/.test(modelValue)) {
             lengthValue = '0';
         }
+	// Ensures all E24 do not print the half HP. Since it is not needed.
         if (/E24/.test(modelValue)) {
            hpValue = '0';
         }

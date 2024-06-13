@@ -65,18 +65,13 @@ document.getElementById('processButton').addEventListener('click', async () => {
         const psAmpValuesMap = new Map(); // Creates a map to count amp values.
         const refNameElements = propertiesElement.querySelectorAll('RefName');
 
-        // Reset variables for each new Properties element. (Ensures no accidental run over glitches)
-        iopCountValue = '0';
-        widthValue = '0';
-        railValue = '0';
+        // Reset variables for each new Properties element.
         curveValue = '0';
-        lengthValue = '0';
         infeedValue = '0';
         dischargeValue = '0';
         hpValue = '0';
+        iopCountValue = '0';
         speedValue = '0';
-        weightValue = '0';
-        priceValue = '0';
 
         // Parse through each ref name and find the value to record. Format and contitionals are within.
         refNameElements.forEach(refNameElement => { 

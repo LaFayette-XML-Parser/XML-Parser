@@ -1,4 +1,4 @@
-  // Formats inches to feet and inches
+ // Formats inches to feet and inches
         function formatInchesToFeetAndInches(inches) {
             const feet = Math.floor(inches / 12);
             let remainingInches = inches % 12;
@@ -97,12 +97,12 @@
                     } else if (propertyName === 'dischargeheight') {
                         dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
                     } else if (propertyName === 'hp') {
-                        hpValue = valueElement.textContent;
+                        hpValue = parseFloat(valueElement.textContent).toFixed(2);
                     } else if (propertyName === 'fpm') {
-                        speedValue = valueElement.textContent;
+                        speedValue = parseFloat(valueElement.textContent).toFixed(2);
                     } else if (propertyName === 'conveyorweight') {
-                        weightValue = valueElement.textContent.trim();
-                        if (weightValue === '0.0000') {
+                        weightValue = parseFloat(valueElement.textContent.trim()).toFixed(2);
+                        if (weightValue === '0.00') {
                             weightValue = '';
                         }
                     } else if (propertyName === 'powersupplysize') {
@@ -117,7 +117,7 @@
                             }
                         }
                     } else if (propertyName === 'TotalPrice') {
-                        priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`;
+                        priceValue = parseFloat(valueElement.textContent || '0').toFixed(2);
                     } else if (propertyName === 'hascloserollers') {
                         const hasCloserollers = valueElement.textContent.toLowerCase() === 'true'; 
                         if (hasCloserollers) {
@@ -201,16 +201,16 @@
                         combination.curveValue, combination.lengthValue, 
                         combination.infeedValue, combination.dischargeValue, 
                         combination.hpValue, quantitySum, ampsRow, 
-                        combination.iopCountValue, combination.speedValue, 
+                        combination.iopCountValue,combination.speedValue, 
                         combination.weightValue, combination.price, ''
                     ];
                     XLSX.utils.sheet_add_aoa(worksheet, [row], {origin: -1});
-                    totalPrice += parseFloat(combination.price.replace('$', ''));
+                    totalPrice += parseFloat(combination.price);
                 }
             }
 
             XLSX.utils.sheet_add_aoa(worksheet, [[
-                '', '', '', '', '', '', '', '', '', '', '', '', '', 
+                '', '', '', '', '', '', '', '', '', '', '', '', '', '', 
                 `Total Prices`, `$${totalPrice.toFixed(2)}`
             ]], {origin: -1});
 

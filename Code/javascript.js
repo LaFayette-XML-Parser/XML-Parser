@@ -137,6 +137,10 @@
                 if (iopCountValue === '0'){
                     iopCountValue = '';
                 }
+                if (hpValue === '0.00'){ 
+                	hpValue ='';
+                }
+                
 
                 const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
 

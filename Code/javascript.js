@@ -1,4 +1,4 @@
-// Formats inches to feet and inches by dividing by 12 and taking the remainder two points after the decimal. 
+// Formats inches to feet and inches by dividing by 12 and taking the remainder two points after the decimal.
 // Then it takes any remainder greater than 12 and makes it a new foot.
 function formatInchesToFeetAndInches(inches) {
     const feet = Math.floor(inches / 12);
@@ -11,7 +11,7 @@ function formatInchesToFeetAndInches(inches) {
     return `${feet} ft ${remainingInches} in`;
 }
 
-// Add event listener for the file input 'file-input' to display file name in span child element. 
+// Add event listener for the file input 'file-input' to display file name in span child element.
 // If valid file set process button to active.
 document.getElementById('xmlFileInput').addEventListener('change', () => {
     const fileInput = document.getElementById('xmlFileInput');
@@ -99,14 +99,14 @@ document.getElementById('processButton').addEventListener('click', async () => {
             } else if (propertyName === 'dischargeheight') {
                 dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
             } else if (propertyName === 'hp') {
-		hpValue = valueElement.textContent;
+                hpValue = valueElement.textContent;
             } else if (propertyName === 'fpm') {
                 speedValue = valueElement.textContent;
             } else if (propertyName === 'conveyorweight') {
                 weightValue = valueElement.textContent.trim();
-                    if (weightValue === '0.0000') {
-        weightValue = '';
-    }
+                if (weightValue === '0.0000') {
+                    weightValue = '';
+                }
             } else if (propertyName === 'powersupplysize') {
                 const psAmpValue = valueElement.textContent;
                 // If there is nothing, a zero is added.
@@ -124,7 +124,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
                 priceValue = `$${parseFloat(valueElement.textContent || '0').toFixed(2)}`;
             } else if (propertyName === 'hascloserollers') {
                 const hasCloserollers = valueElement.textContent.toLowerCase() === 'true'; 
-		// False closed rollers usually means a curve. This sets the rail value to represent that curve.
+                // False closed rollers usually means a curve. This sets the rail value to represent that curve.
                 if (hasCloserollers) {
                     railValue = '0 ft 2 in';
                 } else {
@@ -134,19 +134,19 @@ document.getElementById('processButton').addEventListener('click', async () => {
 
         });
 
-	// Ensures curve models have a length value set to 0.
+        // Ensures curve models have a length value set to 0.
         if (/C/.test(modelValue)) {
             lengthValue = '';
         }
-	// Ensures all E24 do not print the half HP.
-    //Since it is not needed.
+        // Ensures all E24 do not print the half HP.
+        // Since it is not needed.
         if (/E24/.test(modelValue)) {
-           hpValue = '';
+            hpValue = '';
         }
         
-   //Turns the natural zeroes to blank to match the rest of the CSV.
+        // Turns the natural zeroes to blank to match the rest of the CSV.
         if (iopCountValue === '0'){
-        	iopCountValue = '';
+            iopCountValue = '';
         }
 
         // Generate a unique key for this combination of properties to check for repeated lines.
@@ -195,12 +195,12 @@ document.getElementById('processButton').addEventListener('click', async () => {
         if (quantityByCombination.hasOwnProperty(combinationKey)) {
             const combination = quantityByCombination[combinationKey]; // Add to combination key.
             const ampsArray = [];
-            let quantitySum = '';
+            let quantitySum = 0;
 
             // Add psamp column.
             combination.psAmpValuesMap.forEach((count, amp) => {
                 ampsArray.push(`${count}x${amp}`);
-                quantitySum += count;
+                quantitySum += count; // Properly sum the quantities
             });
 
             let ampsRow = ampsArray.join('|'); // Combine counts and amps.
@@ -219,7 +219,11 @@ document.getElementById('processButton').addEventListener('click', async () => {
             csvData += csvRow;
             // Accumulate price for total price
             totalPrice += parseFloat(combination.price.replace('$', ''));
-        };
+       
+        };     
+        if (quantitySum = '0'){
+            	quantitySum = '';
+            }
     };
     
     // Add total price row to CSV data

@@ -203,7 +203,12 @@ document.getElementById('processButton').addEventListener('click', async () => {
                 quantitySum += count; // Properly sum the quantities
             });
 
-            let ampsRow = ampsArray.join('|'); // Combine counts and amps.
+            if (quantitySum === 0) {
+                quantitySum = '';
+            }
+
+            let ampsRow = ampsArray.join('|'); // Combine counts and amps. 
+            
             // Declaration of order that the columns 
             // from the combinations is placed in each row.
             const csvRow = `${combination.markedAttribute},${combination.modelValue},${combination.widthValue},${combination.railValue},${combination.curveValue},${combination.lengthValue},${combination.infeedValue},${combination.dischargeValue},${combination.hpValue},${quantitySum},${ampsRow},${combination.iopCountValue},${combination.speedValue},${combination.weightValue},${combination.price}\n`; 
@@ -221,9 +226,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
             totalPrice += parseFloat(combination.price.replace('$', ''));
        
         };     
-        if (quantitySum = '0'){
-            	quantitySum = '';
-            }
+       
     };
     
     // Add total price row to CSV data

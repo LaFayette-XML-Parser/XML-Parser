@@ -1,51 +1,4 @@
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>XML to XLSX Converter</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-    <link class="icon" rel="icon" type="image/x-icon" href="Images/Favicon.png">
-    <link rel="stylesheet" href="Code/styles.css">
-</head>
-<body>
-    <div class="banner">
-        <a target="blank" href="https://www.lafayette-engineering.com/"><img src="https://www.lafayette-engineering.com/wp-content/uploads/2024/01/lafayette_engineering_logo.webp" alt="LEI Logo"></a>
-        <p><b>Take your Hytrol XML Files and Convert them to Excel Sheets.</b></p>
-    </div>
-    <main>
-        <h1>XML Parser</h1>
-        <div class="content">
-            <div class="directions">
-                <h2>Directions</h2>
-                <ol>
-                    <li>In AutoCad 2021, launch Hytrol and create your conveyor.</li>
-                    <li>In the Hytrol menu click file, then export project(.XML)</li>
-                    <li>Once done loading, name your file and save.</li>
-                    <li>Go to this website and press choose file.</li>
-                    <li>Choose your .xml file.</li>
-                    <li>Press the process button.</li>
-                    <li>It should download automatically, but if it does not, click the download link.</li>
-                    <li>Click on your download to pull up the XLSX.</li>
-                </ol>
-            </div>
-            <div class="file-zone">
-                <h2>Choose a File</h2>
-                <input type="file" id="xmlFileInput" accept=".xml" hidden><label for="xmlFileInput" class="file-input" id="file-input"><span>Select a file</span><button class="btn" data-icon="&#xF4F8">Browse</button>
-                </label>
-                <button id="processButton" data-icon="&#xf1c3" class="btn wide" disabled>Convert to XLSX</button>
-                <button id="downloadLink" data-icon="&#xF30A" class="btn wide" style="display: none;">Download Again
-                    <a id='downloadanchor' href="" download="" hidden></a>
-                </button>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <p>For questions and suggestions, email <a href='mailto:lafayette.xmlparser@gmail.com'>LaFayette.XmlParser@Gmail.Com</a></p>
-        <p>LaFayette Phone Number <a href="tel:(859) 236-6884">(859) 236-6884</a></p>
-    </footer>
-    <script>
-        // Formats inches to feet and inches
+// Formats inches to feet and inches
         function formatInchesToFeetAndInches(inches) {
             const feet = Math.floor(inches / 12);
             let remainingInches = inches % 12;
@@ -295,6 +248,3 @@ refNameElements.forEach(refNameElement => {const propertyName = refNameElement.t
                 downloadLink.removeEventListener('click');
             }
         });
-    </script>
-</body>
-</html>

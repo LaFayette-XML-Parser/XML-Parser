@@ -31,6 +31,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
             const xmlData = await xmlFile.text();
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
+                                                                                
             // Initialize variables for property values
             let markedAttribute = '';
             let iopCountValue = '';
@@ -93,8 +94,12 @@ refNameElements.forEach(refNameElement => {const propertyName = refNameElement.t
                         if (weightValue === '0.00') {weightValue = '';}
                     } else if (propertyName === 'powersupplysize') {
                         const psAmpValue = valueElement.textContent;
+                          
+                        // Makes a count of 0 if there is nothing there.
                         if (psAmpValue.trim() === '') {
                             psAmpValuesMap.set('', (psAmpValuesMap.get('') || 0) + 1);
+                              
+                              // Changes less power supply to 0.
                         } else if (psAmpValue.toLowerCase() !== 'less power supply') {
                             const ampMatch = psAmpValue.match(/\d+/);
                             if (ampMatch) {
@@ -105,6 +110,8 @@ refNameElements.forEach(refNameElement => {const propertyName = refNameElement.t
                     } else if (propertyName === 'TotalPrice') {
                         priceValue = parseFloat(valueElement.textContent || '0').toFixed(2);
                     } else if (propertyName === 'hascloserollers') {
+                          
+                        // Makes value lowercase and checks the value inside. If it has the necessary value, its true.
                         const hasCloserollers = valueElement.textContent.toLowerCase() === 'true';
                         if (hasCloserollers) {
                             railValue = '0 ft 2 in';
@@ -114,6 +121,7 @@ refNameElements.forEach(refNameElement => {const propertyName = refNameElement.t
                     }
                 });
 
+                // Makes zeroes blank. Searches for instances.                                             
                 if (/C/.test(modelValue)) {
                     lengthValue = '';
                 }
@@ -129,6 +137,7 @@ refNameElements.forEach(refNameElement => {const propertyName = refNameElement.t
 
                 const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
 
+                // Creates a non-repeated conbination.
                 if (!quantityByCombination[combinationKey]) {
                     quantityByCombination[combinationKey] = {
                         quantity: 0,
@@ -149,12 +158,14 @@ refNameElements.forEach(refNameElement => {const propertyName = refNameElement.t
                     };
                 }
 
+                // Makes a count for amp based on the amount from the combination.
                 psAmpValuesMap.forEach((count, amp) => {
                     const existingCount = quantityByCombination[combinationKey].psAmpValuesMap.get(amp) || 0;
                     quantityByCombination[combinationKey].psAmpValuesMap.set(amp, existingCount + count);
                 });
             });
 
+            // Creates the headers.
             const worksheet = XLSX.utils.aoa_to_sheet([[
                 'Unit Mark', 'Model', 'Width', 'Rlr Ctrs', 'Curve', 'Length',
                 'Inf El', 'Dis El', 'HP', 'PS Qty', 'PS Amp', 'IOP Qty',
@@ -163,6 +174,8 @@ refNameElements.forEach(refNameElement => {const propertyName = refNameElement.t
 
             let totalPrice = 0;
             let isFirstRow = true;
+
+            // Skips the first row.
             for (const combinationKey in quantityByCombination) {
                 if (quantityByCombination.hasOwnProperty(combinationKey)) {
                     if (isFirstRow) {
@@ -182,7 +195,8 @@ refNameElements.forEach(refNameElement => {const propertyName = refNameElement.t
                     if (quantitySum === 0) {
                         quantitySum = '';
                     }
-
+                      
+                    // Everything placed in a row.
                     let ampsRow = ampsArray.join('|');
                     const row = [
                         combination.markedAttribute, combination.modelValue,
@@ -198,10 +212,12 @@ refNameElements.forEach(refNameElement => {const propertyName = refNameElement.t
                 }
             }
 
+            // Add the total price row.
             XLSX.utils.sheet_add_aoa(worksheet, [[
                 '', '', '', '', '', '', '', '', '', '', '', '', '',   `Total Prices`, `$${totalPrice.toFixed(2)}`
             ]], {origin: -1});
 
+            //Name the sheet.
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
@@ -225,6 +241,7 @@ refNameElements.forEach(refNameElement => {const propertyName = refNameElement.t
             const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', '');
             const xlsxData = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
 
+            // Create blob.
             const blob = new Blob([xlsxData], {
                 type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             });

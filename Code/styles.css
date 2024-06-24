@@ -138,7 +138,7 @@ main h1 {
 }
 
 .directions ol{
-    /* Set padding to be slightly off (more l/r instead of t/b) */
+    /* Set padding to be slightly off */
     padding: 0.25rem 2rem;
     width: 100%;
     box-sizing: border-box;

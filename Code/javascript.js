@@ -269,7 +269,6 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
             downloadLink.addEventListener('click', function () {downloadAnchor.click();});
 
             if (totalPrice > 0) {
-                downloadLink.style.display = 'flex';
                 downloadAnchor.click();
                 downloadLink.removeEventListener('click');
                 URL.revokeObjectURL(url);

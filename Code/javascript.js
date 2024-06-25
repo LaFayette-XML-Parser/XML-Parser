@@ -73,6 +73,7 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
                 iopCountValue = '';
                 speedValue = '';
                 weightValue = '';
+                lengthValue = '';
 
                 // Parse through each ref name and find the value to record
                 refNameElements.forEach(refNameElement => {
@@ -92,8 +93,10 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
                           railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
                       } else if (propertyName === 'curveangle') {
                           curveValue = valueElement.textContent;
-                      } else if (propertyName === 'overalllength') {
+                      } else if (propertyName === 'overallfloorlength') {
                           lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                      } else if (propertyName === 'overalllength'){
+                    	  lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
                       } else if (propertyName === 'infeedheight') {
                           infeedValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
                       } else if (propertyName === 'dischargeheight') {

@@ -153,7 +153,7 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
 
                 const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
 
-                // Creates a non-repeated conbination.
+                // Creates a non-repeated combination.
                 if (!quantityByCombination[combinationKey]) {
                     quantityByCombination[combinationKey] = {
                         quantity: 0,

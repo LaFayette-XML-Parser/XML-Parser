@@ -135,7 +135,7 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
                               railValue = '0 ft 3 in';
                           }
                       }
-      });
+            });
 
                 // Makes zeroes blank. Searches for instances.                                             
                 if (/C/.test(modelValue)) {
@@ -279,4 +279,4 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
                 downloadAnchor.removeAttribute('download');
                 downloadLink.removeEventListener('click');
             }
-        });
+      });

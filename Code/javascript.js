@@ -266,12 +266,12 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
             const downloadAnchor = document.getElementById('downloadanchor');
             downloadAnchor.setAttribute('href', url);
             downloadAnchor.setAttribute('download', `${xmlFileName}.xlsx`);
-
             downloadLink.addEventListener('click', function () {downloadAnchor.click();});
 
             if (totalPrice > 0) {
                 downloadLink.style.display = 'flex';
                 downloadAnchor.click();
+                downloadLink.removeEventListener('click');
                 URL.revokeObjectURL(url);
             } else {
                 alert('No data to download.');

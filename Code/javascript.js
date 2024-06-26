@@ -1,49 +1,51 @@
-// Formats inches to feet and inches
-function formatInchesToFeetAndInches(inches) {
-      
-      const feet = Math.floor(inches / 12);
-      let remainingInches = inches % 12;
-      remainingInches = parseFloat(remainingInches.toFixed(2));
-      if (remainingInches >= 12) {
-            
-            feet += 1;
-            remainingInches -= 12;
-      }
-      return `${feet} ft ${remainingInches} in`;
-}
+ // Formats inches to feet and inches
+        function formatInchesToFeetAndInches(inches) {
+            const feet = Math.floor(inches / 12);
+            let remainingInches = inches % 12;
+            remainingInches = parseFloat(remainingInches.toFixed(2));
+            if (remainingInches >= 12) {
+                feet += 1;
+                remainingInches -= 12;
+            }
+            return `${feet} ft ${remainingInches} in`;
+        }
 
-// Add event listener for the file input to display file name and enable process button
-document.getElementById('xmlFileInput').addEventListener('change', () => {
-      
-      const fileInput = document.getElementById('xmlFileInput');
-      const fileLabel = document.getElementById('file-input');
-      const fileName = fileInput.files[0].name;
-      fileLabel.querySelector('span').textContent = fileName;
-      document.getElementById('processButton').disabled = false;});
+        // Function to format the price with commas
+        function formatPrice(price) {
+            return price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
 
-      // When button clicked, trigger file input click
-      document.querySelector('.btn').addEventListener('click', () => {
-            
-            document.getElementById('xmlFileInput').click();});
+        // Add event listener for the file input to display file name and enable process button
+        document.getElementById('xmlFileInput').addEventListener('change', () => {
+            const fileInput = document.getElementById('xmlFileInput');
+            const fileLabel = document.getElementById('file-input');
+            const fileName = fileInput.files[0].name;
+            fileLabel.querySelector('span').textContent = fileName;
+            document.getElementById('processButton').disabled = false;
+        });
 
-      // When the process button is clicked, process the selected XML file
-      document.getElementById('processButton').addEventListener('click', async () => {
-            
+        // When button clicked, trigger file input click
+        document.querySelector('.btn').addEventListener('click', () => {
+            document.getElementById('xmlFileInput').click();
+        });
+
+        // When the process button is clicked, process the selected XML file
+        document.getElementById('processButton').addEventListener('click', async () => {
             const fileInput = document.getElementById('xmlFileInput');
             const downloadLink = document.getElementById('downloadLink');
 
             // Ensure a file is selected
             if (fileInput.files.length === 0) {
-                  alert('Please select an XML file.'); 
-                  return;
+                alert('Please select an XML file.');
+                return;
             }
-                                                                                      
+
             // Parse the XML file
             const xmlFile = fileInput.files[0];
             const xmlData = await xmlFile.text();
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
-                                                                                
+
             // Initialize variables for property values
             let markedAttribute = '';
             let iopCountValue = '';
@@ -62,7 +64,8 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
             const propertiesElements = xmlDoc.querySelectorAll('Properties');
 
             // Iterate through 'Properties' elements
-            propertiesElements.forEach(propertiesElement => {const psAmpValuesMap = new Map();
+            propertiesElements.forEach(propertiesElement => {
+                const psAmpValuesMap = new Map();
                 const refNameElements = propertiesElement.querySelectorAll('RefName');
 
                 // Reset variables for each new Properties element
@@ -77,68 +80,68 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
 
                 // Parse through each ref name and find the value to record
                 refNameElements.forEach(refNameElement => {
-                      const propertyName = refNameElement.textContent;
-                      const valueElement = refNameElement.nextElementSibling;
+                    const propertyName = refNameElement.textContent;
+                    const valueElement = refNameElement.nextElementSibling;
 
-                      // Assign values based on property name
-                      if (propertyName === 'MarkNumber') {
-                          markedAttribute = valueElement.textContent;
-                      } else if (propertyName === 'Model') {
-                          modelValue = valueElement.textContent;
-                      } else if (propertyName === 'iopcount') {
-                          iopCountValue = valueElement.textContent;
-                      } else if (propertyName === 'overallwidth') {
-                          widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                      } else if (propertyName === 'rollercenters') {
-                          railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                      } else if (propertyName === 'curveangle') {
-                          curveValue = valueElement.textContent;
-                      } else if (propertyName === 'overallfloorlength') {
-                          lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                      } else if (propertyName === 'overalllength'){
-                    	  lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                      } else if (propertyName === 'infeedheight') {
-                          infeedValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                      } else if (propertyName === 'dischargeheight') {
-                          dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                      } else if (propertyName === 'hp') {
-                          hpValue = parseFloat(valueElement.textContent).toFixed(2);
-                      } else if (propertyName === 'fpm') {
-                          speedValue = parseFloat(valueElement.textContent).toFixed(2);
-                      } else if (propertyName === 'conveyorweight') {
-                          weightValue = parseFloat(valueElement.textContent.trim()).toFixed(2);
-                          if (weightValue === '0.00') {weightValue = '';}
-                      } else if (propertyName === 'powersupplysize') {
-                          const psAmpValue = valueElement.textContent;
-                          
-                          // Makes a count of 0 if there is nothing there.
-                          if (psAmpValue.trim() === '') {
-                              psAmpValuesMap.set('', (psAmpValuesMap.get('') || 0) + 1);
-                              
-                              // Changes less power supply to 0.
-                          } else if (psAmpValue.toLowerCase() !== 'less power supply') {
-                              const ampMatch = psAmpValue.match(/\d+/);
-                              if (ampMatch) {
-                                  const amp = ampMatch[0];
-                                  psAmpValuesMap.set(amp, (psAmpValuesMap.get(amp) || 0) + 1);
-                              }
-                          }
-                      } else if (propertyName === 'TotalPrice') {
-                          priceValue = parseFloat(valueElement.textContent || '0').toFixed(2);
-                      } else if (propertyName === 'hascloserollers') {
-                          
-                          // Makes value lowercase and checks the value inside. If it has the necessary value, its true.
-                          const hasCloserollers = valueElement.textContent.toLowerCase() === 'true';
-                          if (hasCloserollers) {
-                              railValue = '0 ft 2 in';
-                          } else {
-                              railValue = '0 ft 3 in';
-                          }
-                      }
-            });
+                    // Assign values based on property name
+                    if (propertyName === 'MarkNumber') {
+                        markedAttribute = valueElement.textContent;
+                    } else if (propertyName === 'Model') {
+                        modelValue = valueElement.textContent;
+                    } else if (propertyName === 'iopcount') {
+                        iopCountValue = valueElement.textContent;
+                    } else if (propertyName === 'overallwidth') {
+                        widthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                    } else if (propertyName === 'rollercenters') {
+                        railValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                    } else if (propertyName === 'curveangle') {
+                        curveValue = valueElement.textContent;
+                    } else if (propertyName === 'overallfloorlength') {
+                        lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                    } else if (propertyName === 'overalllength'){
+                        lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                    } else if (propertyName === 'infeedheight') {
+                        infeedValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                    } else if (propertyName === 'dischargeheight') {
+                        dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
+                    } else if (propertyName === 'hp') {
+                        hpValue = parseFloat(valueElement.textContent).toFixed(2);
+                    } else if (propertyName === 'fpm') {
+                        speedValue = parseFloat(valueElement.textContent).toFixed(2);
+                    } else if (propertyName === 'conveyorweight') {
+                        weightValue = parseFloat(valueElement.textContent.trim()).toFixed(2);
+                        if (weightValue === '0.00') {
+                            weightValue = '';
+                        }
+                    } else if (propertyName === 'powersupplysize') {
+                        const psAmpValue = valueElement.textContent;
 
-                // Makes zeroes blank. Searches for instances.                                             
-                if (/C/.test(modelValue)) {
+                        // Makes a count of 0 if there is nothing there.
+                        if (psAmpValue.trim() === '') {
+                            psAmpValuesMap.set('', (psAmpValuesMap.get('') || 0) + 1);
+                        // Changes less power supply to 0.
+                        } else if (psAmpValue.toLowerCase() !== 'less power supply') {
+                            const ampMatch = psAmpValue.match(/\d+/);
+                            if (ampMatch) {
+                                const amp = ampMatch[0];
+                                psAmpValuesMap.set(amp, (psAmpValuesMap.get(amp) || 0) + 1);
+                            }
+                        }
+                    } else if (propertyName === 'TotalPrice') {
+                        priceValue = parseFloat(valueElement.textContent || '0').toFixed(2);
+                    } else if (propertyName === 'hascloserollers') {
+                        // Makes value lowercase and checks the value inside. If it has the necessary value, its true.
+                        const hasCloserollers = valueElement.textContent.toLowerCase() === 'true';
+                        if (hasCloserollers) {
+                            railValue = '0 ft 2 in';
+                        } else {
+                            railValue = '0 ft 3 in';
+                        }
+                    }
+                });
+
+                // Makes zeroes blank. Searches for instances.
+                if (/C/.test(modelValue) && !/ACC/.test(modelValue)) {
                     lengthValue = '';
                 }
                 if (/E24/.test(modelValue)) {
@@ -211,7 +214,7 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
                     if (quantitySum === 0) {
                         quantitySum = '';
                     }
-                      
+
                     // Everything placed in a row.
                     let ampsRow = ampsArray.join('|');
                     const row = [
@@ -230,12 +233,13 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
 
             // Add the total price row.
             XLSX.utils.sheet_add_aoa(worksheet, [[
-                '', '', '', '', '', '', '', '', '', '', '', '', '',   `Total Price`, `$${totalPrice.toFixed(2)}`
+                '', '', '', '', '', '', '', '', '', '', '', '', '', 'Total Price', `$${formatPrice(totalPrice)}`
             ]], {origin: -1});
 
-            //Name the sheet.
+            // Get the XML file name and use it as the sheet name
+            const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', '');
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+            XLSX.utils.book_append_sheet(workbook, worksheet, xmlFileName);
 
             // Set column widths
             const colWidths = [
@@ -246,15 +250,17 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
             ];
             worksheet['!cols'] = colWidths;
 
-             // Set column format for List Price and Cost columns to currency
+            // Set column format for List Price and Cost columns to currency
             const range = XLSX.utils.decode_range(worksheet['!ref']);
             for (let row = range.s.r + 1; row <= range.e.r; row++) {
                 const cellO = worksheet[XLSX.utils.encode_cell({ r: row, c: 14 })];
-             
                 if (cellO) cellO.z = '$#,##0.00';
             }
 
-            const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', '');
+            // Set format for total price cell
+            const totalPriceCell = worksheet[XLSX.utils.encode_cell({ r: range.e.r, c: 15 })];
+            if (totalPriceCell) totalPriceCell.z = '$#,##0.00';
+
             const xlsxData = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
 
             // Create blob.
@@ -279,4 +285,4 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
                 downloadAnchor.removeAttribute('download');
                 downloadLink.removeEventListener('click');
             }
-      });
+        });

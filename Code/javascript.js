@@ -109,8 +109,8 @@
                     } else if (propertyName === 'fpm') {
                         speedValue = parseFloat(valueElement.textContent).toFixed(2);
                     } else if (propertyName === 'conveyorweight') {
-                        weightValue = parseFloat(valueElement.textContent.trim()).toFixed(2);
-                        if (weightValue === '0.00') {
+                       weightValue = parseFloat(valueElement.textContent.trim()).toFixed(0);
+                        if (weightValue === '0') {
                             weightValue = '';
                         }
                     } else if (propertyName === 'powersupplysize') {

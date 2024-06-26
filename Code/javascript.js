@@ -105,9 +105,9 @@
                     } else if (propertyName === 'dischargeheight') {
                         dischargeValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
                     } else if (propertyName === 'hp') {
-                        hpValue = parseFloat(valueElement.textContent).toFixed(2);
+                        hpValue = parseFloat(valueElement.textContent);
                     } else if (propertyName === 'fpm') {
-                        speedValue = parseFloat(valueElement.textContent).toFixed(2);
+                        speedValue = parseFloat(valueElement.textContent);
                     } else if (propertyName === 'conveyorweight') {
                        weightValue = parseFloat(valueElement.textContent.trim()).toFixed(0);
                         if (weightValue === '0') {

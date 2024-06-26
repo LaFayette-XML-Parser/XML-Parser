@@ -1,4 +1,4 @@
- // Formats inches to feet and inches
+        // Formats inches to feet and inches
         function formatInchesToFeetAndInches(inches) {
             const feet = Math.floor(inches / 12);
             let remainingInches = inches % 12;
@@ -119,6 +119,7 @@
                         // Makes a count of 0 if there is nothing there.
                         if (psAmpValue.trim() === '') {
                             psAmpValuesMap.set('', (psAmpValuesMap.get('') || 0) + 1);
+                         
                         // Changes less power supply to 0.
                         } else if (psAmpValue.toLowerCase() !== 'less power supply') {
                             const ampMatch = psAmpValue.match(/\d+/);
@@ -153,7 +154,6 @@
                 if (hpValue === '0.00') {
                     hpValue = '';
                 }
-
                 const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
 
                 // Creates a non-repeated combination.
@@ -201,16 +201,13 @@
                         isFirstRow = false;
                         continue; // Skip the first row
                     }
-
                     const combination = quantityByCombination[combinationKey];
                     const ampsArray = [];
                     let quantitySum = 0;
-
                     combination.psAmpValuesMap.forEach((count, amp) => {
                         ampsArray.push(`${count}x${amp}`);
                         quantitySum += count;
                     });
-
                     if (quantitySum === 0) {
                         quantitySum = '';
                     }
@@ -256,7 +253,6 @@
                 const cellO = worksheet[XLSX.utils.encode_cell({ r: row, c: 14 })];
                 if (cellO) cellO.z = '$#,##0.00';
             }
-
             const xlsxData = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
 
             // Create blob.
@@ -269,7 +265,6 @@
             downloadAnchor.setAttribute('href', url);
             downloadAnchor.setAttribute('download', `${xmlFileName}.xlsx`);
             downloadLink.addEventListener('click', function () {downloadAnchor.click();});
-
             if (totalPrice > 0) {
                 downloadAnchor.click();
                 downloadLink.removeEventListener('click');

@@ -257,10 +257,6 @@
                 if (cellO) cellO.z = '$#,##0.00';
             }
 
-            // Set format for total price cell
-            const totalPriceCell = worksheet[XLSX.utils.encode_cell({ r: range.e.r, c: 15 })];
-            if (totalPriceCell) totalPriceCell.z = '$#,##0.00';
-
             const xlsxData = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
 
             // Create blob.

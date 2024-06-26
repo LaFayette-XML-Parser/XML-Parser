@@ -230,7 +230,7 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
 
             // Add the total price row.
             XLSX.utils.sheet_add_aoa(worksheet, [[
-                '', '', '', '', '', '', '', '', '', '', '', '', '',   `Total Prices`, `$${totalPrice.toFixed(2)}`
+                '', '', '', '', '', '', '', '', '', '', '', '', '',   `Total Price`, `$${totalPrice.toFixed(2)}`
             ]], {origin: -1});
 
             //Name the sheet.

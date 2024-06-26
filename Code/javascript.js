@@ -199,7 +199,7 @@
                 if (quantityByCombination.hasOwnProperty(combinationKey)) {
                     if (isFirstRow) {
                         isFirstRow = false;
-                        continue; // Skip the first row
+                        continue; 
                     }
                     const combination = quantityByCombination[combinationKey];
                     const ampsArray = [];

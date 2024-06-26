@@ -1,4 +1,4 @@
-        // Formats inches to feet and inches
+        // Formats inches to feet and inches.
         function formatInchesToFeetAndInches(inches) {
             const feet = Math.floor(inches / 12);
             let remainingInches = inches % 12;
@@ -10,12 +10,12 @@
             return `${feet} ft ${remainingInches} in`;
         }
 
-        // Function to format the price with commas
+        // Function to format the price with commas.
         function formatPrice(price) {
             return price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
 
-        // Add event listener for the file input to display file name and enable process button
+        // Add event listener for the file input to display file name and enable process button.
         document.getElementById('xmlFileInput').addEventListener('change', () => {
             const fileInput = document.getElementById('xmlFileInput');
             const fileLabel = document.getElementById('file-input');
@@ -24,17 +24,17 @@
             document.getElementById('processButton').disabled = false;
         });
 
-        // When button clicked, trigger file input click
+        // When button clicked, trigger file input click.
         document.querySelector('.btn').addEventListener('click', () => {
             document.getElementById('xmlFileInput').click();
         });
 
-        // When the process button is clicked, process the selected XML file
+        // When the process button is clicked, process the selected XML file.
         document.getElementById('processButton').addEventListener('click', async () => {
             const fileInput = document.getElementById('xmlFileInput');
             const downloadLink = document.getElementById('downloadLink');
 
-            // Ensure a file is selected
+            // Ensure a file is selected.
             if (fileInput.files.length === 0) {
                 alert('Please select an XML file.');
                 return;
@@ -46,7 +46,7 @@
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
 
-            // Initialize variables for property values
+            // Initialize variables for property values.
             let markedAttribute = '';
             let iopCountValue = '';
             let modelValue = '';
@@ -63,12 +63,12 @@
             const quantityByCombination = {};
             const propertiesElements = xmlDoc.querySelectorAll('Properties');
 
-            // Iterate through 'Properties' elements
+            // Iterate through 'Properties' elements.
             propertiesElements.forEach(propertiesElement => {
                 const psAmpValuesMap = new Map();
                 const refNameElements = propertiesElement.querySelectorAll('RefName');
 
-                // Reset variables for each new Properties element
+                // Reset variables for each new Properties element.
                 curveValue = '';
                 infeedValue = '';
                 dischargeValue = '';
@@ -78,12 +78,12 @@
                 weightValue = '';
                 lengthValue = '';
 
-                // Parse through each ref name and find the value to record
+                // Parse through each ref name and find the value to record.
                 refNameElements.forEach(refNameElement => {
                     const propertyName = refNameElement.textContent;
                     const valueElement = refNameElement.nextElementSibling;
 
-                    // Assign values based on property name
+                    // Assign values based on property name.
                     if (propertyName === 'MarkNumber') {
                         markedAttribute = valueElement.textContent;
                     } else if (propertyName === 'Model') {
@@ -131,6 +131,7 @@
                     } else if (propertyName === 'TotalPrice') {
                         priceValue = parseFloat(valueElement.textContent || '0').toFixed(2);
                     } else if (propertyName === 'hascloserollers') {
+                            
                         // Makes value lowercase and checks the value inside. If it has the necessary value, its true.
                         const hasCloserollers = valueElement.textContent.toLowerCase() === 'true';
                         if (hasCloserollers) {
@@ -233,7 +234,7 @@
                 '', '', '', '', '', '', '', '', '', '', '', '', '', 'Total Price', `$${formatPrice(totalPrice)}`
             ]], {origin: -1});
 
-            // Get the XML file name and use it as the sheet name
+            // Get the XML file name and use it as the sheet name.
             const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', '');
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, xmlFileName);
@@ -247,7 +248,7 @@
             ];
             worksheet['!cols'] = colWidths;
 
-            // Set column format for List Price and Cost columns to currency
+            // Set column format for List Price and Cost columns to currency.
             const range = XLSX.utils.decode_range(worksheet['!ref']);
             for (let row = range.s.r + 1; row <= range.e.r; row++) {
                 const cellO = worksheet[XLSX.utils.encode_cell({ r: row, c: 14 })];
@@ -259,7 +260,6 @@
             const blob = new Blob([xlsxData], {
                 type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             });
-
             const url = URL.createObjectURL(blob);
             const downloadAnchor = document.getElementById('downloadanchor');
             downloadAnchor.setAttribute('href', url);

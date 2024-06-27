@@ -247,6 +247,7 @@ footer {
     justify-content: space-between;
     align-items: center;
     font-family: "Poppins", Times, serif;
+    font-size: 12px;
     font-weight: bold;
     padding: 0.5rem 1rem;
     /* Border box ensures that content grows inwards not outwards with padding */

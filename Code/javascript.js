@@ -1,4 +1,4 @@
-        // Formats inches to feet and inches.
+// Formats inches to feet and inches.
         function formatInchesToFeetAndInches(inches) {
             const feet = Math.floor(inches / 12);
             let remainingInches = inches % 12;
@@ -15,12 +15,17 @@
             return price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
 
+        // Function to truncate string to specified length.
+        const truncateString = (str, num) =>
+            str.length > num ? str.slice(0, num) : str;
+
         // Add event listener for the file input to display file name and enable process button.
         document.getElementById('xmlFileInput').addEventListener('change', () => {
             const fileInput = document.getElementById('xmlFileInput');
             const fileLabel = document.getElementById('file-input');
             const fileName = fileInput.files[0].name;
-            fileLabel.querySelector('span').textContent = fileName;
+            fileLabel.querySelector('span').textContent = truncateString(fileName, 30);
+            
             document.getElementById('processButton').disabled = false;
         });
 
@@ -131,7 +136,6 @@
                     } else if (propertyName === 'TotalPrice') {
                         priceValue = parseFloat(valueElement.textContent || '0').toFixed(2);
                     } else if (propertyName === 'hascloserollers') {
-                            
                         // Makes value lowercase and checks the value inside. If it has the necessary value, its true.
                         const hasCloserollers = valueElement.textContent.toLowerCase() === 'true';
                         if (hasCloserollers) {
@@ -193,15 +197,10 @@
             ]]);
 
             let totalPrice = 0;
-            let isFirstRow = true;
 
-            // Skips the first row.
+            // Process each combination.
             for (const combinationKey in quantityByCombination) {
                 if (quantityByCombination.hasOwnProperty(combinationKey)) {
-                    if (isFirstRow) {
-                        isFirstRow = false;
-                        continue; 
-                    }
                     const combination = quantityByCombination[combinationKey];
                     const ampsArray = [];
                     let quantitySum = 0;
@@ -234,8 +233,8 @@
                 '', '', '', '', '', '', '', '', '', '', '', '', '', 'Total Price', `$${formatPrice(totalPrice)}`
             ]], {origin: -1});
 
-            // Get the XML file name and use it as the sheet name.
-            const xmlFileName = xmlFile.name.replace(/\s+/g, '_').replace('.xml', '');
+            // Get the XML file name and use it as the sheet name, trimming if greater than 32 characters.
+            let xmlFileName = truncateString(xmlFile.name.replace(/\s+/g, '_').replace('.xml', ''), 30);
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, xmlFileName);
 
@@ -263,7 +262,8 @@
             const url = URL.createObjectURL(blob);
             const downloadAnchor = document.getElementById('downloadanchor');
             downloadAnchor.setAttribute('href', url);
-            downloadAnchor.setAttribute('download', `${xmlFileName}.xlsx`);
+            downloadAnchor.setAttribute('download', `${truncateString(xmlFileName, 30)}.xlsx`);
+            downloadLink.style.display = 'block';
             downloadLink.addEventListener('click', function () {downloadAnchor.click();});
             if (totalPrice > 0) {
                 downloadAnchor.click();

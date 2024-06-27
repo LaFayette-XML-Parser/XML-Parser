@@ -136,6 +136,7 @@
                     } else if (propertyName === 'TotalPrice') {
                         priceValue = parseFloat(valueElement.textContent || '0').toFixed(2);
                     } else if (propertyName === 'hascloserollers') {
+                            
                         // Makes value lowercase and checks the value inside. If it has the necessary value, its true.
                         const hasCloserollers = valueElement.textContent.toLowerCase() === 'true';
                         if (hasCloserollers) {
@@ -195,7 +196,6 @@
                 'Inf El', 'Dis El', 'HP', 'PS Qty', 'PS Amp', 'IOP Qty',
                 'Speed', 'Weight', 'List Price', 'Cost'
             ]]);
-
             let totalPrice = 0;
 
             // Process each combination.
@@ -240,9 +240,9 @@
 
             // Set column widths
             const colWidths = [
-                { wch: 12 }, { wch: 20 }, { wch: 12 }, { wch: 12 }, { wch: 12 },
+                { wch: 12 }, { wch: 15 }, { wch: 12 }, { wch: 12 }, { wch: 8 },
                 { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 8 }, { wch: 8 },
-                { wch: 15 }, { wch: 8 }, { wch: 10 }, { wch: 10 }, { wch: 15 },
+                { wch: 15 }, { wch: 8 }, { wch: 8 }, { wch: 10 }, { wch: 15 },
                 { wch: 10 }
             ];
             worksheet['!cols'] = colWidths;

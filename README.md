@@ -9,3 +9,5 @@
   The JS code documents how each section is created in order for the website to be maintained and updated after the original creator has finished their internship.
 
   Please make sure to continue to maintain notes and documentation for further preservation of the site. Thank you.
+
+  Documentation: https://lafayetteeng-my.sharepoint.com/:w:/g/personal/carmindy_phillips_lafayette-engineering_com/EV2kUCZx7mhJsw6XYdSi8o8BoyQMZ8yGh9tzPqSD1eY77g?e=M5eN8f

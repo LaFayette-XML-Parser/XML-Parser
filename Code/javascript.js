@@ -14,8 +14,8 @@ function formatInchesToFeetAndInches(inches) {
 function formatPrice(price) {
         return price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 }
-
-        // Function to truncate string to specified length.
+		
+// Function to truncate string to specified length.
 const truncateString = (str, num) =>
         str.length > num ? str.slice(0, num) : str;
 
@@ -27,7 +27,7 @@ document.getElementById('xmlFileInput').addEventListener('change', () => {
         fileLabel.querySelector('span').textContent = truncateString(fileName, 30);
         document.getElementById('processButton').disabled = false;
 });
-
+        
 // When button clicked, trigger file input click.
 document.querySelector('.btn').addEventListener('click', () => {
         document.getElementById('xmlFileInput').click();
@@ -38,18 +38,18 @@ document.getElementById('processButton').addEventListener('click', async () => {
         const fileInput = document.getElementById('xmlFileInput');
         const downloadLink = document.getElementById('downloadLink');
 
-        // Ensure a file is selected.
+	// Ensure a file is selected.
         if (fileInput.files.length === 0) {
                 alert('Please select an XML file.');
                 return;
         }
 
-        // Parse the XML file
+	// Parse the XML file
         const xmlFile = fileInput.files[0];
         const xmlData = await xmlFile.text();
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
-
+			
         // Initialize variables for property values.
         let markedAttribute = '';
         let iopCountValue = '';
@@ -67,12 +67,12 @@ document.getElementById('processButton').addEventListener('click', async () => {
         const quantityByCombination = {};
         const propertiesElements = xmlDoc.querySelectorAll('Properties');
 
-        // Iterate through 'Properties' elements.
+	// Iterate through 'Properties' elements.
         propertiesElements.forEach(propertiesElement => {
                 const psAmpValuesMap = new Map();
                 const refNameElements = propertiesElement.querySelectorAll('RefName');
 
-                // Reset variables for each new Properties element.
+		// Reset variables for each new Properties element.
                 curveValue = '';
                 infeedValue = '';
                 dischargeValue = '';
@@ -81,12 +81,12 @@ document.getElementById('processButton').addEventListener('click', async () => {
                 speedValue = '';
                 weightValue = '';
                 lengthValue = '';
-
-                // Parse through each ref name and find the value to record.
+                
+		// Parse through each ref name and find the value to record.
                 refNameElements.forEach(refNameElement => {
                         const propertyName = refNameElement.textContent;
                         const valueElement = refNameElement.nextElementSibling;
-
+					
                         // Assign values based on property name.
                         if (propertyName === 'MarkNumber') {
                                 markedAttribute = valueElement.textContent;
@@ -102,7 +102,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
                                 curveValue = valueElement.textContent;
                         } else if (propertyName === 'overallfloorlength') {
                                 lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
-                        } else if (propertyName === 'overalllength'){
+                        } else if (propertyName === 'overalllength') {
                                 lengthValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
                         } else if (propertyName === 'infeedheight') {
                                 infeedValue = formatInchesToFeetAndInches(parseFloat(valueElement.textContent));
@@ -119,14 +119,14 @@ document.getElementById('processButton').addEventListener('click', async () => {
                                 }
                         } else if (propertyName === 'powersupplysize') {
                                 const psAmpValue = valueElement.textContent;
-
+                        
                                 // Makes a count of 0 if there is nothing there.
                                 if (psAmpValue.trim() === '') {
                                         psAmpValuesMap.set('', (psAmpValuesMap.get('') || 0) + 1);
-                         
+                        
                                 // Changes less power supply to 0.
                                 } else if (psAmpValue.toLowerCase() !== 'less power supply') {
-                                        const ampMatch = psAmpValue.match(/\d+/);
+                                                const ampMatch = psAmpValue.match(/\d+/);
                                         if (ampMatch) {
                                                 const amp = ampMatch[0];
                                                 psAmpValuesMap.set(amp, (psAmpValuesMap.get(amp) || 0) + 1);
@@ -135,7 +135,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
                         } else if (propertyName === 'TotalPrice') {
                                 priceValue = parseFloat(valueElement.textContent || '0').toFixed(2);
                         } else if (propertyName === 'hascloserollers') {
-                            
+                    	
                                 // Makes value lowercase and checks the value inside. If it has the necessary value, its true.
                                 const hasCloserollers = valueElement.textContent.toLowerCase() === 'true';
                                 if (hasCloserollers) {
@@ -145,7 +145,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
                                 }
                         }
                 });
-
+                
                 // Makes zeroes blank. Searches for instances.
                 if (/C/.test(modelValue) && !/ACC/.test(modelValue)) {
                         lengthValue = '';
@@ -160,8 +160,8 @@ document.getElementById('processButton').addEventListener('click', async () => {
                         hpValue = '';
                 }
                 const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
-
-                // Creates a non-repeated combination.
+        
+        	// Creates a non-repeated combination.
                 if (!quantityByCombination[combinationKey]) {
                         quantityByCombination[combinationKey] = {
                                 quantity: 0,
@@ -179,10 +179,10 @@ document.getElementById('processButton').addEventListener('click', async () => {
                                 hpValue: hpValue,
                                 speedValue: speedValue,
                                 weightValue: weightValue,
-                        };
+                            };
                 }
-
-                // Makes a count for amp based on the amount from the combination.
+        
+        	// Makes a count for amp based on the amount from the combination.
                 psAmpValuesMap.forEach((count, amp) => {
                         const existingCount = quantityByCombination[combinationKey].psAmpValuesMap.get(amp) || 0;
                         quantityByCombination[combinationKey].psAmpValuesMap.set(amp, existingCount + count);
@@ -196,7 +196,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
                 'Speed', 'Weight', 'List Price', 'Cost'
         ]]);
         let totalPrice = 0;
-
+        
         // Process each combination.
         for (const combinationKey in quantityByCombination) {
                 if (quantityByCombination.hasOwnProperty(combinationKey)) {
@@ -204,13 +204,13 @@ document.getElementById('processButton').addEventListener('click', async () => {
                         const ampsArray = [];
                         let quantitySum = 0;
                         combination.psAmpValuesMap.forEach((count, amp) => {
-                                ampsArray.push(`${count}x${amp}`);
-                                quantitySum += count;
+                        ampsArray.push(`${count}x${amp}`);
+                        quantitySum += count;
                         });
                         if (quantitySum === 0) {
                                 quantitySum = '';
                         }
-
+        					
                         // Everything placed in a row.
                         let ampsRow = ampsArray.join('|');
                         const row = [
@@ -222,25 +222,25 @@ document.getElementById('processButton').addEventListener('click', async () => {
                                 combination.iopCountValue, combination.speedValue,
                                 combination.weightValue, parseFloat(combination.price), ''
                         ];
-                        XLSX.utils.sheet_add_aoa(worksheet, [row], {origin: -1});
+                        XLSX.utils.sheet_add_aoa(worksheet, [row], { origin: -1 });
                         totalPrice += parseFloat(combination.price);
                 }
         }
-
-       // Add the Total Price label and value in the first row
-            XLSX.utils.sheet_add_aoa(worksheet, [[
-              'Total Price'
-            ]], { origin: { r: 1, c: 13 } });
-
-            // Adjust range to exclude the first row if it only contains the price.
-            const range = XLSX.utils.decode_range(worksheet['!ref']);
-
+        
+        // Add the Total Price label and value in the first row.
+        XLSX.utils.sheet_add_aoa(worksheet, [[
+                'Total Price'
+        ]], { origin: { r: 1, c: 13 } });
+        
+        // Adjust range to exclude the first row if it only contains the price.
+        const range = XLSX.utils.decode_range(worksheet['!ref']);
+        			
         // Get the XML file name and use it as the sheet name, trimming if greater than 32 characters.
         let xmlFileName = truncateString(xmlFile.name.replace(/\s+/g, '_').replace('.xml', ''), 30);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, xmlFileName);
-
-        // Set column widths
+        
+        // Set column widths.
         const colWidths = [
                 { wch: 12 }, { wch: 15 }, { wch: 12 }, { wch: 12 }, { wch: 8 },
                 { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 8 }, { wch: 8 },
@@ -248,16 +248,15 @@ document.getElementById('processButton').addEventListener('click', async () => {
                 { wch: 10 }
         ];
         worksheet['!cols'] = colWidths;
-
+                    
         // Set column format for List Price and Cost columns to currency.
-        const range = XLSX.utils.decode_range(worksheet['!ref']);
         for (let row = range.s.r + 1; row <= range.e.r; row++) {
                 const cellO = worksheet[XLSX.utils.encode_cell({ r: row, c: 14 })];
                 if (cellO) cellO.z = '$#,##0.00';
         }
         const xlsxData = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-
-        // Create blob.
+        			
+        //Create blob.
         const blob = new Blob([xlsxData], {
                 type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         });
@@ -266,14 +265,14 @@ document.getElementById('processButton').addEventListener('click', async () => {
         downloadAnchor.setAttribute('href', url);
         downloadAnchor.setAttribute('download', `${truncateString(xmlFileName, 30)}.xlsx`);
         downloadLink.style.display = 'block';
-        downloadLink.addEventListener('click', function () {downloadAnchor.click();});
+        downloadLink.addEventListener('click', function () { downloadAnchor.click(); });
         if (totalPrice > 0) {
                 downloadAnchor.click();
                 downloadLink.removeEventListener('click');
                 URL.revokeObjectURL(url);
         } else {
                 alert('No data to download.');
-                downloadLink.style.display = 'none';
+                downloadLink.style.display = 'noane';
                 downloadAnchor.removeAttribute('href');
                 downloadAnchor.removeAttribute('download');
                 downloadLink.removeEventListener('click');

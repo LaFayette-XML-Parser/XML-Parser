@@ -227,10 +227,13 @@ document.getElementById('processButton').addEventListener('click', async () => {
                 }
         }
 
-        // Add the total price row.
-        XLSX.utils.sheet_add_aoa(worksheet, [[
-                '', '', '', '', '', '', '', '', '', '', '', '', '', 'Total Price', `$${formatPrice(totalPrice)}`
-        ]], {origin: -1});
+       // Add the Total Price label and value in the first row
+            XLSX.utils.sheet_add_aoa(worksheet, [[
+              'Total Price'
+            ]], { origin: { r: 1, c: 13 } });
+
+            // Adjust range to exclude the first row if it only contains the price.
+            const range = XLSX.utils.decode_range(worksheet['!ref']);
 
         // Get the XML file name and use it as the sheet name, trimming if greater than 32 characters.
         let xmlFileName = truncateString(xmlFile.name.replace(/\s+/g, '_').replace('.xml', ''), 30);

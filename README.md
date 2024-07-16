@@ -2,7 +2,7 @@
 
   This XML Parsing website works like an addon to the program HyCad, made by Hytrol. HyCad is a module to AutoDesk meant for the easy design of conveyor systems.
   
-  The original created a pdf and excel file through AutoCad itself. However, some information needed by LaFayette Engineering Inc. for potential buyers is not present in this original excel sheet.
+  The original created a pdf and excel file through AutoCad itself. However, some information needed by LaFayette Engineering Inc. for potential buyers is not present in the original excel sheet.
 
   To save time, this XML parsing website has been created and can be used to create excel sheets with accurate information for the buyers.
 

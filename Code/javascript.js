@@ -245,7 +245,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
                 { wch: 12 }, { wch: 15 }, { wch: 12 }, { wch: 12 }, { wch: 8 },
                 { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 8 }, { wch: 8 },
                 { wch: 15 }, { wch: 8 }, { wch: 8 }, { wch: 10 }, { wch: 15 },
-                { wch: 10 }
+                { wch: 15 }
         ];
         worksheet['!cols'] = colWidths;
                     

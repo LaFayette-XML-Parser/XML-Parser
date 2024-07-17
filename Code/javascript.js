@@ -193,7 +193,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
         const worksheet = XLSX.utils.aoa_to_sheet([[
                 'Unit Mark', 'Model', 'Width', 'Rlr Ctrs', 'Curve', 'Length',
                 'Inf El', 'Dis El', 'HP', 'PS Qty', 'PS Amp', 'IOP Qty',
-                'Speed', 'Weight', 'List Price', 'Cost'
+                'Speed', 'Weight', 'List Price'
         ]]);
         let totalPrice = 0;
         
@@ -230,7 +230,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
         // Add the Total Price label and value in the first row.
         XLSX.utils.sheet_add_aoa(worksheet, [[
                 '<-- Total Price'
-        ]], { origin: { r: 1, c: 16 } });
+        ]], { origin: { r: 1, c: 15 } });
         
         // Adjust range to exclude the first row if it only contains the price.
         const range = XLSX.utils.decode_range(worksheet['!ref']);

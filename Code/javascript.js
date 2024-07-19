@@ -156,9 +156,10 @@ document.getElementById('processButton').addEventListener('click', async () => {
                 if (iopCountValue === '0') {
                         iopCountValue = '';
                 }
-                if (hpValue === '0') {
-                        hpValue = '';
-                }
+                if (hpValue === '0' || hpValue === 0) {
+    			hpValue = '';
+		}
+
                 const combinationKey = `${markedAttribute}_${modelValue}_${priceValue}`;
         
         	// Creates a non-repeated combination.
